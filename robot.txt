@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://www.kosconn.com/sitemap.xml
