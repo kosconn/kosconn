@@ -1,35 +1,37 @@
 name: Generate sitemap
+
 on:
   push:
-    branches: [ main ]
-
-permissions:
-  contents: write
+    branches:
+      - main
 
 jobs:
-  sitemap:
+  build:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout code
+        uses: actions/checkout@v3
 
       - name: Generate sitemap.xml
         run: |
-          cat > sitemap.xml <<'EOF'
-          <?xml version="1.0" encoding="UTF-8"?>
-          <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-            <url><loc>https://www.kosconn.com/</loc></url>
-            <url><loc>https://www.kosconn.com/services.html</loc></url>
-            <url><loc>https://www.kosconn.com/about.html</loc></url>
-            <url><loc>https://www.kosconn.com/how-we-work.html</loc></url>
-            <url><loc>https://www.kosconn.com/resources.html</loc></url>
-            <url><loc>https://www.kosconn.com/contact.html</loc></url>
-          </urlset>
-          EOF
+          echo '<?xml version="1.0" encoding="UTF-8"?>' > sitemap.xml
+          echo '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">' >> sitemap.xml
+          echo '  <url><loc>https://www.kosconn.com/</loc></url>' >> sitemap.xml
+          echo '  <url><loc>https://www.kosconn.com/services.html</loc></url>' >> sitemap.xml
+          echo '  <url><loc>https://www.kosconn.com/about.html</loc></url>' >> sitemap.xml
+          echo '  <url><loc>https://www.kosconn.com/how-we-work.html</loc></url>' >> sitemap.xml
+          echo '  <url><loc>https://www.kosconn.com/resources.html</loc></url>' >> sitemap.xml
+          echo '  <url><loc>https://www.kosconn.com/contact.html</loc></url>' >> sitemap.xml
+          echo '</urlset>' >> sitemap.xml
 
-      - name: Commit sitemap.xml
-        uses: EndBug/add-and-commit@v9
+      - name: Upload sitemap artifact
+        uses: actions/upload-artifact@v3
         with:
-          add: "sitemap.xml"
-          message: "chore: update sitemap"
-          author_name: "kosconn-bot"
-          author_email: "noreply@users.noreply.github.com"
+          name: sitemap
+          path: sitemap.xml
+
+      - name: Deploy to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./
