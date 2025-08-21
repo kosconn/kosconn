@@ -1,10 +1,25 @@
 name: Link Check
-on: [pull_request]
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+
+permissions:
+  contents: read
+
 jobs:
   lychee:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - uses: lycheeverse/lychee-action@v1
+
+      # Offline mode = check only local/internal links in your repo.
+      # This avoids false reds from external sites timing out.
+      - name: Run lychee (offline)
+        uses: lycheeverse/lychee-action@v1
         with:
-          args: --no-progress --verbose .
+          args: >
+            --offline
+            --exclude-mail
+            --no-progress
+            .
