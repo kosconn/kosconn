@@ -17,97 +17,131 @@
   <meta property="og:image" content="https://www.kosconn.com/og-cover.jpg" />
   <meta name="twitter:card" content="summary_large_image" />
 
-  <!-- Favicon / Manifest (place files in /assets) -->
+  <!-- Icons (put files in /assets or remove these lines) -->
   <link rel="icon" href="/assets/favicon.ico" />
   <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png" />
   <link rel="manifest" href="/assets/site.webmanifest" />
 
-  <!-- Styles (same design as before) -->
   <style>
-    :root{ --ink:#0b1220; --muted:#475569; --bg:#f6f9ff; --panel:#ffffff; --line:#e6ebf5; --sky:#2e90fa; --violet:#8256ff; --green:#12b76a; --pink:#f43f5e; --amber:#f59e0b; --grad-1: linear-gradient(135deg,#2e90fa 0%,#8256ff 60%,#f43f5e 100%); --grad-2: linear-gradient(135deg,#12b76a 0%,#2e90fa 60%,#8256ff 100%); --shadow: 0 8px 30px rgba(2,6,23,.08); --radius:18px; --radius-lg:22px; --maxw:1180px; }
-    *{box-sizing:border-box} html,body{height:100%} body{margin:0;font-family:ui-sans-serif,system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial;color:var(--ink);background:var(--bg);-webkit-font-smoothing:antialiased;line-height:1.55}
+    :root{
+      --ink:#0b1220; --muted:#475569; --bg:#f6f9ff; --panel:#ffffff; --line:#e6ebf5;
+      --sky:#2e90fa; --violet:#8256ff; --green:#12b76a; --pink:#f43f5e; --amber:#f59e0b;
+      --grad-1: linear-gradient(135deg,#2e90fa 0%,#8256ff 60%,#f43f5e 100%);
+      --grad-2: linear-gradient(135deg,#12b76a 0%,#2e90fa 60%,#8256ff 100%);
+      --shadow: 0 8px 30px rgba(2,6,23,.08); --radius:18px; --radius-lg:22px; --maxw:1180px;
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    html{scroll-behavior:smooth}
+    body{margin:0;font-family:ui-sans-serif,system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial;color:var(--ink);background:var(--bg);-webkit-font-smoothing:antialiased;line-height:1.55}
     a{color:var(--sky);text-decoration:none} a:hover{color:#1b74e4}
     .container{max-width:var(--maxw);margin:0 auto;padding:0 20px}
     .btn{display:inline-flex;align-items:center;gap:.55rem;padding:.75rem 1.1rem;border-radius:999px;font-weight:700;border:1px solid var(--line);background:#fff;transition:.2s}
-    .btn:hover{transform:translateY(-1px);box-shadow:var(--shadow)} .btn.primary{background:var(--ink);color:#fff;border-color:transparent} .btn.gradient{background:var(--grad-1);color:#fff;border-color:transparent}
+    .btn:hover{transform:translateY(-1px);box-shadow:var(--shadow)}
+    .btn.primary{background:var(--ink);color:#fff;border-color:transparent}
+    .btn.gradient{background:var(--grad-1);color:#fff;border-color:transparent}
     .badge{display:inline-block;font-size:.75rem;font-weight:700;letter-spacing:.02em;padding:.25rem .6rem;border-radius:999px}
-    .badge.sky{background:#e7f1ff;color:#1b74e4} .badge.violet{background:#efe9ff;color:#6e38ff} .badge.green{background:#e8fff3;color:#0f9d5c}
+    .badge.sky{background:#e7f1ff;color:#1b74e4}
+    .badge.violet{background:#efe9ff;color:#6e38ff}
+    .badge.green{background:#e8fff3;color:#0f9d5c}
+    .badge.pink{background:#ffe7ed;color:#e11d48}
     .card{background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);box-shadow:0 1px 1px rgba(2,8,23,.03)}
-    .section{padding:3.5rem 0} .h1{font-size:clamp(2rem,4.2vw,3.4rem);line-height:1.1;letter-spacing:-.01em}
-    .h2{font-size:clamp(1.6rem,2.8vw,2.3rem)} .lead{font-size:1.125rem;color:var(--muted)}
-    .grid{display:grid;gap:1.1rem} .grid-2{grid-template-columns:repeat(2,minmax(0,1fr))} .grid-3{grid-template-columns:repeat(3,minmax(0,1fr))}
+    .section{padding:3.5rem 0}
+    .h1{font-size:clamp(2rem,4.2vw,3.4rem);line-height:1.1;letter-spacing:-.01em}
+    .h2{font-size:clamp(1.6rem,2.8vw,2.3rem)}
+    .lead{font-size:1.125rem;color:var(--muted)}
+    .grid{display:grid;gap:1.1rem}
+    .grid-2{grid-template-columns:repeat(2,minmax(0,1fr))}
+    .grid-3{grid-template-columns:repeat(3,minmax(0,1fr))}
     @media (max-width:960px){.grid-2,.grid-3{grid-template-columns:1fr}}
     header{position:sticky;top:0;z-index:40;background:rgba(255,255,255,.9);backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
-    .nav{display:flex;align-items:center;height:68px} .brand{display:flex;align-items:center;gap:.6rem;font-weight:900}
+    .nav{display:flex;align-items:center;height:68px}
+    .brand{display:flex;align-items:center;gap:.6rem;font-weight:900}
     .logo{width:36px;height:36px;border-radius:12px;background:var(--grad-1)}
     .nav-links{margin-left:auto;display:flex;align-items:center;gap:.35rem}
     .nav-links a{padding:.55rem .85rem;border-radius:12px;font-weight:700;color:#334155}
-    .nav-links a.active,.nav-links a:hover{color:var(--sky)}
+    .nav-links a:hover{color:var(--sky)}
     .burger{display:none;border:none;background:transparent}
     @media (max-width:900px){.nav-links{display:none}.burger{display:block}.mobile{border-top:1px solid var(--line);background:#fff}.mobile a{display:block;padding:12px 20px;font-weight:700;color:#334155}.mobile .cta{margin:12px 20px 16px}}
-    .chips{display:flex;flex-wrap:wrap;gap:.5rem;margin-top:.75rem} .chip{background:#eef2ff;color:#4f46e5;border:1px solid #e5e7eb;padding:.35rem .7rem;border-radius:999px;font-weight:700;font-size:.9rem}
+    .chips{display:flex;flex-wrap:wrap;gap:.5rem;margin-top:.75rem}
+    .chip{background:#eef2ff;color:#4f46e5;border:1px solid #e5e7eb;padding:.35rem .7rem;border-radius:999px;font-weight:700;font-size:.9rem}
     .hero-blob{position:absolute;inset:-60px -60px auto auto;width:380px;height:380px;border-radius:50%;background:var(--grad-2);filter:blur(40px);opacity:.35;z-index:-1}
     .colored{background:#fff;border-radius:var(--radius-lg);border:1px solid var(--line);padding:20px}
-    footer{background:#0b1220;color:#cbd5e1} footer a{color:#a3d3ff}
+    footer{background:#0b1220;color:#cbd5e1}
+    footer a{color:#a3d3ff}
+    section[id]{scroll-margin-top:80px} /* offset for sticky header */
+    .sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
   </style>
 
   <!-- JSON-LD Organization schema -->
   <script type="application/ld+json">
   {
-    "@context": "https://schema.org",
-    "@type": "Organization",
-    "name": "Kosconn",
-    "url": "https://www.kosconn.com/",
-    "logo": "https://www.kosconn.com/assets/logo.png",
-    "sameAs": ["https://github.com/kosconn"],
-    "contactPoint": [{"@type": "ContactPoint","email": "hello@kosconn.com","contactType": "customer support","areaServed": "EU","availableLanguage": ["en","sv"]}]
+    "@context":"https://schema.org",
+    "@type":"Organization",
+    "name":"Kosconn",
+    "url":"https://www.kosconn.com/",
+    "logo":"https://www.kosconn.com/assets/logo.png",
+    "sameAs":["https://github.com/kosconn"],
+    "contactPoint":[{
+      "@type":"ContactPoint",
+      "email":"hello@kosconn.com",
+      "contactType":"customer support",
+      "areaServed":"EU",
+      "availableLanguage":["en","sv"]
+    }]
   }
   </script>
 </head>
 <body>
-  <!-- ===== NAV (links now go to real pages) ===== -->
+  <!-- Header / Nav -->
   <header>
     <div class="container nav">
-      <a class="brand" href="/" aria-label="Kosconn home"><div class="logo" aria-hidden="true"></div> Kosconn</a>
+      <a class="brand" href="#home" aria-label="Kosconn home"><div class="logo" aria-hidden="true"></div> Kosconn</a>
       <nav class="nav-links" aria-label="Main">
-        <a href="/" class="active">HOME</a>
-        <a href="/services.html">SERVICES</a>
-        <a href="/about.html">WHO WE ARE</a>
-        <a href="/contact.html">CONTACT</a>
-        <a href="/contact.html" class="btn gradient">Start a project</a>
+        <a href="#home">HOME</a>
+        <a href="#services">SERVICES</a>
+        <a href="#how">HOW WE WORK</a>
+        <a href="#resources">RESOURCES</a>
+        <a href="#about">WHO WE ARE</a>
+        <a href="#contact">CONTACT</a>
+        <a href="#contact" class="btn gradient">Start a project</a>
       </nav>
       <button id="burger" class="burger" aria-label="Open menu" aria-expanded="false" aria-controls="mobile">
         <svg width="28" height="28" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h16" stroke="#0b1220" stroke-width="2" stroke-linecap="round"/></svg>
       </button>
     </div>
-    <div id="mobile" class="mobile" hidden>
-      <a href="/">Home</a>
-      <a href="/services.html">Services</a>
-      <a href="/about.html">Who we are</a>
-      <a href="/contact.html">Contact</a>
-      <div class="cta"><a href="/contact.html" class="btn gradient">Start a project</a></div>
+    <div id="mobile" class="mobile" hidden role="dialog" aria-label="Mobile menu">
+      <a href="#home">Home</a>
+      <a href="#services">Services</a>
+      <a href="#how">How we work</a>
+      <a href="#resources">Resources</a>
+      <a href="#about">Who we are</a>
+      <a href="#contact">Contact</a>
+      <div class="cta"><a href="#contact" class="btn gradient">Start a project</a></div>
     </div>
   </header>
 
-  <!-- ===== HOMEPAGE CONTENT ONLY ===== -->
   <main>
-    <section class="section" style="position:relative">
+    <!-- HOME -->
+    <section id="home" class="section" style="position:relative">
       <div class="container">
         <div class="hero-blob" aria-hidden="true"></div>
         <div class="grid grid-2" style="align-items:center; gap:2rem">
           <div>
             <div class="badge violet">Nearshore to EU member states</div>
-            <h1 class="h1" style="margin:.6rem 0 1rem">Outsource to a <span style="background:var(--grad-1); -webkit-background-clip:text; background-clip:text; color:transparent">high‑performing team</span> that ships clean code and reliable networks.</h1>
+            <h1 class="h1" style="margin:.6rem 0 1rem">Outsource to a
+              <span style="background:var(--grad-1); -webkit-background-clip:text; background-clip:text; color:transparent">high-performing team</span>
+              that ships clean code and reliable networks.</h1>
             <p class="lead">Same timezone, English communication, weekly demos and measurable outcomes. We’re your pragmatic partner for building and running digital products.</p>
             <div class="chips">
               <div class="chip">Transparent pricing</div>
               <div class="chip">Weekly demos</div>
               <div class="chip">Outcome KPIs</div>
-              <div class="chip">Security‑first</div>
+              <div class="chip">Security-first</div>
             </div>
             <div style="margin-top:1.1rem; display:flex; gap:.6rem; flex-wrap:wrap">
-              <a href="/contact.html" class="btn gradient">Start a project</a>
-              <a href="/services.html" class="btn primary">See our services</a>
+              <a href="#contact" class="btn gradient">Start a project</a>
+              <a href="#how" class="btn primary">See our process</a>
             </div>
           </div>
           <div class="colored">
@@ -115,16 +149,17 @@
             <div style="height:.6rem"></div>
             <div class="grid">
               <div><strong>Faster delivery</strong><div class="lead" style="font-size:1rem">Small senior team focused on impact. We cut queue time and ship weekly.</div></div>
-              <div><strong>Lower total cost</strong><div class="lead" style="font-size:1rem">Near‑shore rates with zero overhead on office, pension or equipment.</div></div>
+              <div><strong>Lower total cost</strong><div class="lead" style="font-size:1rem">Near-shore rates with zero overhead on office, pension or equipment.</div></div>
               <div><strong>Clear ownership</strong><div class="lead" style="font-size:1rem">We set goals, define KPIs and own the outcome — not only the tasks.</div></div>
-              <div><strong>Seamless collaboration</strong><div class="lead" style="font-size:1rem">We integrate into your tools and document everything.</div></div>
-              <div><strong>Risk‑managed</strong><div class="lead" style="font-size:1rem">Security practices, backups and runbooks — no black boxes.</div></div>
+              <div><strong>Seamless collaboration</strong><div class="lead" style="font-size:1rem">We integrate into your tools (Jira, Teams, Git) and document everything.</div></div>
+              <div><strong>Risk-managed</strong><div class="lead" style="font-size:1rem">Security practices, backups and runbooks — no black boxes.</div></div>
             </div>
           </div>
         </div>
       </div>
     </section>
 
+    <!-- QUICK PILLARS -->
     <section class="section">
       <div class="container">
         <div class="grid grid-3">
@@ -146,26 +181,153 @@
         </div>
       </div>
     </section>
+
+    <!-- SERVICES -->
+    <section id="services" class="section">
+      <div class="container">
+        <h2 class="h2" style="margin-bottom:1rem">Services</h2>
+        <div class="grid grid-3">
+          <div class="card" style="padding:18px; border-top:4px solid var(--green)">
+            <div class="h2">Coding & Product</div>
+            <ul class="lead" style="margin:.6rem 0 0; padding-left:1rem; font-size:1rem">
+              <li>Web apps, portals and internal tools</li>
+              <li>APIs, data integrations, automation</li>
+              <li>UX flows, rapid prototyping, design systems</li>
+              <li>Testing, CI/CD, documentation and support</li>
+            </ul>
+          </div>
+          <div class="card" style="padding:18px; border-top:4px solid var(--sky)">
+            <div class="h2">Network as a Foundation</div>
+            <p class="lead">Performance, resilience and observability. We craft networks that prevent downtime, isolate faults quickly and scale with your business.</p>
+            <ul style="margin:.6rem 0 0; padding-left:1rem">
+              <li>Segmentation, QoS and Wi-Fi planning</li>
+              <li>Monitoring, logging and alerting that matter</li>
+              <li>Security by design & clear runbooks</li>
+            </ul>
+          </div>
+          <div class="card" style="padding:18px; border-top:4px solid var(--violet)">
+            <div class="h2">Cloud & FinOps</div>
+            <ul class="lead" style="margin:.6rem 0 0; padding-left:1rem; font-size:1rem">
+              <li>Landing zones & guardrails</li>
+              <li>Scalable pipelines & infrastructure automation</li>
+              <li>Cost visibility and optimizations</li>
+              <li>Backup, recovery and incident readiness</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- HOW WE WORK -->
+    <section id="how" class="section">
+      <div class="container">
+        <h2 class="h2" style="margin-bottom:1rem">How we work</h2>
+        <div class="card" style="padding:18px">
+          <div style="display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:.6rem">
+            <div class="colored" style="padding:.6rem .8rem"><strong>1</strong> Initial contact</div>
+            <div class="colored" style="padding:.6rem .8rem"><strong>2</strong> Discovery & requirements</div>
+            <div class="colored" style="padding:.6rem .8rem"><strong>3</strong> Analysis & design</div>
+            <div class="colored" style="padding:.6rem .8rem"><strong>4</strong> Build & transition</div>
+            <div class="colored" style="padding:.6rem .8rem"><strong>5</strong> Operate & support</div>
+            <div class="colored" style="padding:.6rem .8rem"><strong>6</strong> Review & improve</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- RESOURCES -->
+    <section id="resources" class="section">
+      <div class="container">
+        <h2 class="h2" style="margin-bottom:1rem">Resources</h2>
+        <p class="lead">Short, practical notes that match our delivery process.</p>
+        <div class="grid grid-3" style="margin-top:1rem">
+          <div class="card" style="padding:16px"><span class="badge sky">Discovery</span><div class="h2" style="font-size:1.1rem; margin:.4rem 0"><strong>Stakeholder & KPI template</strong></div><div class="muted">Capture goals, users and measurable outcomes fast.</div></div>
+          <div class="card" style="padding:16px"><span class="badge violet">Design</span><div class="h2" style="font-size:1.1rem; margin:.4rem 0"><strong>Architecture decision record (ADR)</strong></div><div class="muted">A lightweight format to keep decisions explicit.</div></div>
+          <div class="card" style="padding:16px"><span class="badge green">Build</span><div class="h2" style="font-size:1.1rem; margin:.4rem 0"><strong>Definition of Done</strong></div><div class="muted">Checks for code, tests, docs and security.</div></div>
+          <div class="card" style="padding:16px"><span class="badge pink">Operate</span><div class="h2" style="font-size:1.1rem; margin:.4rem 0"><strong>Runbook & On-call basics</strong></div><div class="muted">How we respond, escalate and communicate.</div></div>
+          <div class="card" style="padding:16px"><span class="badge amber">Improve</span><div class="h2" style="font-size:1.1rem; margin:.4rem 0"><strong>Quarterly review pack</strong></div><div class="muted">KPI trends, costs and next-step proposals.</div></div>
+          <div class="card" style="padding:16px"><span class="badge sky">Costs</span><div class="h2" style="font-size:1.1rem; margin:.4rem 0"><strong>FinOps quick wins</strong></div><div class="muted">Rightsizing, schedules and storage tiers that save money.</div></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- WHO WE ARE -->
+    <section id="about" class="section">
+      <div class="container">
+        <h2 class="h2" style="margin-bottom:1rem">Who we are</h2>
+        <div class="grid grid-2">
+          <div class="card" style="padding:18px">
+            <span class="badge violet">Kosovo advantage</span>
+            <p class="lead">Kosovo is one of Europe’s youngest countries — over half the population is under 30. A tech-savvy, English-speaking talent pool with strong work ethic and a culture of hospitality.</p>
+            <ul style="margin:.6rem 0 0; padding-left:1rem">
+              <li><strong>Youthful energy</strong> and quick learning in modern stacks.</li>
+              <li><strong>Time-zone alignment</strong> with EU member states for real-time collaboration.</li>
+              <li><strong>Cost efficiency</strong> without compromising on seniority.</li>
+              <li><strong>EU-oriented mindset</strong> and cultural proximity.</li>
+            </ul>
+          </div>
+          <div class="card" style="padding:18px">
+            <span class="badge green">How we organize</span>
+            <p class="lead">Small, senior squads led by a delivery manager. Clear ownership, documentation and regular reviews keep quality high and costs predictable.</p>
+            <ul style="margin:.6rem 0 0; padding-left:1rem">
+              <li>Weekly demos and transparent backlogs</li>
+              <li>Written design notes and runbooks</li>
+              <li>Capacity you can scale up or down</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CONTACT -->
+    <section id="contact" class="section">
+      <div class="container">
+        <h2 class="h2" style="margin-bottom:1rem">Start a project</h2>
+        <div class="card" style="padding:18px">
+          <form id="contactForm" class="grid grid-2" action="https://formspree.io/f/xpwlgvpz" method="POST">
+            <!-- Honeypot to block bots -->
+            <label class="sr-only" for="company2">Company2</label>
+            <input id="company2" name="company2" class="sr-only" tabindex="-1" autocomplete="off">
+
+            <label class="sr-only" for="name">Your name</label>
+            <input id="name" name="name" placeholder="Your name" aria-label="Your name" required style="padding:.85rem .9rem; border:1px solid var(--line); border-radius:12px">
+
+            <label class="sr-only" for="email">Email</label>
+            <input id="email" name="email" placeholder="Email" aria-label="Email" type="email" required style="padding:.85rem .9rem; border:1px solid var(--line); border-radius:12px">
+
+            <label class="sr-only" for="company">Company</label>
+            <input id="company" name="company" placeholder="Company" aria-label="Company" style="grid-column:1/-1; padding:.85rem .9rem; border:1px solid var(--line); border-radius:12px">
+
+            <label class="sr-only" for="message">Message</label>
+            <textarea id="message" name="message" rows="4" placeholder="What do you want to achieve?" aria-label="Message" required style="grid-column:1/-1; padding:.85rem .9rem; border:1px solid var(--line); border-radius:12px"></textarea>
+
+            <div><button class="btn gradient" type="submit">Send</button></div>
+            <p id="formStatus" class="lead" style="grid-column:1/-1; margin-top:10px; font-size:1rem; color:var(--muted)"></p>
+          </form>
+          <p class="lead" style="margin-top:10px">Prefer email? <a href="mailto:hello@kosconn.com">hello@kosconn.com</a></p>
+        </div>
+      </div>
+    </section>
   </main>
 
-  <!-- ===== FOOTER ===== -->
+  <!-- FOOTER -->
   <footer>
     <div class="container section" style="display:grid; gap:1.2rem; grid-template-columns:2fr 1fr 1fr 1fr">
       <div>
         <div style="display:flex; align-items:center; gap:.6rem; margin-bottom:.5rem"><div class="logo" aria-hidden="true"></div><strong>Kosconn</strong></div>
-        <div style="color:#93a4bf">Outsource smart: coding first, on a rock‑solid network and cloud.</div>
+        <div style="color:#93a4bf">Outsource smart: coding first, on a rock-solid network and cloud.</div>
       </div>
       <div>
         <div class="h2" style="font-size:1rem; margin-bottom:.4rem">Services</div>
-        <div style="color:#93a4bf"><a href="/services.html">Coding & Product</a></div>
-        <div style="color:#93a4bf"><a href="/services.html">Network Foundation</a></div>
-        <div style="color:#93a4bf"><a href="/services.html">Cloud & FinOps</a></div>
+        <div style="color:#93a4bf"><a href="#services">Coding & Product</a></div>
+        <div style="color:#93a4bf"><a href="#services">Network Foundation</a></div>
+        <div style="color:#93a4bf"><a href="#services">Cloud & FinOps</a></div>
       </div>
       <div>
         <div class="h2" style="font-size:1rem; margin-bottom:.4rem">Company</div>
-        <div style="color:#93a4bf"><a href="/about.html">Who we are</a></div>
-        <div style="color:#93a4bf"><a href="/how-we-work.html">How we work</a></div>
-        <div style="color:#93a4bf"><a href="/resources.html">Resources</a></div>
+        <div style="color:#93a4bf"><a href="#about">Who we are</a></div>
+        <div style="color:#93a4bf"><a href="#how">How we work</a></div>
+        <div style="color:#93a4bf"><a href="#resources">Resources</a></div>
       </div>
       <div>
         <div class="h2" style="font-size:1rem; margin-bottom:.4rem">Contact</div>
@@ -177,7 +339,7 @@
   </footer>
 
   <script>
-    // Mobile menu toggle + footer year
+    // Mobile menu + year
     const burger = document.getElementById('burger');
     const mobile = document.getElementById('mobile');
     burger?.addEventListener('click', () => {
@@ -186,7 +348,23 @@
       burger.setAttribute('aria-expanded', hidden ? 'true' : 'false');
     });
     document.getElementById('year').textContent = new Date().getFullYear();
-    // (No SPA routing anymore)
+
+    // Formspree AJAX (replace action URL above with your real endpoint)
+    const form = document.getElementById('contactForm');
+    const statusEl = document.getElementById('formStatus');
+    if (form) {
+      form.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        if (form.company2 && form.company2.value) return; // bot honeypot
+        statusEl.textContent = 'Sending…';
+        try {
+          const data = new FormData(form);
+          const res = await fetch(form.action, { method: 'POST', body: data, headers: { 'Accept':'application/json' }});
+          if (res.ok) { statusEl.textContent = 'Thanks! We will get back to you shortly.'; form.reset(); }
+          else { statusEl.textContent = 'Something went wrong. Email hello@kosconn.com.'; }
+        } catch { statusEl.textContent = 'Network error. Please email hello@kosconn.com.'; }
+      });
+    }
   </script>
 </body>
 </html>
