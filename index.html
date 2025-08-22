@@ -24,6 +24,7 @@
     font-family:ui-sans-serif,system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial;
     background:var(--bg);color:var(--ink);line-height:1.55;-webkit-font-smoothing:antialiased;
     padding-top:68px; /* space for fixed header on inner pages */
+    min-height:100vh; display:flex; flex-direction:column; /* sticky footer layout */
   }
   body.is-home{ padding-top:0; } /* no offset on Home (hero sits under header) */
 
@@ -69,6 +70,7 @@
   footer{background:#0b1220;color:#cbd5e1}
   footer a{color:#a3d3ff}
   @media (max-width:600px){.section{padding:2rem 0}.h1{font-size:clamp(1.6rem,7vw,2.2rem)}.nav{height:60px}}
+  main{ flex:1; } /* content grows; footer stays at bottom */
 
   /* ===== Color accents (kept for home if needed) ===== */
   .text-gradient{
@@ -164,27 +166,50 @@
     border-top: 1px solid var(--line) !important;
   }
 
-  /* ===== Sticky footer layout ===== */
-  body{ min-height:100vh; display:flex; flex-direction:column; }
-  main{ flex:1; } /* page content grows; footer stays at bottom */
+  /* ===== Services page: force 3-across row & tidy content ===== */
+  .svc .cards-flat{
+    display: grid;
+    grid-template-columns: repeat(3, minmax(320px, 1fr));
+    gap: 24px;
+    align-items: stretch;
+  }
+  @media (max-width: 1200px){
+    .svc .cards-flat{ grid-template-columns: repeat(2, minmax(280px, 1fr)); }
+  }
+  @media (max-width: 740px){
+    .svc .cards-flat{ grid-template-columns: 1fr; }
+  }
 
-  /* ===== Services page: square, modern cards (no accent bars) ===== */
   .svc .cards-flat .card{
     border-radius:0;
     border-top:none;
     padding:22px 24px;
     box-shadow:0 6px 22px rgba(2,6,23,.06);
   }
+
+  /* make each card a column: keeps stack pinned to bottom */
+  .svc .service-card{
+    display:flex;
+    flex-direction:column;
+  }
   .svc .service-card h2{ margin:.25rem 0 .35rem; }
   .svc .service-card p.lead{ margin:0 0 .8rem; color:var(--muted); }
-  .svc .svc-columns{
-    display:grid; gap:12px 28px;
-    grid-template-columns:repeat(2,minmax(0,1fr));
+
+  /* flatten Outcomes/Deliverables to a single column for readability */
+  .svc .svc-columns{ display:block; }
+  .svc .service-card ul{ padding-left:1.1rem; margin:.3rem 0 .6rem; }
+  .svc .service-card li{ margin:.22rem 0; line-height:1.45; }
+
+  /* tech stack row anchored to bottom */
+  .svc .stack{
+    margin-top:auto;
+    border-top:1px dashed var(--line);
+    padding-top:.75rem;
+    font-size:.95rem;
+    color:#64748b;
   }
-  @media (max-width: 960px){
-    .svc .svc-columns{ grid-template-columns:1fr; }
-  }
-  .svc .stack{ margin-top:.75rem; font-size:.95rem; color:#64748b }
+
+  /* Optional: soft callout */
   .svc .callout{
     border-radius:0;
     border-left:3px solid #2e90fa;
