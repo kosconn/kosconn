@@ -87,8 +87,8 @@
     /* Hero copy wrapper (replaces unused grid) */
     .hero-copy{ max-width: 820px; }
 
-    /* Moved features card below hero */
-    .features-wrap{ max-width: 920px; margin: 0 auto; }
+    /* Center the section and let the card use the full container width */
+    .features-wrap{ max-width: var(--maxw); margin: 0 auto; }
     .section.compact{ padding: 2rem 0; } /* default is 3rem */
 
     /* More gap between the 3 service cards */
@@ -97,18 +97,29 @@
       .grid-3{ gap: 1rem; }
     }
 
-    /* Glass card + KPI list (used below hero) */
-    .glass-card{
-      max-width: 520px;
-      padding: 18px 22px;
-      border-radius: 16px;
-      background: rgba(255,255,255,.18);
-      border: 1px solid rgba(255,255,255,.35);
-      backdrop-filter: blur(10px) saturate(120%);
-      box-shadow: 0 10px 30px rgba(2,6,23,.15);
-    }
+    /* Full-width glass card (stretched, symmetric) */
+  .glass-card{
+  width: 100%;
+  max-width: none;                 /* was 520px */
+  padding: 22px 28px;              /* a bit more breathing room */
+  border-radius: 16px;
+  background: rgba(255,255,255,.18);
+  border: 1px solid rgba(255,255,255,.35);
+  backdrop-filter: blur(10px) saturate(120%);
+  box-shadow: 0 10px 30px rgba(2,6,23,.15);
+}
     /* Fresh KPI card content */
-.kpis.modern{ display:grid; gap:16px; margin:0; padding:0; list-style:none; }
+.kpis.modern{
+  display: grid;
+  gap: 18px 28px;                     /* row / column gap */
+  grid-template-columns: repeat(2, minmax(0,1fr));
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+@media (max-width: 900px){
+  .kpis.modern{ grid-template-columns: 1fr; }
+}
 
 .kpi2{
   display:grid;
