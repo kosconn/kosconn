@@ -47,11 +47,10 @@
   /* ===== Header ===== */
   header{
     position:fixed; top:0; left:0; right:0; z-index:40;
-    background:rgba(255,255,255,.9);           /* default on inner pages */
+    background:rgba(255,255,255,.9);
     backdrop-filter:blur(8px);
     border-bottom:1px solid var(--line);
   }
-  /* Transparent on Home */
   body.is-home header{ background:transparent; border-bottom:0; backdrop-filter:none; }
 
   .nav{display:flex;align-items:center;gap:1rem;height:68px}
@@ -60,19 +59,16 @@
   .nav-links{margin-left:auto;display:flex;flex-wrap:wrap;gap:.35rem}
   .nav-links a{padding:.5rem .8rem;border-radius:10px;font-weight:700;color:#334155}
   .nav-links a.active,.nav-links a:hover{color:#2e90fa}
-  /* Readable links on transparent Home header */
   body.is-home .brand{ color:#fff; text-shadow:0 1px 2px rgba(0,0,0,.35); }
   body.is-home .nav-links a{ color:#f8fafc; text-shadow:0 1px 2px rgba(0,0,0,.35); }
-  body.is-home .nav-links a:hover, body.is-home .nav-links a.active{
-    color:#ffffff; background:rgba(255,255,255,.08);
-  }
+  body.is-home .nav-links a:hover, body.is-home .nav-links a.active{ color:#ffffff; background:rgba(255,255,255,.08); }
 
   footer{background:#0b1220;color:#cbd5e1}
   footer a{color:#a3d3ff}
-  @media (max-width:600px){.section{padding:2rem 0}.h1{font-size:clamp(1.6rem,7vw,2.2rem)}.nav{height:60px}}
-  main{ flex:1; } /* content grows; footer stays at bottom */
 
-  /* ===== Color accents (kept for home if needed) ===== */
+  @media (max-width:600px){.section{padding:2rem 0}.h1{font-size:clamp(1.6rem,7vw,2.2rem)}.nav{height:60px}}
+
+  /* ===== Color accents for home (optional) ===== */
   .text-gradient{
     background: linear-gradient(135deg,#2e90fa 0%,#8256ff 55%,#f43f5e 100%);
     -webkit-background-clip:text; background-clip:text; color:transparent;
@@ -89,13 +85,7 @@
     position:relative;
     padding: clamp(3rem, 7vw, 6rem) 0;
     background:
-      linear-gradient(
-        90deg,
-        rgba(255,255,255,.42) 0%,
-        rgba(255,255,255,.22) 34%,
-        rgba(255,255,255,.08) 62%,
-        rgba(255,255,255,0) 100%
-      ),
+      linear-gradient(90deg, rgba(255,255,255,.42) 0%, rgba(255,255,255,.22) 34%, rgba(255,255,255,.08) 62%, rgba(255,255,255,0) 100%),
       url('/assets/hero.jpg');
     background-size: cover;
     background-position: center right;
@@ -104,27 +94,23 @@
   }
   body.is-home .hero{ min-height: clamp(520px, 72vh, 860px); }
   .hero::before{ content:none; }
-
   .hero .container{ position: relative; z-index: 1; }
   .hero-copy{ max-width: 820px; }
-
   @media (max-width: 700px){
     .hero{
       background:
-        linear-gradient(180deg, rgba(255,255,255,.95) 0%, rgba(255,255,255,.75) 45%,
-                               rgba(255,255,255,.30) 70%, rgba(255,255,255,0) 100%),
+        linear-gradient(180deg, rgba(255,255,255,.95) 0%, rgba(255,255,255,.75) 45%, rgba(255,255,255,.30) 70%, rgba(255,255,255,0) 100%),
         url('/assets/hero.jpg');
       background-position: center top;
       min-height: 420px;
     }
   }
 
-  /* ===== Home: value band and square cards ===== */
+  /* ===== Home square cards ===== */
   .features-wrap{ max-width: var(--maxw); margin: 0 auto; }
   .section.compact{ padding: 2rem 0; }
   .grid-3{ gap: 1.25rem; }
   @media (max-width: 960px){ .grid-3{ gap: 1rem; } }
-
   .glass-card{
     width: 100%;
     max-width: none;
@@ -135,12 +121,9 @@
     backdrop-filter: blur(10px) saturate(120%);
     box-shadow: 0 10px 30px rgba(2,6,23,.15);
   }
-  .kpis.modern{
-    display: grid;
-    gap: 18px 28px;
-    grid-template-columns: repeat(2, minmax(0,1fr));
-    margin: 0; padding: 0; list-style: none;
-  }
+
+  /* KPI dots */
+  .kpis.modern{ display:grid; gap:18px 28px; grid-template-columns:repeat(2,minmax(0,1fr)); margin:0; padding:0; list-style:none; }
   @media (max-width: 900px){ .kpis.modern{ grid-template-columns: 1fr; } }
   .kpi2{ display:grid; grid-template-columns:14px 1fr; column-gap:12px; align-items:start; }
   .kpi2 .dot{ width:10px; height:10px; border-radius:999px; margin-top:.55rem; box-shadow:0 0 0 3px rgba(255,255,255,.35), 0 6px 18px rgba(2,6,23,.18); }
@@ -152,64 +135,56 @@
   .kpi2-desc{  margin:.25rem 0 0; color:#475569; line-height:1.55; }
   .kpi2-sub{   margin:.35rem 0 0 .85rem; padding:0 0 0 .6rem; color:#64748b; }
   .kpi2-sub li{ margin:.15rem 0; }
+
   .value-prop h2{ font-size: clamp(1.6rem, 3vw, 2.2rem); line-height: 1.25; margin: .5rem 0 .75rem; font-weight: 800; }
   .value-prop p{ color: var(--muted); max-width: 70ch; }
 
-  .flat-cards .card{
-    border-radius: 0;
-    border-top: 1px solid var(--line);
-    box-shadow: var(--shadow);
-  }
+  .flat-cards .card{ border-radius: 0; border-top: 1px solid var(--line); box-shadow: var(--shadow); }
   .flat-cards .card.accent-core,
   .flat-cards .card.accent-foundation,
-  .flat-cards .card.accent-platform{
-    border-top: 1px solid var(--line) !important;
-  }
+  .flat-cards .card.accent-platform{ border-top: 1px solid var(--line) !important; }
 
-  /* ===== Services page: force 3-across row & tidy content ===== */
-  .svc .cards-flat{
-    display: grid;
-    grid-template-columns: repeat(3, minmax(320px, 1fr));
-    gap: 24px;
-    align-items: stretch;
-  }
-  @media (max-width: 1200px){
-    .svc .cards-flat{ grid-template-columns: repeat(2, minmax(280px, 1fr)); }
-  }
-  @media (max-width: 740px){
-    .svc .cards-flat{ grid-template-columns: 1fr; }
-  }
+  /* ===== Services page ===== */
+  main{ flex:1; } /* footer stays at bottom */
 
   .svc .cards-flat .card{
     border-radius:0;
     border-top:none;
-    padding:22px 24px;
+    padding:24px 24px 18px;
     box-shadow:0 6px 22px rgba(2,6,23,.06);
   }
 
-  /* make each card a column: keeps stack pinned to bottom */
-  .svc .service-card{
+  /* Make each service card a flex column so stacks align */
+  .svc .service-card{ display:flex; flex-direction:column; }
+  .svc .service-card h2{ margin:.35rem 0 .35rem; }
+  .svc .service-card p.lead{ margin:0 0 1rem; color:var(--muted); }
+
+  /* >>> KEY CHANGE: vertical flow inside each card (no side-by-side columns) */
+  .svc .svc-columns{
     display:flex;
     flex-direction:column;
+    gap:16px;
   }
-  .svc .service-card h2{ margin:.25rem 0 .35rem; }
-  .svc .service-card p.lead{ margin:0 0 .8rem; color:var(--muted); }
+  .svc .svc-columns h3{
+    font-size:1rem;
+    margin:.25rem 0 .25rem;
+    letter-spacing:.01em;
+  }
+  .svc .svc-columns ul{
+    margin:.25rem 0 .5rem;
+    padding-left:1.1rem;
+  }
+  .svc .svc-columns li{ margin:.35rem 0; }
 
-  /* flatten Outcomes/Deliverables to a single column for readability */
-  .svc .svc-columns{ display:block; }
-  .svc .service-card ul{ padding-left:1.1rem; margin:.3rem 0 .6rem; }
-  .svc .service-card li{ margin:.22rem 0; line-height:1.45; }
-
-  /* tech stack row anchored to bottom */
+  /* Pin stack line to bottom so card heights line up nicely */
   .svc .stack{
     margin-top:auto;
-    border-top:1px dashed var(--line);
     padding-top:.75rem;
+    border-top:1px solid var(--line);
     font-size:.95rem;
-    color:#64748b;
+    color:#64748b
   }
 
-  /* Optional: soft callout */
   .svc .callout{
     border-radius:0;
     border-left:3px solid #2e90fa;
@@ -275,7 +250,6 @@
       </div>
     </section>
 
-    <!-- Value proposition band -->
     <section class="section value-prop">
       <div class="container">
         <h2>Get more from your IT budget with a near-shore team that ships software on a reliable network and cloud.</h2>
@@ -286,7 +260,6 @@
       </div>
     </section>
 
-    <!-- Home cards: square, no colored stripes -->
     <section class="section flat-cards">
       <div class="container">
         <div class="grid grid-3">
@@ -310,7 +283,7 @@
     </section>
   </template>
 
-  <!-- ===== Services (updated) ===== -->
+  <!-- ===== Services (updated layout: vertical content inside cards) ===== -->
   <template id="page-services">
     <section class="section">
       <div class="container">
@@ -335,7 +308,7 @@
 
             <div class="svc-columns">
               <div>
-                <h3 class="h2" style="font-size:1.05rem;margin:.2rem 0 .4rem">Outcomes</h3>
+                <h3>Outcomes</h3>
                 <ul>
                   <li>Predictable roadmap; visible backlog with priorities.</li>
                   <li>Stable builds with automated tests and CI/CD.</li>
@@ -345,7 +318,7 @@
                 </ul>
               </div>
               <div>
-                <h3 class="h2" style="font-size:1.05rem;margin:.2rem 0 .4rem">Deliverables</h3>
+                <h3>Deliverables</h3>
                 <ul>
                   <li>Sprint plan, demo notes, and risk register weekly.</li>
                   <li>ADR &amp; architecture notes for key decisions.</li>
@@ -370,7 +343,7 @@
 
             <div class="svc-columns">
               <div>
-                <h3 class="h2" style="font-size:1.05rem;margin:.2rem 0 .4rem">Outcomes</h3>
+                <h3>Outcomes</h3>
                 <ul>
                   <li>Segmentation, QoS and Wi-Fi planning that scales.</li>
                   <li>Central monitoring, logs and actionable alerts.</li>
@@ -380,7 +353,7 @@
                 </ul>
               </div>
               <div>
-                <h3 class="h2" style="font-size:1.05rem;margin:.2rem 0 .4rem">Deliverables</h3>
+                <h3>Deliverables</h3>
                 <ul>
                   <li>Network baseline + diagrams + IP strategy.</li>
                   <li>Device inventory (source-of-truth) and ZTP setup.</li>
@@ -405,7 +378,7 @@
 
             <div class="svc-columns">
               <div>
-                <h3 class="h2" style="font-size:1.05rem;margin:.2rem 0 .4rem">Outcomes</h3>
+                <h3>Outcomes</h3>
                 <ul>
                   <li>Secure landing zone with identity, policy and logging.</li>
                   <li>Pipelines for infra + app deploys (repeatable IaC).</li>
@@ -415,7 +388,7 @@
                 </ul>
               </div>
               <div>
-                <h3 class="h2" style="font-size:1.05rem;margin:.2rem 0 .4rem">Deliverables</h3>
+                <h3>Deliverables</h3>
                 <ul>
                   <li>Terraform modules and environments (dev/test/prod).</li>
                   <li>GitHub Actions pipelines with policy checks.</li>
@@ -433,7 +406,6 @@
           </article>
         </div>
 
-        <!-- Why outsource (callout) -->
         <div class="cards-flat" style="margin-top:1.25rem">
           <article class="card callout">
             <h3 class="h2" style="margin:.2rem 0 .4rem">Why outsource these with Kosconn?</h3>
