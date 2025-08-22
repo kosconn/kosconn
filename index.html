@@ -4,68 +4,90 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Kosconn — Outsource smart: Coding, Networks, Cloud</title>
-
   <meta name="description" content="Kosconn helps EU companies ship clean code on reliable networks and cloud. Nearshore squads, weekly demos, measurable outcomes.">
   <link rel="canonical" href="https://www.kosconn.com/">
-
-  <!-- (Optional) icons if you have them in /assets -->
+  <!-- Optional icons if you have them -->
   <link rel="icon" href="/assets/favicon.ico">
   <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
   <link rel="manifest" href="/assets/site.webmanifest">
 
   <style>
-   /* ===== Colorful theme + full-bleed hero ===== */
+    /* ===== Base theme (keep all of this) ===== */
+    :root{
+      --ink:#0b1220; --muted:#475569; --bg:#f6f9ff; --panel:#fff; --line:#e6ebf5;
+      --sky:#2e90fa; --violet:#8256ff; --green:#12b76a; --shadow:0 8px 30px rgba(2,6,23,.08);
+      --maxw:1180px;
+    }
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    body{margin:0;font-family:ui-sans-serif,system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial;
+         background:var(--bg);color:var(--ink);line-height:1.55;-webkit-font-smoothing:antialiased}
+    a{color:var(--sky);text-decoration:none} a:hover{opacity:.9}
+    .container{max-width:var(--maxw);margin:0 auto;padding:0 20px}
+    .section{padding:3rem 0}
+    .h1{font-size:clamp(2rem,4.2vw,3.2rem);line-height:1.1}
+    .h2{font-size:clamp(1.5rem,3vw,2rem)}
+    .lead{color:var(--muted)}
+    .grid{display:grid;gap:1rem}
+    .grid-2{grid-template-columns:repeat(2,minmax(0,1fr))}
+    .grid-3{grid-template-columns:repeat(3,minmax(0,1fr))}
+    @media (max-width:960px){.grid-2,.grid-3{grid-template-columns:1fr}}
+    .card{background:var(--panel);border:1px solid var(--line);border-radius:16px;
+          box-shadow:0 1px 1px rgba(2,8,23,.03);padding:18px}
+    .badge{display:inline-block;font-size:.75rem;font-weight:700;padding:.25rem .6rem;border-radius:999px;background:#eef2ff;color:#4f46e5}
+    .btn{display:inline-flex;align-items:center;gap:.5rem;padding:.75rem 1rem;border-radius:999px;font-weight:700;border:1px solid var(--line);background:#fff}
+    .btn.primary{background:#0b1220;color:#fff;border-color:transparent}
+    header{position:sticky;top:0;z-index:40;background:rgba(255,255,255,.9);backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
+    .nav{display:flex;align-items:center;gap:1rem;height:68px}
+    .brand{display:flex;align-items:center;gap:.6rem;font-weight:900}
+    .logo{width:32px;height:32px;border-radius:10px;background:linear-gradient(135deg,#2e90fa,#8256ff)}
+    .nav-links{margin-left:auto;display:flex;flex-wrap:wrap;gap:.35rem}
+    .nav-links a{padding:.5rem .8rem;border-radius:10px;font-weight:700;color:#334155}
+    .nav-links a.active,.nav-links a:hover{color:#2e90fa}
+    footer{background:#0b1220;color:#cbd5e1}
+    footer a{color:#a3d3ff}
+    @media (max-width:600px){.section{padding:2rem 0}.h1{font-size:clamp(1.6rem,7vw,2.2rem)}.nav{height:60px}}
 
-/* Gradient text */
-.text-gradient{
-  background: linear-gradient(135deg,#2e90fa 0%,#8256ff 55%,#f43f5e 100%);
-  -webkit-background-clip:text; background-clip:text; color:transparent;
-}
+    /* ===== Colorful theme + full-bleed hero ===== */
+    .text-gradient{
+      background: linear-gradient(135deg,#2e90fa 0%,#8256ff 55%,#f43f5e 100%);
+      -webkit-background-clip:text; background-clip:text; color:transparent;
+    }
+    .badge.core{ background:#e8fff3; color:#0f9d5c; }
+    .badge.foundation{ background:#e7f1ff; color:#1b74e4; }
+    .badge.platform{ background:#efe9ff; color:#6e38ff; }
+    .card.accent-core{ border-top:4px solid #12b76a; }
+    .card.accent-foundation{ border-top:4px solid #2e90fa; }
+    .card.accent-platform{ border-top:4px solid #8256ff; }
 
-/* Colored badges */
-.badge.core{ background:#e8fff3; color:#0f9d5c; }
-.badge.foundation{ background:#e7f1ff; color:#1b74e4; }
-.badge.platform{ background:#efe9ff; color:#6e38ff; }
-
-/* Card accents */
-.card.accent-core{ border-top:4px solid #12b76a; }
-.card.accent-foundation{ border-top:4px solid #2e90fa; }
-.card.accent-platform{ border-top:4px solid #8256ff; }
-
-/* Full-width hero with cover image */
-.hero{
-  position:relative;
-  padding: clamp(3rem, 7vw, 6rem) 0;
-  background:
-    linear-gradient(90deg, rgba(255,255,255,.92) 0%, rgba(255,255,255,.75) 38%,
-                           rgba(255,255,255,.35) 62%, rgba(255,255,255,0) 100%),
-    url('/assets/hero.jpg');
-  background-size: cover;
-  background-position: center right;
-  background-repeat: no-repeat;
-  min-height: 520px; /* feel free to tweak */
-}
-.hero .container{ position: relative; z-index: 1; }
-
-/* Hide old blob in hero */
-.hero-blob{ display:none; }
-
-/* Mobile */
-@media (max-width: 700px){
-  .hero{
-    background:
-      linear-gradient(180deg, rgba(255,255,255,.95) 0%, rgba(255,255,255,.75) 45%,
-                             rgba(255,255,255,.30) 70%, rgba(255,255,255,0) 100%),
-      url('/assets/hero.jpg');
-    background-position: center top;
-    min-height: 420px;
-  }
-}
-
+    .hero{
+      position:relative;
+      padding: clamp(3rem, 7vw, 6rem) 0;
+      background:
+        linear-gradient(90deg, rgba(255,255,255,.92) 0%, rgba(255,255,255,.75) 38%,
+                               rgba(255,255,255,.35) 62%, rgba(255,255,255,0) 100%),
+        url('/assets/hero.jpg');
+      background-size: cover;
+      background-position: center right;
+      background-repeat: no-repeat;
+      min-height: 520px;
+    }
+    .hero .container{ position: relative; z-index: 1; }
+    .hero-blob{ display:none; }
+    @media (max-width: 700px){
+      .hero{
+        background:
+          linear-gradient(180deg, rgba(255,255,255,.95) 0%, rgba(255,255,255,.75) 45%,
+                                 rgba(255,255,255,.30) 70%, rgba(255,255,255,0) 100%),
+          url('/assets/hero.jpg');
+        background-position: center top;
+        min-height: 420px;
+      }
+    }
   </style>
 </head>
 <body>
-  <!-- Shared header -->
+  <!-- Header -->
   <header>
     <div class="container nav">
       <a class="brand" href="/" data-nav="/"><div class="logo" aria-hidden="true"></div> Kosconn</a>
@@ -83,7 +105,7 @@
   <!-- App root -->
   <main id="app" class="container section"></main>
 
-  <!-- Shared footer -->
+  <!-- Footer -->
   <footer>
     <div class="container section" style="display:grid;gap:1rem;grid-template-columns:2fr 1fr 1fr 1fr">
       <div><div style="display:flex;align-items:center;gap:.6rem;margin-bottom:.5rem"><div class="logo"></div><strong>Kosconn</strong></div>
@@ -103,60 +125,58 @@
     <div class="container" style="color:#7b8aa8;font-size:.9rem;padding:0 20px 28px">© <span id="year"></span> Kosconn. All rights reserved.</div>
   </footer>
 
-  <!-- Page templates (bundled) -->
-<template id="page-home">
-  <section class="hero">
-    <div class="container">
-      <div class="grid grid-2" style="align-items:center; gap:2rem">
-        <div>
-          <span class="badge foundation">Nearshore to EU member states</span>
-          <h1 class="h1" style="margin:.6rem 0 1rem">
-            Outsource to a <span class="text-gradient">high-performing team</span> that
-            ships clean code and reliable networks.
-          </h1>
-          <p class="lead">
-            Same timezone, English communication, weekly demos and measurable outcomes.
-          </p>
-          <div style="margin-top:1rem; display:flex; gap:.6rem; flex-wrap:wrap">
-            <a class="btn primary" href="/contact" data-nav="/contact">Start a project</a>
-            <a class="btn" href="/services" data-nav="/services">See our services</a>
+  <!-- ===== Page templates ===== -->
+  <template id="page-home">
+    <section class="hero">
+      <div class="container">
+        <div class="grid grid-2" style="align-items:center; gap:2rem">
+          <div>
+            <span class="badge foundation">Nearshore to EU member states</span>
+            <h1 class="h1" style="margin:.6rem 0 1rem">
+              Outsource to a <span class="text-gradient">high-performing team</span> that
+              ships clean code and reliable networks.
+            </h1>
+            <p class="lead">Same timezone, English communication, weekly demos and measurable outcomes.</p>
+            <div style="margin-top:1rem; display:flex; gap:.6rem; flex-wrap:wrap">
+              <a class="btn primary" href="/contact" data-nav="/contact">Start a project</a>
+              <a class="btn" href="/services" data-nav="/services">See our services</a>
+            </div>
           </div>
-        </div>
-
-        <div class="card" style="backdrop-filter:saturate(110%) blur(2px);">
-          <div class="grid" style="gap:.7rem">
-            <div><strong>Faster delivery</strong><div class="lead">Small senior team focused on impact.</div></div>
-            <div><strong>Lower total cost</strong><div class="lead">Near-shore rates, no overhead.</div></div>
-            <div><strong>Clear ownership</strong><div class="lead">We own outcomes, not just tasks.</div></div>
-            <div><strong>Security-first</strong><div class="lead">Tests, docs, backups & runbooks.</div></div>
+          <div class="card" style="backdrop-filter:saturate(110%) blur(2px);">
+            <div class="grid" style="gap:.7rem">
+              <div><strong>Faster delivery</strong><div class="lead">Small senior team focused on impact.</div></div>
+              <div><strong>Lower total cost</strong><div class="lead">Near-shore rates, no overhead.</div></div>
+              <div><strong>Clear ownership</strong><div class="lead">We own outcomes, not just tasks.</div></div>
+              <div><strong>Security-first</strong><div class="lead">Tests, docs, backups & runbooks.</div></div>
+            </div>
           </div>
         </div>
       </div>
-    </div>
-  </section>
+    </section>
 
-  <section class="section">
-    <div class="container">
-      <div class="grid grid-3">
-        <div class="card accent-core">
-          <span class="badge core">Core</span>
-          <h2 class="h2" style="margin:.4rem 0">Coding & Product</h2>
-          <p class="lead">Apps, APIs, integrations with CI/CD.</p>
-        </div>
-        <div class="card accent-foundation">
-          <span class="badge foundation">Foundation</span>
-          <h2 class="h2" style="margin:.4rem 0">Reliable Network</h2>
-          <p class="lead">Uptime, security & visibility.</p>
-        </div>
-        <div class="card accent-platform">
-          <span class="badge platform">Platform</span>
-          <h2 class="h2" style="margin:.4rem 0">Cloud & FinOps</h2>
-          <p class="lead">Guardrails, automation, cost control.</p>
+    <section class="section">
+      <div class="container">
+        <div class="grid grid-3">
+          <div class="card accent-core">
+            <span class="badge core">Core</span>
+            <h2 class="h2" style="margin:.4rem 0">Coding & Product</h2>
+            <p class="lead">Apps, APIs, integrations with CI/CD.</p>
+          </div>
+          <div class="card accent-foundation">
+            <span class="badge foundation">Foundation</span>
+            <h2 class="h2" style="margin:.4rem 0">Reliable Network</h2>
+            <p class="lead">Uptime, security & visibility.</p>
+          </div>
+          <div class="card accent-platform">
+            <span class="badge platform">Platform</span>
+            <h2 class="h2" style="margin:.4rem 0">Cloud & FinOps</h2>
+            <p class="lead">Guardrails, automation, cost control.</p>
+          </div>
         </div>
       </div>
-    </div>
-  </section>
-</template>
+    </section>
+  </template>
+
   <template id="page-services">
     <h1 class="h1">Our Services</h1>
     <div class="grid grid-3" style="margin-top:1rem">
@@ -239,79 +259,39 @@
   </template>
 
   <script>
-    // --- SPA router (History API) ---
+    // SPA router
     const app = document.getElementById('app');
-
     const routes = {
-      '/': 'page-home',
-      '/index.html': 'page-home',
-      '/services': 'page-services',
-      '/services.html': 'page-services',
-      '/how-we-work': 'page-how',
-      '/how-we-work.html': 'page-how',
-      '/resources': 'page-resources',
-      '/resources.html': 'page-resources',
-      '/about': 'page-about',
-      '/about.html': 'page-about',
-      '/contact': 'page-contact',
-      '/contact.html': 'page-contact',
+      '/': 'page-home','/index.html': 'page-home',
+      '/services': 'page-services','/services.html':'page-services',
+      '/how-we-work':'page-how','/how-we-work.html':'page-how',
+      '/resources':'page-resources','/resources.html':'page-resources',
+      '/about':'page-about','/about.html':'page-about',
+      '/contact':'page-contact','/contact.html':'page-contact'
     };
-
     const titles = {
-      'page-home': 'Kosconn — Outsource smart: Coding, Networks, Cloud',
-      'page-services': 'Services | Kosconn',
-      'page-how': 'How We Work | Kosconn',
-      'page-resources': 'Resources | Kosconn',
-      'page-about': 'Who We Are | Kosconn',
-      'page-contact': 'Contact | Kosconn',
+      'page-home':'Kosconn — Outsource smart: Coding, Networks, Cloud',
+      'page-services':'Services | Kosconn',
+      'page-how':'How We Work | Kosconn',
+      'page-resources':'Resources | Kosconn',
+      'page-about':'Who We Are | Kosconn',
+      'page-contact':'Contact | Kosconn'
     };
-
-    function bindContactForm() {
-      const form = document.querySelector('#contactForm');
-      if (!form) return;
-      form.addEventListener('submit', async (e) => {
-        e.preventDefault();
-        try {
-          const data = new FormData(form);
-          const res = await fetch(form.action, { method: 'POST', body: data, headers: { 'Accept':'application/json' }});
-          if (res.ok) { alert('Thanks! We will get back to you.'); form.reset(); }
-          else { alert('Something went wrong. Email hello@kosconn.com.'); }
-        } catch { alert('Network error. Please email hello@kosconn.com.'); }
-      }, { once: true });
-    }
-
-    function render(pathname) {
-      const id = routes[pathname] || 'page-home';
+    function render(path){ const id = routes[path] || 'page-home';
       const tpl = document.getElementById(id);
       app.innerHTML = tpl ? tpl.innerHTML : '<h1>Not found</h1>';
       document.title = titles[id] || 'Kosconn';
-      window.scrollTo(0, 0);
-      bindContactForm();
+      window.scrollTo(0,0);
     }
-
-    function navigate(href) {
-      history.pushState({}, '', href);
-      render(location.pathname);
-    }
-
-    // Intercept internal link clicks
-    document.addEventListener('click', (e) => {
-      const a = e.target.closest('a[href]');
-      if (!a) return;
-      const url = new URL(a.href, location.origin);
-      if (url.origin === location.origin && routes[url.pathname]) {
-        e.preventDefault();
-        navigate(url.pathname);
-      }
+    document.addEventListener('click', (e)=>{
+      const a = e.target.closest('a[href]'); if(!a) return;
+      const u = new URL(a.href, location.origin);
+      if (u.origin === location.origin && routes[u.pathname]) { e.preventDefault(); history.pushState({},'',u.pathname); render(u.pathname); }
     });
-
-    // Back/forward
-    window.addEventListener('popstate', () => render(location.pathname));
-
-    // Handle 404 fallback redirects (?__r=PATH)
+    window.addEventListener('popstate', ()=>render(location.pathname));
     (function init(){
       const p = new URLSearchParams(location.search).get('__r');
-      if (p) history.replaceState({}, '', p);
+      if (p) history.replaceState({},'',p);
       render(location.pathname);
       document.getElementById('year').textContent = new Date().getFullYear();
     })();
