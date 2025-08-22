@@ -18,6 +18,16 @@
       --sky:#2e90fa; --violet:#8256ff; --green:#12b76a; --shadow:0 8px 30px rgba(2,6,23,.08);
       --maxw:1180px;
     }
+    /* Center the moved card and keep the section a bit tighter */
+.features-wrap{ max-width: 920px; margin: 0 auto; }
+.section.compact{ padding: 2rem 0; } /* default is 3rem; this keeps things neat */
+
+/* More gap between the 3 service cards */
+.grid-3{ gap: 1.25rem; }               /* was 1rem */
+@media (max-width: 960px){
+  .grid-3{ gap: 1rem; }                /* sensible on mobile */
+}
+
 /* Balanced hero grid (keeps symmetry) */
 .hero-grid{
   grid-template-columns: minmax(0,1fr) 520px;
@@ -215,57 +225,59 @@
             <div style="margin-top:1rem; display:flex; gap:.6rem; flex-wrap:wrap">
               <a class="btn primary" href="/contact" data-nav="/contact">Start a project</a>
               <a class="btn" href="/services" data-nav="/services">See our services</a>
-            </div>
           </div>
-          <div class="glass-card" role="region" aria-label="Why teams choose us">
-  <ul class="kpis">
-    <li class="kpi">
-      <span class="check" aria-hidden="true">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>
-      </span>
-      <div>
-        <div class="kpi-title"><span class="text-gradient">Faster</span> delivery</div>
-        <div class="kpi-desc">Small senior team focused on impact.</div>
-      </div>
-    </li>
-
-    <li class="kpi">
-      <span class="check" aria-hidden="true">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>
-      </span>
-      <div>
-        <div class="kpi-title"><span class="text-gradient">Lower</span> total cost</div>
-        <div class="kpi-desc">Near-shore rates, no overhead.</div>
-      </div>
-    </li>
-
-    <li class="kpi">
-      <span class="check" aria-hidden="true">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>
-      </span>
-      <div>
-        <div class="kpi-title"><span class="text-gradient">Clear</span> ownership</div>
-        <div class="kpi-desc">We own outcomes, not just tasks.</div>
-      </div>
-    </li>
-
-    <li class="kpi">
-      <span class="check" aria-hidden="true">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>
-      </span>
-      <div>
-        <div class="kpi-title"><span class="text-gradient">Security</span>-first</div>
-        <div class="kpi-desc">Tests, docs, backups & runbooks.</div>
-      </div>
-    </li>
-  </ul>
-</div>
-
-
-          </div>
+         </div>
         </div>
       </div>
     </section>
+    
+<!-- Features card below the hero -->
+<section class="section compact">
+  <div class="container">
+    <div class="features-wrap">
+      <div class="glass-card" role="region" aria-label="Why teams choose us">
+        <ul class="kpis">
+          <li class="kpi">
+            <span class="check" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>
+            </span>
+            <div>
+              <div class="kpi-title"><span class="text-gradient">Faster</span> delivery</div>
+              <div class="kpi-desc">Small senior team focused on impact.</div>
+            </div>
+          </li>
+          <li class="kpi">
+            <span class="check" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>
+            </span>
+            <div>
+              <div class="kpi-title"><span class="text-gradient">Lower</span> total cost</div>
+              <div class="kpi-desc">Near-shore rates, no overhead.</div>
+            </div>
+          </li>
+          <li class="kpi">
+            <span class="check" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>
+            </span>
+            <div>
+              <div class="kpi-title"><span class="text-gradient">Clear</span> ownership</div>
+              <div class="kpi-desc">We own outcomes, not just tasks.</div>
+            </div>
+          </li>
+          <li class="kpi">
+            <span class="check" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>
+            </span>
+            <div>
+              <div class="kpi-title"><span class="text-gradient">Security</span>-first</div>
+              <div class="kpi-desc">Tests, docs, backups & runbooks.</div>
+            </div>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
 
     <section class="section">
       <div class="container">
