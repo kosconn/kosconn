@@ -18,6 +18,39 @@
       --sky:#2e90fa; --violet:#8256ff; --green:#12b76a; --shadow:0 8px 30px rgba(2,6,23,.08);
       --maxw:1180px;
     }
+    /* Hero grid with fixed right column for symmetry */
+.hero-grid{
+  grid-template-columns: minmax(0,1fr) 520px;       /* left grows, right is neat */
+  align-items: center;
+}
+@media (max-width: 960px){ .hero-grid{ grid-template-columns: 1fr; } }
+
+/* Creative right card */
+.hero .features-card{
+  max-width: 520px;
+  padding: 18px 22px;
+  border-radius: 18px;
+  border: 1px solid transparent;                   /* gradient border trick */
+  background:
+    linear-gradient(180deg, rgba(255,255,255,.55), rgba(255,255,255,.35)) padding-box,
+    linear-gradient(135deg, #2e90fa 0%, #8256ff 55%, #f43f5e 100%) border-box;
+  box-shadow: 0 12px 40px rgba(2,6,23,.15);
+  backdrop-filter: blur(8px) saturate(120%);
+}
+
+/* List layout + icons */
+.features-list{ list-style:none; margin:0; padding:0; display:grid; gap:12px; }
+.features-item{ display:grid; grid-template-columns:24px 1fr; column-gap:12px; align-items:start; }
+.features-icon{
+  width:24px; height:24px; border-radius:999px;
+  background: linear-gradient(135deg,#2e90fa,#8256ff);
+  display:flex; align-items:center; justify-content:center;
+  box-shadow: 0 2px 6px rgba(2,6,23,.2);
+}
+.features-icon svg{ width:14px; height:14px; color:#fff; }
+.features-title{ font-weight:800; }
+.features-desc{ color:#475569; font-size:1rem; margin-top:2px; }
+
 .hero .card.transparent{
   background: transparent;
   border: 0;
@@ -136,7 +169,7 @@
   <template id="page-home">
     <section class="hero">
       <div class="container">
-        <div class="grid grid-2" style="align-items:center; gap:2rem">
+        <div class="grid grid-2 hero-grid" style="gap:2rem">
           <div>
             <span class="badge foundation">Nearshore to EU member states</span>
             <h1 class="h1" style="margin:.6rem 0 1rem">
@@ -149,13 +182,49 @@
               <a class="btn" href="/services" data-nav="/services">See our services</a>
             </div>
           </div>
-          <div class="card transparent">
-            <div class="grid" style="gap:.7rem">
-              <div><strong>Faster delivery</strong><div class="lead">Small senior team focused on impact.</div></div>
-              <div><strong>Lower total cost</strong><div class="lead">Near-shore rates, no overhead.</div></div>
-              <div><strong>Clear ownership</strong><div class="lead">We own outcomes, not just tasks.</div></div>
-              <div><strong>Security-first</strong><div class="lead">Tests, docs, backups & runbooks.</div></div>
-            </div>
+          <div class="features-card" aria-label="Why outsourcing with us works">
+            <ul class="features-list">
+      <li class="features-item">
+          <span class="features-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>
+          </span>
+          <div>
+            <div class="features-title">Faster delivery</div>
+            <div class="features-desc">Small senior team focused on impact.</div>
+        </div>
+      </li>
+    <li class="features-item">
+      <span class="features-icon" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>
+      </span>
+      <div>
+        <div class="features-title">Lower total cost</div>
+        <div class="features-desc">Near-shore rates, no overhead.</div>
+      </div>
+    </li>
+
+    <li class="features-item">
+      <span class="features-icon" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>
+      </span>
+      <div>
+        <div class="features-title">Clear ownership</div>
+        <div class="features-desc">We own outcomes, not just tasks.</div>
+      </div>
+    </li>
+
+    <li class="features-item">
+      <span class="features-icon" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>
+      </span>
+      <div>
+        <div class="features-title">Security-first</div>
+        <div class="features-desc">Tests, docs, backups & runbooks.</div>
+      </div>
+    </li>
+  </ul>
+</div>
+
           </div>
         </div>
       </div>
