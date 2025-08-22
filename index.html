@@ -152,6 +152,30 @@
   .kpi2-desc{  margin:.25rem 0 0; color:#475569; line-height:1.55; }
   .kpi2-sub{   margin:.35rem 0 0 .85rem; padding:0 0 0 .6rem; color:#64748b; }
   .kpi2-sub li{ margin:.15rem 0; }
+    
+  /* --- Value band (between hero and cards) --- */
+.value-prop h2{
+  font-size: clamp(1.6rem, 3vw, 2.2rem);
+  line-height: 1.25;
+  margin: .5rem 0 .75rem;
+  font-weight: 800;
+}
+.value-prop p{
+  color: var(--muted);
+  max-width: 70ch;
+}
+
+/* --- Make only the home cards square & remove top accent --- */
+.flat-cards .card{
+  border-radius: 0;                 /* square corners */
+  border-top: 1px solid var(--line);
+  box-shadow: var(--shadow);
+}
+.flat-cards .card.accent-core,
+.flat-cards .card.accent-foundation,
+.flat-cards .card.accent-platform{
+  border-top: 1px solid var(--line) !important;  /* override colored top */
+}
 </style>
 
 </head>
@@ -196,45 +220,58 @@
 
   <!-- ===== Page templates ===== -->
   <template id="page-home">
-    <section class="hero">
-      <div class="container">
-        <div class="hero-copy">
-          <span class="badge foundation">Nearshore to EU member states</span>
-          <h1 class="h1" style="margin:.6rem 0 1rem">
-            Outsource to a <span class="text-gradient">high-performing team</span> that
-            ships clean code and reliable networks.
-          </h1>
-          <p class="lead">Same timezone, English communication, weekly demos and measurable outcomes.</p>
-          <div style="margin-top:1rem; display:flex; gap:.6rem; flex-wrap:wrap">
-            <a class="btn primary" href="/contact" data-nav="/contact">Start a project</a>
-            <a class="btn" href="/services" data-nav="/services">See our services</a>
-          </div>
+  <section class="hero">
+    <div class="container">
+      <div class="hero-copy">
+        <span class="badge foundation">Nearshore to EU member states</span>
+        <h1 class="h1" style="margin:.6rem 0 1rem">
+          Outsource to a <span class="text-gradient">high-performing team</span> that
+          ships clean code and reliable networks.
+        </h1>
+        <p class="lead">Same timezone, English communication, weekly demos and measurable outcomes.</p>
+        <div style="margin-top:1rem; display:flex; gap:.6rem; flex-wrap:wrap">
+          <a class="btn primary" href="/contact" data-nav="/contact">Start a project</a>
+          <a class="btn" href="/services" data-nav="/services">See our services</a>
         </div>
       </div>
-    </section>
+    </div>
+  </section>
 
-    <section class="section">
-      <div class="container">
-        <div class="grid grid-3">
-          <div class="card accent-core">
-            <span class="badge core">Core</span>
-            <h2 class="h2" style="margin:.4rem 0">Coding & Product</h2>
-            <p class="lead">Apps, APIs, integrations with CI/CD.</p>
-          </div>
-          <div class="card accent-foundation">
-            <span class="badge foundation">Foundation</span>
-            <h2 class="h2" style="margin:.4rem 0">Reliable Network</h2>
-            <p class="lead">Uptime, security & visibility.</p>
-          </div>
-          <div class="card accent-platform">
-            <span class="badge platform">Platform</span>
-            <h2 class="h2" style="margin:.4rem 0">Cloud & FinOps</h2>
-            <p class="lead">Guardrails, automation, cost control.</p>
-          </div>
+  <!-- New value proposition band -->
+  <section class="section value-prop">
+    <div class="container">
+      <h2>Get more from your IT budget with a near-shore team that ships software on a reliable network and cloud.</h2>
+      <p>
+        We design, build and operate the essentials—apps and APIs, secure networks and governed cloud landing zones.
+      Senior, EU-timezone squads with weekly demos, clear KPIs and automation keep outcomes predictable and costs under control.
+      </p>
+    </div>
+  </section>
+
+  <!-- Home cards: now square, no colored stripes -->
+  <section class="section flat-cards">
+    <div class="container">
+      <div class="grid grid-3">
+        <div class="card accent-core">
+          <span class="badge core">Core</span>
+          <h2 class="h2" style="margin:.4rem 0">Coding & Product</h2>
+          <p class="lead">Apps, APIs, integrations with CI/CD.</p>
+        </div>
+        <div class="card accent-foundation">
+          <span class="badge foundation">Foundation</span>
+          <h2 class="h2" style="margin:.4rem 0">Reliable Network</h2>
+          <p class="lead">Uptime, security & visibility.</p>
+        </div>
+        <div class="card accent-platform">
+          <span class="badge platform">Platform</span>
+          <h2 class="h2" style="margin:.4rem 0">Cloud & FinOps</h2>
+          <p class="lead">Guardrails, automation, cost control.</p>
         </div>
       </div>
-    </section>
-  </template>
+    </div>
+  </section>
+</template>
+
 
   <template id="page-services">
     <h1 class="h1">Our Services</h1>
