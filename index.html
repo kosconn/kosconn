@@ -50,7 +50,7 @@
     backdrop-filter:blur(8px);
     border-bottom:1px solid var(--line);
   }
-  /* Transparent on Home (like before) */
+  /* Transparent on Home */
   body.is-home header{ background:transparent; border-bottom:0; backdrop-filter:none; }
 
   .nav{display:flex;align-items:center;gap:1rem;height:68px}
@@ -59,7 +59,7 @@
   .nav-links{margin-left:auto;display:flex;flex-wrap:wrap;gap:.35rem}
   .nav-links a{padding:.5rem .8rem;border-radius:10px;font-weight:700;color:#334155}
   .nav-links a.active,.nav-links a:hover{color:#2e90fa}
-  /* Make links readable on Home while header is transparent */
+  /* Readable links on transparent Home header */
   body.is-home .brand{ color:#fff; text-shadow:0 1px 2px rgba(0,0,0,.35); }
   body.is-home .nav-links a{ color:#f8fafc; text-shadow:0 1px 2px rgba(0,0,0,.35); }
   body.is-home .nav-links a:hover, body.is-home .nav-links a.active{
@@ -70,7 +70,7 @@
   footer a{color:#a3d3ff}
   @media (max-width:600px){.section{padding:2rem 0}.h1{font-size:clamp(1.6rem,7vw,2.2rem)}.nav{height:60px}}
 
-  /* ===== Color accents ===== */
+  /* ===== Color accents (kept for home if needed) ===== */
   .text-gradient{
     background: linear-gradient(135deg,#2e90fa 0%,#8256ff 55%,#f43f5e 100%);
     -webkit-background-clip:text; background-clip:text; color:transparent;
@@ -82,7 +82,7 @@
   .card.accent-foundation{ border-top:4px solid #2e90fa; }
   .card.accent-platform{ border-top:4px solid #8256ff; }
 
-  /* ===== Hero (restore the bright look) ===== */
+  /* ===== Hero ===== */
   .hero{
     position:relative;
     padding: clamp(3rem, 7vw, 6rem) 0;
@@ -100,14 +100,12 @@
     background-repeat: no-repeat;
     min-height: clamp(520px, 72vh, 860px);
   }
-  body.is-home .hero{ min-height: clamp(520px, 72vh, 860px); } 
-  /* remove the dark top fade that dimmed the hero */
+  body.is-home .hero{ min-height: clamp(520px, 72vh, 860px); }
   .hero::before{ content:none; }
 
   .hero .container{ position: relative; z-index: 1; }
   .hero-copy{ max-width: 820px; }
 
-  /* Mobile keeps stronger overlay for legibility */
   @media (max-width: 700px){
     .hero{
       background:
@@ -119,7 +117,7 @@
     }
   }
 
-  /* ===== Inner-page polish kept ===== */
+  /* ===== Home: value band and square cards ===== */
   .features-wrap{ max-width: var(--maxw); margin: 0 auto; }
   .section.compact{ padding: 2rem 0; }
   .grid-3{ gap: 1.25rem; }
@@ -152,65 +150,47 @@
   .kpi2-desc{  margin:.25rem 0 0; color:#475569; line-height:1.55; }
   .kpi2-sub{   margin:.35rem 0 0 .85rem; padding:0 0 0 .6rem; color:#64748b; }
   .kpi2-sub li{ margin:.15rem 0; }
-    
-  /* --- Value band (between hero and cards) --- */
-.value-prop h2{
-  font-size: clamp(1.6rem, 3vw, 2.2rem);
-  line-height: 1.25;
-  margin: .5rem 0 .75rem;
-  font-weight: 800;
-}
-.value-prop p{
-  color: var(--muted);
-  max-width: 70ch;
-}
+  .value-prop h2{ font-size: clamp(1.6rem, 3vw, 2.2rem); line-height: 1.25; margin: .5rem 0 .75rem; font-weight: 800; }
+  .value-prop p{ color: var(--muted); max-width: 70ch; }
 
-/* --- Make only the home cards square & remove top accent --- */
-.flat-cards .card{
-  border-radius: 0;                 /* square corners */
-  border-top: 1px solid var(--line);
-  box-shadow: var(--shadow);
-}
-.flat-cards .card.accent-core,
-.flat-cards .card.accent-foundation,
-.flat-cards .card.accent-platform{
-  border-top: 1px solid var(--line) !important;  /* override colored top */
-}
-/* --- Keep footer at the bottom on short pages --- */
-body{ min-height:100vh; display:flex; flex-direction:column; }  /* keeps footer down */
-main{ flex:1; }                                                  /* page content grows */
+  .flat-cards .card{
+    border-radius: 0;
+    border-top: 1px solid var(--line);
+    box-shadow: var(--shadow);
+  }
+  .flat-cards .card.accent-core,
+  .flat-cards .card.accent-foundation,
+  .flat-cards .card.accent-platform{
+    border-top: 1px solid var(--line) !important;
+  }
 
-/* --- Services page: flat, square, modern cards (no accent bars) --- */
-.svc .cards-flat .card{
-  border-radius:0;                 /* square corners */
-  border-top:none;                 /* remove accent bar look */
-  padding:22px 24px;
-  box-shadow:0 6px 22px rgba(2,6,23,.06); /* subtle, modern */
-}
+  /* ===== Sticky footer layout ===== */
+  body{ min-height:100vh; display:flex; flex-direction:column; }
+  main{ flex:1; } /* page content grows; footer stays at bottom */
 
-.svc .service-card h2{ margin:.25rem 0 .35rem; }
-.svc .service-card p.lead{ margin:0 0 .8rem; color:var(--muted); }
-
-/* Two neat columns for outcomes/deliverables on desktop */
-.svc .svc-columns{
-  display:grid; gap:12px 28px;
-  grid-template-columns:repeat(2,minmax(0,1fr));
-}
-@media (max-width: 960px){
-  .svc .svc-columns{ grid-template-columns:1fr; }
-}
-
-/* tiny stacks/tech row */
-.svc .stack{ margin-top:.75rem; font-size:.95rem; color:#64748b }
-
-/* Optional: soft callout at end */
-.svc .callout{
-  border-radius:0;
-  border-left:3px solid #2e90fa;
-  background:linear-gradient(180deg,#ffffff, #f9fbff);
-}
-</style>
-
+  /* ===== Services page: square, modern cards (no accent bars) ===== */
+  .svc .cards-flat .card{
+    border-radius:0;
+    border-top:none;
+    padding:22px 24px;
+    box-shadow:0 6px 22px rgba(2,6,23,.06);
+  }
+  .svc .service-card h2{ margin:.25rem 0 .35rem; }
+  .svc .service-card p.lead{ margin:0 0 .8rem; color:var(--muted); }
+  .svc .svc-columns{
+    display:grid; gap:12px 28px;
+    grid-template-columns:repeat(2,minmax(0,1fr));
+  }
+  @media (max-width: 960px){
+    .svc .svc-columns{ grid-template-columns:1fr; }
+  }
+  .svc .stack{ margin-top:.75rem; font-size:.95rem; color:#64748b }
+  .svc .callout{
+    border-radius:0;
+    border-left:3px solid #2e90fa;
+    background:linear-gradient(180deg,#ffffff, #f9fbff);
+  }
+  </style>
 </head>
 <body>
   <!-- Header -->
@@ -253,202 +233,201 @@ main{ flex:1; }                                                  /* page content
 
   <!-- ===== Page templates ===== -->
   <template id="page-home">
-  <section class="hero">
-    <div class="container">
-      <div class="hero-copy">
-        <span class="badge foundation">Nearshore to EU member states</span>
-        <h1 class="h1" style="margin:.6rem 0 1rem">
-          Outsource to a <span class="text-gradient">high-performing team</span> that
-          ships clean code and reliable networks.
-        </h1>
-        <p class="lead">Same timezone, English communication, weekly demos and measurable outcomes.</p>
-        <div style="margin-top:1rem; display:flex; gap:.6rem; flex-wrap:wrap">
-          <a class="btn primary" href="/contact" data-nav="/contact">Start a project</a>
-          <a class="btn" href="/services" data-nav="/services">See our services</a>
+    <section class="hero">
+      <div class="container">
+        <div class="hero-copy">
+          <span class="badge foundation">Nearshore to EU member states</span>
+          <h1 class="h1" style="margin:.6rem 0 1rem">
+            Outsource to a <span class="text-gradient">high-performing team</span> that
+            ships clean code and reliable networks.
+          </h1>
+          <p class="lead">Same timezone, English communication, weekly demos and measurable outcomes.</p>
+          <div style="margin-top:1rem; display:flex; gap:.6rem; flex-wrap:wrap">
+            <a class="btn primary" href="/contact" data-nav="/contact">Start a project</a>
+            <a class="btn" href="/services" data-nav="/services">See our services</a>
+          </div>
         </div>
       </div>
-    </div>
-  </section>
+    </section>
 
-  <!-- New value proposition band -->
-  <section class="section value-prop">
-    <div class="container">
-      <h2>Get more from your IT budget with a near-shore team that ships software on a reliable network and cloud.</h2>
-      <p>
-        We design, build and operate the essentials—apps and APIs, secure networks and governed cloud landing zones.
-      Senior, EU-timezone squads with weekly demos, clear KPIs and automation keep outcomes predictable and costs under control.
-      </p>
-    </div>
-  </section>
+    <!-- Value proposition band -->
+    <section class="section value-prop">
+      <div class="container">
+        <h2>Get more from your IT budget with a near-shore team that ships software on a reliable network and cloud.</h2>
+        <p>
+          We design, build and operate the essentials—apps and APIs, secure networks and governed cloud landing zones.
+          Senior, EU-timezone squads with weekly demos, clear KPIs and automation keep outcomes predictable and costs under control.
+        </p>
+      </div>
+    </section>
 
-  <!-- Home cards: now square, no colored stripes -->
-  <section class="section flat-cards">
-    <div class="container">
-      <div class="grid grid-3">
-        <div class="card accent-core">
-          <span class="badge core">Core</span>
-          <h2 class="h2" style="margin:.4rem 0">Coding & Product</h2>
-          <p class="lead">Apps, APIs, integrations with CI/CD.</p>
-        </div>
-        <div class="card accent-foundation">
-          <span class="badge foundation">Foundation</span>
-          <h2 class="h2" style="margin:.4rem 0">Reliable Network</h2>
-          <p class="lead">Uptime, security & visibility.</p>
-        </div>
-        <div class="card accent-platform">
-          <span class="badge platform">Platform</span>
-          <h2 class="h2" style="margin:.4rem 0">Cloud & FinOps</h2>
-          <p class="lead">Guardrails, automation, cost control.</p>
+    <!-- Home cards: square, no colored stripes -->
+    <section class="section flat-cards">
+      <div class="container">
+        <div class="grid grid-3">
+          <div class="card accent-core">
+            <span class="badge core">Core</span>
+            <h2 class="h2" style="margin:.4rem 0">Coding & Product</h2>
+            <p class="lead">Apps, APIs, integrations with CI/CD.</p>
+          </div>
+          <div class="card accent-foundation">
+            <span class="badge foundation">Foundation</span>
+            <h2 class="h2" style="margin:.4rem 0">Reliable Network</h2>
+            <p class="lead">Uptime, security & visibility.</p>
+          </div>
+          <div class="card accent-platform">
+            <span class="badge platform">Platform</span>
+            <h2 class="h2" style="margin:.4rem 0">Cloud & FinOps</h2>
+            <p class="lead">Guardrails, automation, cost control.</p>
+          </div>
         </div>
       </div>
-    </div>
-  </section>
-</template>
+    </section>
+  </template>
 
-
-<template id="page-services">
-  <section class="section">
-    <div class="container">
-      <h1 class="h1">Our Services</h1>
-      <p class="lead" style="max-width:880px">
-        Three tracks work together so you can move with confidence: 
-        <strong>Product (software)</strong>, <strong>Network (foundation)</strong>, and <strong>Cloud &amp; FinOps</strong>.
-        Each is delivered by a small senior squad with weekly demos, docs and runbooks.
-      </p>
-    </div>
-  </section>
-
-  <section class="section svc">
-    <div class="container">
-      <div class="grid grid-3 cards-flat">
-
-        <!-- Coding & Product -->
-        <article class="card service-card">
-          <span class="badge">Coding &amp; Product</span>
-          <h2>Ship useful software</h2>
-          <p class="lead">Features every week, maintainable code, and zero-drama releases.</p>
-
-          <div class="svc-columns">
-            <div>
-              <h3 class="h2" style="font-size:1.05rem;margin:.2rem 0 .4rem">Outcomes</h3>
-              <ul>
-                <li>Predictable roadmap; visible backlog with priorities.</li>
-                <li>Stable builds with automated tests and CI/CD.</li>
-                <li>Design system + reusable components for speed.</li>
-                <li>APIs with clear contracts (REST/GraphQL) and docs.</li>
-                <li>Measured quality (lint, coverage, performance budgets).</li>
-              </ul>
-            </div>
-            <div>
-              <h3 class="h2" style="font-size:1.05rem;margin:.2rem 0 .4rem">Deliverables</h3>
-              <ul>
-                <li>Sprint plan, demo notes, and risk register weekly.</li>
-                <li>ADR &amp; architecture notes for key decisions.</li>
-                <li>Test suites (unit/e2e), pipelines, environments.</li>
-                <li>Runbooks for deploy, rollback, and incidents.</li>
-                <li>Onboarding guide so you can own it anytime.</li>
-              </ul>
-            </div>
-          </div>
-
-          <div class="stack">
-            React / Next.js • Vue • .NET / Node.js • PostgreSQL • REST / GraphQL •
-            Playwright • Docker • GitHub Actions • CI/CD
-          </div>
-        </article>
-
-        <!-- Network Foundation -->
-        <article class="card service-card">
-          <span class="badge">Network Foundation</span>
-          <h2>Keep the lights on</h2>
-          <p class="lead">A reliable, observable network: segmented, monitored, and documented.</p>
-
-          <div class="svc-columns">
-            <div>
-              <h3 class="h2" style="font-size:1.05rem;margin:.2rem 0 .4rem">Outcomes</h3>
-              <ul>
-                <li>Segmentation, QoS and Wi-Fi planning that scales.</li>
-                <li>Central monitoring, logs and actionable alerts.</li>
-                <li>Security by design with least-privilege defaults.</li>
-                <li>Transparent KPIs for uptime, latency and SLOs.</li>
-                <li>Change control with tested, auditable workflows.</li>
-              </ul>
-            </div>
-            <div>
-              <h3 class="h2" style="font-size:1.05rem;margin:.2rem 0 .4rem">Deliverables</h3>
-              <ul>
-                <li>Network baseline + diagrams + IP strategy.</li>
-                <li>Device inventory (source-of-truth) and ZTP setup.</li>
-                <li>Monitoring/alerting rules, dashboards and runbooks.</li>
-                <li>Backup/restore procedures for critical gear.</li>
-                <li>Handover checklist and training session.</li>
-              </ul>
-            </div>
-          </div>
-
-          <div class="stack">
-            NetBox • Prometheus / Grafana • Syslog / SIEM • ZTP •
-            Firewalls / Switches / Wi-Fi (vendor-neutral)
-          </div>
-        </article>
-
-        <!-- Cloud & FinOps -->
-        <article class="card service-card">
-          <span class="badge">Cloud &amp; FinOps</span>
-          <h2>Safe, efficient platform</h2>
-          <p class="lead">Guardrails, automation, and cost visibility—without slowing teams down.</p>
-
-          <div class="svc-columns">
-            <div>
-              <h3 class="h2" style="font-size:1.05rem;margin:.2rem 0 .4rem">Outcomes</h3>
-              <ul>
-                <li>Secure landing zone with identity, policy and logging.</li>
-                <li>Pipelines for infra + app deploys (repeatable IaC).</li>
-                <li>Budgets, alerts and reports for real cost control.</li>
-                <li>Backups + recovery objectives with testable drills.</li>
-                <li>Clear ownership model and documented SRE routines.</li>
-              </ul>
-            </div>
-            <div>
-              <h3 class="h2" style="font-size:1.05rem;margin:.2rem 0 .4rem">Deliverables</h3>
-              <ul>
-                <li>Terraform modules and environments (dev/test/prod).</li>
-                <li>GitHub Actions pipelines with policy checks.</li>
-                <li>Guardrails: IAM, tagging, networking, encryption.</li>
-                <li>Budgets, cost dashboards and savings plan (rightsizing).</li>
-                <li>Backup/restore runbooks and incident simulation.</li>
-              </ul>
-            </div>
-          </div>
-
-          <div class="stack">
-            Azure / AWS • Terraform • GitHub Actions • Budgets &amp; Alerts •
-            Backup / DR • Observability
-          </div>
-        </article>
+  <!-- ===== Services (updated) ===== -->
+  <template id="page-services">
+    <section class="section">
+      <div class="container">
+        <h1 class="h1">Our Services</h1>
+        <p class="lead" style="max-width:880px">
+          Three tracks work together so you can move with confidence:
+          <strong>Product (software)</strong>, <strong>Network (foundation)</strong>, and
+          <strong>Cloud &amp; FinOps</strong>. Each is delivered by a small senior squad with weekly demos, docs and runbooks.
+        </p>
       </div>
+    </section>
 
-      <!-- Why outsource (simple callout) -->
-      <div class="cards-flat" style="margin-top:1.25rem">
-        <article class="card callout">
-          <h3 class="h2" style="margin:.2rem 0 .4rem">Why outsource these with Kosconn?</h3>
-          <ul class="lead" style="margin:0">
-            <li><strong>Small senior squad</strong> = fewer hand-offs, faster impact.</li>
-            <li><strong>Near-shore</strong> rates and same-timezone collaboration.</li>
-            <li><strong>Measurable delivery</strong>: weekly demos, visible KPIs, docs.</li>
-            <li><strong>Ownership transfer</strong>: runbooks and training so you can run it.</li>
-          </ul>
-        </article>
+    <section class="section svc">
+      <div class="container">
+        <div class="grid grid-3 cards-flat">
+
+          <!-- Coding & Product -->
+          <article class="card service-card">
+            <span class="badge">Coding &amp; Product</span>
+            <h2>Ship useful software</h2>
+            <p class="lead">Features every week, maintainable code, and zero-drama releases.</p>
+
+            <div class="svc-columns">
+              <div>
+                <h3 class="h2" style="font-size:1.05rem;margin:.2rem 0 .4rem">Outcomes</h3>
+                <ul>
+                  <li>Predictable roadmap; visible backlog with priorities.</li>
+                  <li>Stable builds with automated tests and CI/CD.</li>
+                  <li>Design system & reusable components for speed.</li>
+                  <li>APIs with clear contracts (REST/GraphQL) and docs.</li>
+                  <li>Measured quality (lint, coverage, performance budgets).</li>
+                </ul>
+              </div>
+              <div>
+                <h3 class="h2" style="font-size:1.05rem;margin:.2rem 0 .4rem">Deliverables</h3>
+                <ul>
+                  <li>Sprint plan, demo notes, and risk register weekly.</li>
+                  <li>ADR &amp; architecture notes for key decisions.</li>
+                  <li>Test suites (unit/e2e), pipelines, environments.</li>
+                  <li>Runbooks for deploy, rollback, and incidents.</li>
+                  <li>Onboarding guide so you can own it anytime.</li>
+                </ul>
+              </div>
+            </div>
+
+            <div class="stack">
+              React / Next.js • Vue • .NET / Node.js • PostgreSQL • REST / GraphQL •
+              Playwright • Docker • GitHub Actions • CI/CD
+            </div>
+          </article>
+
+          <!-- Network Foundation -->
+          <article class="card service-card">
+            <span class="badge">Network Foundation</span>
+            <h2>Keep the lights on</h2>
+            <p class="lead">A reliable, observable network: segmented, monitored, and documented.</p>
+
+            <div class="svc-columns">
+              <div>
+                <h3 class="h2" style="font-size:1.05rem;margin:.2rem 0 .4rem">Outcomes</h3>
+                <ul>
+                  <li>Segmentation, QoS and Wi-Fi planning that scales.</li>
+                  <li>Central monitoring, logs and actionable alerts.</li>
+                  <li>Security by design with least-privilege defaults.</li>
+                  <li>Transparent KPIs for uptime, latency and SLOs.</li>
+                  <li>Change control with tested, auditable workflows.</li>
+                </ul>
+              </div>
+              <div>
+                <h3 class="h2" style="font-size:1.05rem;margin:.2rem 0 .4rem">Deliverables</h3>
+                <ul>
+                  <li>Network baseline + diagrams + IP strategy.</li>
+                  <li>Device inventory (source-of-truth) and ZTP setup.</li>
+                  <li>Monitoring/alerting rules, dashboards and runbooks.</li>
+                  <li>Backup/restore procedures for critical gear.</li>
+                  <li>Handover checklist and training session.</li>
+                </ul>
+              </div>
+            </div>
+
+            <div class="stack">
+              NetBox • Prometheus / Grafana • Syslog / SIEM • ZTP •
+              Firewalls / Switches / Wi-Fi (vendor-neutral)
+            </div>
+          </article>
+
+          <!-- Cloud & FinOps -->
+          <article class="card service-card">
+            <span class="badge">Cloud &amp; FinOps</span>
+            <h2>Safe, efficient platform</h2>
+            <p class="lead">Guardrails, automation, and cost visibility—without slowing teams down.</p>
+
+            <div class="svc-columns">
+              <div>
+                <h3 class="h2" style="font-size:1.05rem;margin:.2rem 0 .4rem">Outcomes</h3>
+                <ul>
+                  <li>Secure landing zone with identity, policy and logging.</li>
+                  <li>Pipelines for infra + app deploys (repeatable IaC).</li>
+                  <li>Budgets, alerts and reports for real cost control.</li>
+                  <li>Backups + recovery objectives with testable drills.</li>
+                  <li>Clear ownership model and documented SRE routines.</li>
+                </ul>
+              </div>
+              <div>
+                <h3 class="h2" style="font-size:1.05rem;margin:.2rem 0 .4rem">Deliverables</h3>
+                <ul>
+                  <li>Terraform modules and environments (dev/test/prod).</li>
+                  <li>GitHub Actions pipelines with policy checks.</li>
+                  <li>Guardrails: IAM, tagging, networking, encryption.</li>
+                  <li>Budgets, cost dashboards and savings plan (rightsizing).</li>
+                  <li>Backup/restore runbooks and incident simulation.</li>
+                </ul>
+              </div>
+            </div>
+
+            <div class="stack">
+              Azure / AWS • Terraform • GitHub Actions • Budgets &amp; Alerts •
+              Backup / DR • Observability
+            </div>
+          </article>
+        </div>
+
+        <!-- Why outsource (callout) -->
+        <div class="cards-flat" style="margin-top:1.25rem">
+          <article class="card callout">
+            <h3 class="h2" style="margin:.2rem 0 .4rem">Why outsource these with Kosconn?</h3>
+            <ul class="lead" style="margin:0">
+              <li><strong>Small senior squad</strong> = fewer hand-offs, faster impact.</li>
+              <li><strong>Near-shore</strong> rates and same-timezone collaboration.</li>
+              <li><strong>Measurable delivery</strong>: weekly demos, visible KPIs, docs.</li>
+              <li><strong>Ownership transfer</strong>: runbooks and training so you can run it.</li>
+            </ul>
+          </article>
+        </div>
       </div>
-    </div>
-  </section>
-</template>
+    </section>
+  </template>
 
   <template id="page-how">
     <h1 class="h1">How We Work</h1>
     <p class="lead">Small senior squad, visible progress, measurable outcomes.</p>
 
-    <!-- Glass KPI card -->
     <section class="section" style="padding-top:1.2rem">
       <div class="container">
         <div class="glass-card">
@@ -502,34 +481,15 @@ main{ flex:1; }                                                  /* page content
       </div>
     </section>
 
-    <!-- Timeline -->
     <section class="section" style="padding-top:1rem">
       <div class="container">
-        <ol class="steps">
-          <li>
-            <strong>Initial contact</strong>
-            <small>Goals, constraints, success criteria, one-page proposal.</small>
-          </li>
-          <li>
-            <strong>Discovery & requirements</strong>
-            <small>Workshops, audits, KPIs, risks and first backlog.</small>
-          </li>
-          <li>
-            <strong>Analysis & design</strong>
-            <small>Architecture notes, ADRs, delivery plan & estimates.</small>
-          </li>
-          <li>
-            <strong>Build & transition</strong>
-            <small>Sprints, weekly demos, tests and docs. Handover plan.</small>
-          </li>
-          <li>
-            <strong>Operate & support</strong>
-            <small>Monitoring, incidents, fixes and change requests.</small>
-          </li>
-          <li>
-            <strong>Review & improve</strong>
-            <small>KPI + cost review, next-step proposals and roadmap.</small>
-          </li>
+        <ol>
+          <li><strong>Initial contact:</strong> goals, constraints, success criteria, one-page proposal.</li>
+          <li><strong>Discovery & requirements:</strong> workshops, audits, KPIs, risks and first backlog.</li>
+          <li><strong>Analysis & design:</strong> architecture notes, ADRs, delivery plan & estimates.</li>
+          <li><strong>Build & transition:</strong> sprints, weekly demos, tests and docs. Handover plan.</li>
+          <li><strong>Operate & support:</strong> monitoring, incidents, fixes and change requests.</li>
+          <li><strong>Review & improve:</strong> KPI + cost review, next-step proposals and roadmap.</li>
         </ol>
       </div>
     </section>
@@ -540,46 +500,40 @@ main{ flex:1; }                                                  /* page content
     <p class="lead">Lightweight templates we use in delivery. Grab and adapt.</p>
 
     <div class="grid grid-3" style="margin-top:1rem">
-      <div class="doc-card">
+      <div class="card">
         <span class="badge">Discovery</span>
         <h3 class="h2" style="margin:.2rem 0 .4rem">Stakeholder & KPI template</h3>
         <p class="lead">Capture goals, constraints and success metrics in a single page.</p>
-        <div class="doc-meta"><span class="chip">owner / goals</span><span class="chip">KPIs</span><span class="chip">risks</span></div>
       </div>
 
-      <div class="doc-card">
+      <div class="card">
         <span class="badge">Design</span>
         <h3 class="h2" style="margin:.2rem 0 .4rem">ADR — Architecture Decision Record</h3>
         <p class="lead">Keep decisions explicit: context, options, trade-offs and outcome.</p>
-        <div class="doc-meta"><span class="chip">context</span><span class="chip">options</span><span class="chip">decision</span></div>
       </div>
 
-      <div class="doc-card">
+      <div class="card">
         <span class="badge">Build</span>
         <h3 class="h2" style="margin:.2rem 0 .4rem">Definition of Done</h3>
         <p class="lead">What “done” means for us: code, tests, docs, security checks.</p>
-        <div class="doc-meta"><span class="chip">tests</span><span class="chip">docs</span><span class="chip">security</span></div>
       </div>
 
-      <div class="doc-card">
+      <div class="card">
         <span class="badge">Operate</span>
         <h3 class="h2" style="margin:.2rem 0 .4rem">Runbook basics</h3>
         <p class="lead">Respond, escalate and communicate clearly during incidents.</p>
-        <div class="doc-meta"><span class="chip">SLA</span><span class="chip">escalation</span><span class="chip">post-mortem</span></div>
       </div>
 
-      <div class="doc-card">
+      <div class="card">
         <span class="badge">Improve</span>
         <h3 class="h2" style="margin:.2rem 0 .4rem">Quarterly review pack</h3>
         <p class="lead">KPI trends, costs and proposed next steps with estimates.</p>
-        <div class="doc-meta"><span class="chip">KPIs</span><span class="chip">costs</span><span class="chip">roadmap</span></div>
       </div>
 
-      <div class="doc-card">
+      <div class="card">
         <span class="badge">Costs</span>
         <h3 class="h2" style="margin:.2rem 0 .4rem">FinOps quick wins</h3>
         <p class="lead">Rightsizing, schedules and tiers that typically save 10–30%.</p>
-        <div class="doc-meta"><span class="chip">budgets</span><span class="chip">alerts</span><span class="chip">tiers</span></div>
       </div>
     </div>
   </template>
@@ -592,29 +546,23 @@ main{ flex:1; }                                                  /* page content
       <div class="card">
         <span class="badge">Kosovo advantage</span>
         <h3 class="h2" style="margin:.3rem 0 .5rem">Close, capable, cost-efficient</h3>
-        <ul class="checklist">
+        <ul>
           <li>Young, tech-savvy, English-speaking talent; cultural proximity to EU.</li>
           <li>Modern stacks and delivery practices from day one.</li>
           <li>EU timezone overlap for demos and decisions.</li>
           <li>Cost-efficient without losing seniority.</li>
         </ul>
-        <div class="pill-list">
-          <span class="pill">React / Node</span><span class="pill">.NET</span><span class="pill">Azure / AWS</span><span class="pill">Terraform</span>
-        </div>
       </div>
 
       <div class="card">
         <span class="badge">How we organize</span>
         <h3 class="h2" style="margin:.3rem 0 .5rem">Small senior squads</h3>
-        <ul class="checklist">
+        <ul>
           <li>Delivery manager as your single point of contact.</li>
           <li>Weekly demos, transparent backlogs and ADRs.</li>
           <li>Security, testing and docs by default.</li>
           <li>Capacity you can scale up or pause.</li>
         </ul>
-        <div class="pill-list">
-          <span class="pill">Weekly demo</span><span class="pill">Runbooks</span><span class="pill">KPIs</span><span class="pill">Cost control</span>
-        </div>
       </div>
     </div>
   </template>
@@ -669,7 +617,7 @@ main{ flex:1; }                                                  /* page content
       });
 
       window.scrollTo(0,0);
-      document.getElementById('year').textContent = new Date().getFullYear();
+      const y = document.getElementById('year'); if (y) y.textContent = new Date().getFullYear();
     }
 
     document.addEventListener('click', (e)=>{
