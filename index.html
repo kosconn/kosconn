@@ -19,8 +19,14 @@
     }
     *{box-sizing:border-box}
     html{scroll-behavior:smooth}
-    body{margin:0;font-family:ui-sans-serif,system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial;
-         background:var(--bg);color:var(--ink);line-height:1.55;-webkit-font-smoothing:antialiased}
+    body{
+      margin:0;
+      font-family:ui-sans-serif,system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial;
+      background:var(--bg);color:var(--ink);line-height:1.55;-webkit-font-smoothing:antialiased;
+      padding-top:68px; /* space for fixed header on all pages... */
+    }
+    body.is-home{ padding-top:0; } /* ...except on Home (hero sits under header) */
+
     a{color:var(--sky);text-decoration:none} a:hover{opacity:.9}
     .container{max-width:var(--maxw);margin:0 auto;padding:0 20px}
     .section{padding:3rem 0}
@@ -36,13 +42,23 @@
     .badge{display:inline-block;font-size:.75rem;font-weight:700;padding:.25rem .6rem;border-radius:999px;background:#eef2ff;color:#4f46e5}
     .btn{display:inline-flex;align-items:center;gap:.5rem;padding:.75rem 1rem;border-radius:999px;font-weight:700;border:1px solid var(--line);background:#fff}
     .btn.primary{background:#0b1220;color:#fff;border-color:transparent}
-    header{position:sticky;top:0;z-index:40;background:rgba(255,255,255,.9);backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
+
+    /* Fixed header that becomes transparent on Home */
+    header{
+      position:fixed; top:0; left:0; right:0; z-index:40;
+      background:rgba(255,255,255,.9);
+      backdrop-filter:blur(8px);
+      border-bottom:1px solid var(--line);
+    }
+    body.is-home header{ background:transparent; border-bottom:0; backdrop-filter:none; }
+
     .nav{display:flex;align-items:center;gap:1rem;height:68px}
     .brand{display:flex;align-items:center;gap:.6rem;font-weight:900}
     .logo{width:32px;height:32px;border-radius:10px;background:linear-gradient(135deg,#2e90fa,#8256ff)}
     .nav-links{margin-left:auto;display:flex;flex-wrap:wrap;gap:.35rem}
     .nav-links a{padding:.5rem .8rem;border-radius:10px;font-weight:700;color:#334155}
     .nav-links a.active,.nav-links a:hover{color:#2e90fa}
+
     footer{background:#0b1220;color:#cbd5e1}
     footer a{color:#a3d3ff}
     @media (max-width:600px){.section{padding:2rem 0}.h1{font-size:clamp(1.6rem,7vw,2.2rem)}.nav{height:60px}}
@@ -59,23 +75,20 @@
     .card.accent-foundation{ border-top:4px solid #2e90fa; }
     .card.accent-platform{ border-top:4px solid #8256ff; }
 
-.hero{
-  position:relative;
-  /* keep the nice top padding, but don't add extra bottom padding */
-  padding: clamp(3rem, 7vw, 6rem) 0;
+    .hero{
+      position:relative;
+      padding: clamp(3rem, 7vw, 6rem) 0;
+      background:
+        linear-gradient(90deg, rgba(255,255,255,.92) 0%, rgba(255,255,255,.75) 38%,
+                               rgba(255,255,255,.35) 62%, rgba(255,255,255,0) 100%),
+        url('/assets/hero.jpg');
+      background-size: cover;
+      background-position: center right;
+      background-repeat: no-repeat;
+      min-height: calc(100vh - 68px);            /* full screen minus header by default */
+    }
+    body.is-home .hero{ min-height:100vh; }       /* true full-bleed on Home */
 
-  /* same overlay + image */
-  background:
-    linear-gradient(90deg, rgba(255,255,255,.92) 0%, rgba(255,255,255,.75) 38%,
-                           rgba(255,255,255,.35) 62%, rgba(255,255,255,0) 100%),
-    url('/assets/hero.jpg');
-  background-size: cover;
-  background-position: center right;
-  background-repeat: no-repeat;
-
-  /* ⬇️ key change: make it fill the viewport (minus the sticky header ~68px) */
-  min-height: calc(100vh - 68px);
-}
     .hero .container{ position: relative; z-index: 1; }
     .hero-blob{ display:none; }
     @media (max-width: 700px){
@@ -89,67 +102,62 @@
       }
     }
 
-    /* Hero copy wrapper (replaces unused grid) */
+    /* Hero copy wrapper */
     .hero-copy{ max-width: 820px; }
 
-    .features-wrap{ max-width: var(--maxw); margin: -24px auto 0; } /* lift the card a bit */
-    .section.compact{ padding: 0 0 2rem; }       /* no top padding */
+    /* Section spacing now that the card moved off Home */
+    .features-wrap{ max-width: var(--maxw); margin: 0 auto; }
+    .section.compact{ padding: 2rem 0; }
 
     /* More gap between the 3 service cards */
     .grid-3{ gap: 1.25rem; }
-    @media (max-width: 960px){
-      .grid-3{ gap: 1rem; }
+    @media (max-width: 960px){ .grid-3{ gap: 1rem; } }
+
+    /* Full-width glass card (for How We Work) */
+    .glass-card{
+      width: 100%;
+      max-width: none;
+      padding: 22px 28px;
+      border-radius: 16px;
+      background: rgba(255,255,255,.18);
+      border: 1px solid rgba(255,255,255,.35);
+      backdrop-filter: blur(10px) saturate(120%);
+      box-shadow: 0 10px 30px rgba(2,6,23,.15);
     }
 
-    /* Full-width glass card (stretched, symmetric) */
-  .glass-card{
-  width: 100%;
-  max-width: none;                
-  padding: 22px 28px;              /* a bit more breathing room */
-  border-radius: 16px;
-  background: rgba(255,255,255,.18);
-  border: 1px solid rgba(255,255,255,.35);
-  backdrop-filter: blur(10px) saturate(120%);
-  box-shadow: 0 10px 30px rgba(2,6,23,.15);
-}
     /* Fresh KPI card content */
-.kpis.modern{
-  display: grid;
-  gap: 18px 28px;                     /* row / column gap */
-  grid-template-columns: repeat(2, minmax(0,1fr));
-  margin: 0;
-  padding: 0;
-  list-style: none;
-}
-@media (max-width: 900px){
-  .kpis.modern{ grid-template-columns: 1fr; }
-}
+    .kpis.modern{
+      display: grid;
+      gap: 18px 28px;                     /* row / column gap */
+      grid-template-columns: repeat(2, minmax(0,1fr));
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+    @media (max-width: 900px){
+      .kpis.modern{ grid-template-columns: 1fr; }
+    }
 
-.kpi2{
-  display:grid;
-  grid-template-columns:14px 1fr;   /* tiny color sphere + content */
-  column-gap:12px;
-  align-items:start;
-}
+    .kpi2{
+      display:grid;
+      grid-template-columns:14px 1fr;   /* tiny color sphere + content */
+      column-gap:12px;
+      align-items:start;
+    }
+    .kpi2 .dot{
+      width:10px; height:10px; border-radius:999px;
+      margin-top:.55rem;                 /* aligns with title baseline */
+      box-shadow:0 0 0 3px rgba(255,255,255,.35), 0 6px 18px rgba(2,6,23,.18);
+    }
+    .dot.blue{   background:linear-gradient(135deg,#2e90fa,#8256ff); }
+    .dot.green{  background:linear-gradient(135deg,#22c55e,#12b76a); }
+    .dot.violet{ background:linear-gradient(135deg,#7c3aed,#8256ff); }
+    .dot.pink{   background:linear-gradient(135deg,#f43f5e,#fb7185); }
 
-.kpi2 .dot{
-  width:10px; height:10px; border-radius:999px;
-  margin-top:.55rem;                 /* aligns with title baseline */
-  box-shadow:0 0 0 3px rgba(255,255,255,.35), 0 6px 18px rgba(2,6,23,.18);
-}
-
-/* dot colors */
-.dot.blue{   background:linear-gradient(135deg,#2e90fa,#8256ff); }
-.dot.green{  background:linear-gradient(135deg,#22c55e,#12b76a); }
-.dot.violet{ background:linear-gradient(135deg,#7c3aed,#8256ff); }
-.dot.pink{   background:linear-gradient(135deg,#f43f5e,#fb7185); }
-
-.kpi2-title{ margin:0; font-size:1.05rem; line-height:1.35; font-weight:900; }
-.kpi2-desc{  margin:.25rem 0 0; color:#475569; line-height:1.55; }
-.kpi2-sub{   margin:.35rem 0 0 .85rem; padding:0 0 0 .6rem; color:#64748b; }
-.kpi2-sub li{ margin:.15rem 0; }
-
-    .hero .glass-card{ margin-top:.25rem; }
+    .kpi2-title{ margin:0; font-size:1.05rem; line-height:1.35; font-weight:900; }
+    .kpi2-desc{  margin:.25rem 0 0; color:#475569; line-height:1.55; }
+    .kpi2-sub{   margin:.35rem 0 0 .85rem; padding:0 0 0 .6rem; color:#64748b; }
+    .kpi2-sub li{ margin:.15rem 0; }
   </style>
 </head>
 <body>
@@ -196,86 +204,21 @@
     <section class="hero">
       <div class="container">
         <div class="hero-copy">
-          <div>
-            <span class="badge foundation">Nearshore to EU member states</span>
-            <h1 class="h1" style="margin:.6rem 0 1rem">
-              Outsource to a <span class="text-gradient">high-performing team</span> that
-              ships clean code and reliable networks.
-            </h1>
-            <p class="lead">Same timezone, English communication, weekly demos and measurable outcomes.</p>
-            <div style="margin-top:1rem; display:flex; gap:.6rem; flex-wrap:wrap">
-              <a class="btn primary" href="/contact" data-nav="/contact">Start a project</a>
-              <a class="btn" href="/services" data-nav="/services">See our services</a>
-            </div>
+          <span class="badge foundation">Nearshore to EU member states</span>
+          <h1 class="h1" style="margin:.6rem 0 1rem">
+            Outsource to a <span class="text-gradient">high-performing team</span> that
+            ships clean code and reliable networks.
+          </h1>
+          <p class="lead">Same timezone, English communication, weekly demos and measurable outcomes.</p>
+          <div style="margin-top:1rem; display:flex; gap:.6rem; flex-wrap:wrap">
+            <a class="btn primary" href="/contact" data-nav="/contact">Start a project</a>
+            <a class="btn" href="/services" data-nav="/services">See our services</a>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- Features card below the hero -->
-    <section class="section compact">
-      <div class="container">
-        <div class="features-wrap">
-          <div class="glass-card" role="region" aria-label="Why teams choose us">
-            <ul class="kpis modern">
-  <li class="kpi2">
-    <span class="dot blue" aria-hidden="true"></span>
-    <div>
-      <h3 class="kpi2-title"><span class="text-gradient">Faster</span> delivery</h3>
-      <p class="kpi2-desc">Ship value every week with demo-ready builds. A small senior squad means fewer hand-offs and faster decisions.</p>
-      <ul class="kpi2-sub">
-        <li>Weekly demo & notes; next week’s plan agreed in the call.</li>
-        <li>CI/CD from day one; preview links for every change.</li>
-        <li>2–4 engineers + delivery lead; no unnecessary layers.</li>
-      </ul>
-    </div>
-  </li>
-
-  <li class="kpi2">
-    <span class="dot green" aria-hidden="true"></span>
-    <div>
-      <h3 class="kpi2-title"><span class="text-gradient">Lower</span> total cost</h3>
-      <p class="kpi2-desc">Near-shore rates without office overhead. We reduce rework and recurring toil with automation.</p>
-      <ul class="kpi2-sub">
-        <li>Reuse components & patterns; don’t reinvent.</li>
-        <li>Automate tests, releases and environment setup.</li>
-        <li>Transparent time vs. outcome tracking.</li>
-      </ul>
-    </div>
-  </li>
-
-  <li class="kpi2">
-    <span class="dot violet" aria-hidden="true"></span>
-    <div>
-      <h3 class="kpi2-title"><span class="text-gradient">Clear</span> ownership</h3>
-      <p class="kpi2-desc">One accountable delivery lead, visible backlog and KPIs. You always know status, risks and next steps.</p>
-      <ul class="kpi2-sub">
-        <li>Single point of contact; fast decisions.</li>
-        <li>Public backlog/roadmap; shared docs & ADRs.</li>
-        <li>Weekly review: goals hit, risks, upcoming work.</li>
-      </ul>
-    </div>
-  </li>
-
-  <li class="kpi2">
-    <span class="dot pink" aria-hidden="true"></span>
-    <div>
-      <h3 class="kpi2-title"><span class="text-gradient">Security</span>-first</h3>
-      <p class="kpi2-desc">Testing, docs, backups and runbooks by default. We design for uptime and quick recovery.</p>
-      <ul class="kpi2-sub">
-        <li>PR checks, dependency updates, SAST/linters.</li>
-        <li>Monitoring & alerts; backups verified regularly.</li>
-        <li>Runbooks & incident drill basics.</li>
-      </ul>
-    </div>
-  </li>
-</ul>
-
-          </div>
-        </div>
-      </div>
-    </section>
-
+    <!-- Home no longer has the features card -->
     <section class="section">
       <div class="container">
         <div class="grid grid-3">
@@ -330,6 +273,70 @@
 
   <template id="page-how">
     <h1 class="h1">How We Work</h1>
+
+    <!-- Features card moved here -->
+    <section class="section compact">
+      <div class="container">
+        <div class="features-wrap">
+          <div class="glass-card" role="region" aria-label="Why teams choose us">
+            <ul class="kpis modern">
+              <li class="kpi2">
+                <span class="dot blue" aria-hidden="true"></span>
+                <div>
+                  <h3 class="kpi2-title"><span class="text-gradient">Faster</span> delivery</h3>
+                  <p class="kpi2-desc">Ship value every week with demo-ready builds. A small senior squad means fewer hand-offs and faster decisions.</p>
+                  <ul class="kpi2-sub">
+                    <li>Weekly demo & notes; next week’s plan agreed in the call.</li>
+                    <li>CI/CD from day one; preview links for every change.</li>
+                    <li>2–4 engineers + delivery lead; no unnecessary layers.</li>
+                  </ul>
+                </div>
+              </li>
+
+              <li class="kpi2">
+                <span class="dot green" aria-hidden="true"></span>
+                <div>
+                  <h3 class="kpi2-title"><span class="text-gradient">Lower</span> total cost</h3>
+                  <p class="kpi2-desc">Near-shore rates without office overhead. We reduce rework and recurring toil with automation.</p>
+                  <ul class="kpi2-sub">
+                    <li>Reuse components & patterns; don’t reinvent.</li>
+                    <li>Automate tests, releases and environment setup.</li>
+                    <li>Transparent time vs. outcome tracking.</li>
+                  </ul>
+                </div>
+              </li>
+
+              <li class="kpi2">
+                <span class="dot violet" aria-hidden="true"></span>
+                <div>
+                  <h3 class="kpi2-title"><span class="text-gradient">Clear</span> ownership</h3>
+                  <p class="kpi2-desc">One accountable delivery lead, visible backlog and KPIs. You always know status, risks and next steps.</p>
+                  <ul class="kpi2-sub">
+                    <li>Single point of contact; fast decisions.</li>
+                    <li>Public backlog/roadmap; shared docs & ADRs.</li>
+                    <li>Weekly review: goals hit, risks, upcoming work.</li>
+                  </ul>
+                </div>
+              </li>
+
+              <li class="kpi2">
+                <span class="dot pink" aria-hidden="true"></span>
+                <div>
+                  <h3 class="kpi2-title"><span class="text-gradient">Security</span>-first</h3>
+                  <p class="kpi2-desc">Testing, docs, backups and runbooks by default. We design for uptime and quick recovery.</p>
+                  <ul class="kpi2-sub">
+                    <li>PR checks, dependency updates, SAST/linters.</li>
+                    <li>Monitoring & alerts; backups verified regularly.</li>
+                    <li>Runbooks & incident drill basics.</li>
+                  </ul>
+                </div>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
     <ol class="lead">
       <li><strong>Initial contact:</strong> goals, constraints, one-page proposal.</li>
       <li><strong>Discovery & requirements:</strong> workshops, audits, KPIs, risks.</li>
@@ -399,18 +406,37 @@
       'page-about':'Who We Are | Kosconn',
       'page-contact':'Contact | Kosconn'
     };
-    function render(path){ const id = routes[path] || 'page-home';
+
+    function render(path){
+      const id = routes[path] || 'page-home';
       const tpl = document.getElementById(id);
       app.innerHTML = tpl ? tpl.innerHTML : '<h1>Not found</h1>';
       document.title = titles[id] || 'Kosconn';
+
+      // Make header transparent only on Home
+      document.body.classList.toggle('is-home', id === 'page-home');
+
+      // Highlight current nav
+      document.querySelectorAll('.nav-links a').forEach(a=>{
+        const u = new URL(a.href, location.origin);
+        a.classList.toggle('active', routes[u.pathname] === id);
+      });
+
       window.scrollTo(0,0);
     }
+
     document.addEventListener('click', (e)=>{
       const a = e.target.closest('a[href]'); if(!a) return;
       const u = new URL(a.href, location.origin);
-      if (u.origin === location.origin && routes[u.pathname]) { e.preventDefault(); history.pushState({},'',u.pathname); render(u.pathname); }
+      if (u.origin === location.origin && routes[u.pathname]) {
+        e.preventDefault();
+        history.pushState({},'',u.pathname);
+        render(u.pathname);
+      }
     });
+
     window.addEventListener('popstate', ()=>render(location.pathname));
+
     (function init(){
       const p = new URLSearchParams(location.search).get('__r');
       if (p) history.replaceState({},'',p);
