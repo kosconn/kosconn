@@ -23,10 +23,11 @@
     margin:0;
     font-family:ui-sans-serif,system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial;
     background:var(--bg);color:var(--ink);line-height:1.55;-webkit-font-smoothing:antialiased;
-    padding-top:68px; /* space for fixed header on inner pages */
+    padding-top:68px; /* fixed header offset on inner pages */
     min-height:100vh; display:flex; flex-direction:column; /* sticky footer layout */
   }
-  body.is-home{ padding-top:0; } /* no offset on Home (hero sits under header) */
+  body.is-home{ padding-top:0; } /* home hero sits under header */
+  main{ flex:1; }
 
   a{color:var(--sky);text-decoration:none} a:hover{opacity:.9}
   .container{max-width:var(--maxw);margin:0 auto;padding:0 20px}
@@ -44,35 +45,70 @@
   .btn{display:inline-flex;align-items:center;gap:.5rem;padding:.75rem 1rem;border-radius:999px;font-weight:700;border:1px solid var(--line);background:#fff}
   .btn.primary{background:#0b1220;color:#fff;border-color:transparent}
 
-  /* ===== Header ===== */
+  /* ===== Header (desktop) ===== */
   header{
-    position:fixed; top:0; left:0; right:0; z-index:40;
-    background:rgba(255,255,255,.9);           /* default on inner pages */
+    position:fixed; top:0; left:0; right:0; z-index:50;
+    background:rgba(255,255,255,.9);
     backdrop-filter:blur(8px);
     border-bottom:1px solid var(--line);
   }
-  /* Transparent on Home */
   body.is-home header{ background:transparent; border-bottom:0; backdrop-filter:none; }
-
   .nav{display:flex;align-items:center;gap:1rem;height:68px}
   .brand{display:flex;align-items:center;gap:.6rem;font-weight:900}
   .logo{width:32px;height:32px;border-radius:10px;background:linear-gradient(135deg,#2e90fa,#8256ff)}
   .nav-links{margin-left:auto;display:flex;flex-wrap:wrap;gap:.35rem}
   .nav-links a{padding:.5rem .8rem;border-radius:10px;font-weight:700;color:#334155}
   .nav-links a.active,.nav-links a:hover{color:#2e90fa}
-  /* Readable links on transparent Home header */
+
+  /* Readable links on transparent Home header (desktop) */
   body.is-home .brand{ color:#fff; text-shadow:0 1px 2px rgba(0,0,0,.35); }
   body.is-home .nav-links a{ color:#f8fafc; text-shadow:0 1px 2px rgba(0,0,0,.35); }
   body.is-home .nav-links a:hover, body.is-home .nav-links a.active{
     color:#ffffff; background:rgba(255,255,255,.08);
   }
 
+  /* ===== Mobile nav ===== */
+  .nav-toggle{
+    display:none; margin-left:auto; width:40px; height:40px; border:1px solid var(--line);
+    border-radius:10px; background:#fff; align-items:center; justify-content:center;
+  }
+  .nav-toggle span, .nav-toggle::before, .nav-toggle::after{
+    content:""; display:block; width:20px; height:2px; background:#0b1220; border-radius:2px;
+  }
+  .nav-toggle::before{ transform:translateY(-6px); }
+  .nav-toggle::after{ transform:translateY(6px); }
+
+  @media (max-width:860px){
+    /* Hide desktop links, show hamburger */
+    .nav-links{ display:none; }
+    .nav-toggle{ display:flex; }
+    /* Open state: slide-down overlay menu */
+    .nav-links.open{
+      display:flex; flex-direction:column; gap:.25rem;
+      position:fixed; left:0; right:0; top:68px; padding:12px 20px 16px;
+      background:rgba(15,23,42,.92); backdrop-filter:blur(10px) saturate(140%);
+      border-bottom:1px solid rgba(255,255,255,.12); z-index:60;
+    }
+    .nav-links.open a{ color:#f8fafc; }
+    .nav-links.open a:hover,.nav-links.open a.active{ color:#fff; background:rgba(255,255,255,.08); }
+    .nav-links .nav-cta{ margin-top:.25rem; }
+    body.menu-open header{
+      background:rgba(15,23,42,.92); border-bottom:0; backdrop-filter:blur(10px) saturate(140%);
+    }
+    /* On Home with menu open, keep brand readable */
+    body.is-home.menu-open .brand{ color:#fff; }
+  }
+
   footer{background:#0b1220;color:#cbd5e1}
   footer a{color:#a3d3ff}
 
-  @media (max-width:600px){.section{padding:2rem 0}.h1{font-size:clamp(1.6rem,7vw,2.2rem)}.nav{height:60px}}
+  @media (max-width:600px){
+    .section{padding:2rem 0}
+    .h1{font-size:clamp(1.6rem,7vw,2.2rem)}
+    .nav{height:60px}
+  }
 
-  /* ===== Color accents (kept for home if needed) ===== */
+  /* ===== Color accents (home cards) ===== */
   .text-gradient{
     background: linear-gradient(135deg,#2e90fa 0%,#8256ff 55%,#f43f5e 100%);
     -webkit-background-clip:text; background-clip:text; color:transparent;
@@ -89,7 +125,8 @@
     position:relative;
     padding: clamp(3rem, 7vw, 6rem) 0;
     background:
-      linear-gradient(90deg, rgba(255,255,255,.42) 0%, rgba(255,255,255,.22) 34%, rgba(255,255,255,.08) 62%, rgba(255,255,255,0) 100%),
+      linear-gradient(90deg, rgba(255,255,255,.42) 0%, rgba(255,255,255,.22) 34%,
+                            rgba(255,255,255,.08) 62%, rgba(255,255,255,0) 100%),
       url('/assets/hero.jpg');
     background-size: cover;
     background-position: center right;
@@ -101,18 +138,21 @@
   .hero .container{ position: relative; z-index: 1; }
   .hero-copy{ max-width: 820px; }
 
-  @media (max-width: 700px){
+  /* Stronger mobile overlay so text never clashes */
+  @media (max-width:700px){
     .hero{
       background:
-        linear-gradient(180deg, rgba(255,255,255,.95) 0%, rgba(255,255,255,.75) 45%,
-                               rgba(255,255,255,.30) 70%, rgba(255,255,255,0) 100%),
+        linear-gradient(180deg, rgba(0,0,0,.35) 0%, rgba(0,0,0,.22) 24%,
+                               rgba(255,255,255,.15) 55%, rgba(255,255,255,0) 100%),
         url('/assets/hero.jpg');
       background-position: center top;
-      min-height: 420px;
+      min-height: 480px;
     }
+    /* Make the hero text slightly tighter on small screens */
+    .hero .h1{ line-height:1.05; }
   }
 
-  /* ===== Home: value band and square cards ===== */
+  /* ===== Home: value band + square cards ===== */
   .features-wrap{ max-width: var(--maxw); margin: 0 auto; }
   .section.compact{ padding: 2rem 0; }
   .grid-3{ gap: 1.25rem; }
@@ -145,7 +185,7 @@
   .kpi2-desc{  margin:.25rem 0 0; color:#475569; line-height:1.55; }
   .kpi2-sub{   margin:.35rem 0 0 .85rem; padding:0 0 0 .6rem; color:#64748b; }
   .kpi2-sub li{ margin:.15rem 0; }
-  .value-prop h2{ font-size: clamp(1.6rem, 3vw, 2.2rem); line-height: 1.25; margin: .5rem 0 .75rem; font-weight: 800; }
+  .value-prop h2{ font-size: clamp(1.6rem, 3vw, 2.2rem); line-height:1.25; margin:.5rem 0 .75rem; font-weight:800; }
   .value-prop p{ color: var(--muted); max-width: 70ch; }
 
   .flat-cards .card{
@@ -159,37 +199,28 @@
     border-top: 1px solid var(--line) !important;
   }
 
-  /* ===== Shared: flat square cards used on inner pages ===== */
-  .cards-flat .card{
+  /* ===== Services page: modern cards ===== */
+  .svc .cards-flat .card{
     border-radius:0;
     border-top:none;
     padding:22px 24px;
     box-shadow:0 6px 22px rgba(2,6,23,.06);
   }
-
-  /* Two clean columns inside a card */
-  .two-col{
+  .svc .service-card h2{ margin:.25rem 0 .35rem; }
+  .svc .service-card p.lead{ margin:0 0 .8rem; color:var(--muted); }
+  .svc .svc-columns{
     display:grid; gap:12px 28px;
     grid-template-columns:repeat(2,minmax(0,1fr));
-    margin-top:.2rem;
   }
   @media (max-width: 960px){
-    .two-col{ grid-template-columns:1fr; }
+    .svc .svc-columns{ grid-template-columns:1fr; }
   }
-  .two-col h3{
-    font-size:1.05rem; margin:.2rem 0 .35rem; font-weight:800;
-  }
-  .stack{ margin-top:.75rem; font-size:.95rem; color:#64748b }
-
-  /* Soft callout */
-  .callout{
+  .svc .stack{ margin-top:.75rem; font-size:.95rem; color:#64748b }
+  .svc .callout{
     border-radius:0;
     border-left:3px solid #2e90fa;
     background:linear-gradient(180deg,#ffffff, #f9fbff);
   }
-
-  /* Sticky footer support */
-  main{ flex:1; }
   </style>
 </head>
 <body>
@@ -197,13 +228,17 @@
   <header>
     <div class="container nav">
       <a class="brand" href="/" data-nav="/"><div class="logo" aria-hidden="true"></div> Kosconn</a>
+
+      <!-- Mobile toggle -->
+      <button class="nav-toggle" aria-label="Open menu" aria-expanded="false"><span></span></button>
+
       <nav class="nav-links" aria-label="Main">
         <a href="/" data-nav="/">Home</a>
         <a href="/services" data-nav="/services">Services</a>
         <a href="/how-we-work" data-nav="/how-we-work">How we work</a>
         <a href="/resources" data-nav="/resources">Resources</a>
         <a href="/about" data-nav="/about">Who we are</a>
-        <a href="/contact" data-nav="/contact" class="btn primary">Start a project</a>
+        <a href="/contact" data-nav="/contact" class="btn primary nav-cta">Start a project</a>
       </nav>
     </div>
   </header>
@@ -285,7 +320,7 @@
     </section>
   </template>
 
-  <!-- ===== Services (two-column content inside each card) ===== -->
+  <!-- ===== Services ===== -->
   <template id="page-services">
     <section class="section">
       <div class="container">
@@ -298,19 +333,19 @@
       </div>
     </section>
 
-    <section class="section">
+    <section class="section svc">
       <div class="container">
         <div class="grid grid-3 cards-flat">
 
           <!-- Coding & Product -->
-          <article class="card">
+          <article class="card service-card">
             <span class="badge">Coding &amp; Product</span>
             <h2>Ship useful software</h2>
             <p class="lead">Features every week, maintainable code, and zero-drama releases.</p>
 
-            <div class="two-col">
+            <div class="svc-columns">
               <div>
-                <h3>Outcomes</h3>
+                <h3 class="h2" style="font-size:1.05rem;margin:.2rem 0 .4rem">Outcomes</h3>
                 <ul>
                   <li>Predictable roadmap; visible backlog with priorities.</li>
                   <li>Stable builds with automated tests and CI/CD.</li>
@@ -320,7 +355,7 @@
                 </ul>
               </div>
               <div>
-                <h3>Deliverables</h3>
+                <h3 class="h2" style="font-size:1.05rem;margin:.2rem 0 .4rem">Deliverables</h3>
                 <ul>
                   <li>Sprint plan, demo notes, and risk register weekly.</li>
                   <li>ADR &amp; architecture notes for key decisions.</li>
@@ -338,14 +373,14 @@
           </article>
 
           <!-- Network Foundation -->
-          <article class="card">
+          <article class="card service-card">
             <span class="badge">Network Foundation</span>
             <h2>Keep the lights on</h2>
             <p class="lead">A reliable, observable network: segmented, monitored, and documented.</p>
 
-            <div class="two-col">
+            <div class="svc-columns">
               <div>
-                <h3>Outcomes</h3>
+                <h3 class="h2" style="font-size:1.05rem;margin:.2rem 0 .4rem">Outcomes</h3>
                 <ul>
                   <li>Segmentation, QoS and Wi-Fi planning that scales.</li>
                   <li>Central monitoring, logs and actionable alerts.</li>
@@ -355,7 +390,7 @@
                 </ul>
               </div>
               <div>
-                <h3>Deliverables</h3>
+                <h3 class="h2" style="font-size:1.05rem;margin:.2rem 0 .4rem">Deliverables</h3>
                 <ul>
                   <li>Network baseline + diagrams + IP strategy.</li>
                   <li>Device inventory (source-of-truth) and ZTP setup.</li>
@@ -373,14 +408,14 @@
           </article>
 
           <!-- Cloud & FinOps -->
-          <article class="card">
+          <article class="card service-card">
             <span class="badge">Cloud &amp; FinOps</span>
             <h2>Safe, efficient platform</h2>
             <p class="lead">Guardrails, automation, and cost visibility—without slowing teams down.</p>
 
-            <div class="two-col">
+            <div class="svc-columns">
               <div>
-                <h3>Outcomes</h3>
+                <h3 class="h2" style="font-size:1.05rem;margin:.2rem 0 .4rem">Outcomes</h3>
                 <ul>
                   <li>Secure landing zone with identity, policy and logging.</li>
                   <li>Pipelines for infra + app deploys (repeatable IaC).</li>
@@ -390,7 +425,7 @@
                 </ul>
               </div>
               <div>
-                <h3>Deliverables</h3>
+                <h3 class="h2" style="font-size:1.05rem;margin:.2rem 0 .4rem">Deliverables</h3>
                 <ul>
                   <li>Terraform modules and environments (dev/test/prod).</li>
                   <li>GitHub Actions pipelines with policy checks.</li>
@@ -424,312 +459,171 @@
     </section>
   </template>
 
-  <!-- ===== How we work (same two-column card pattern) ===== -->
+  <!-- ===== How we work ===== -->
   <template id="page-how">
     <section class="section">
       <div class="container">
         <h1 class="h1">How We Work</h1>
-        <p class="lead" style="max-width:880px">
-          Small senior squads. Weekly demos. Visible backlogs. Clear KPIs. Security, tests and docs by default.
-        </p>
+        <p class="lead">Small senior squad, visible progress, measurable outcomes.</p>
       </div>
     </section>
 
-    <section class="section">
+    <section class="section" style="padding-top:1.2rem">
       <div class="container">
-        <div class="grid grid-3 cards-flat">
-          <!-- Delivery rhythm -->
-          <article class="card">
-            <span class="badge">Delivery rhythm</span>
-            <h2>Move fast without chaos</h2>
-            <p class="lead">Short cycles with predictable outcomes and clear ownership.</p>
-
-            <div class="two-col">
-              <div>
-                <h3>What you get</h3>
-                <ul>
-                  <li>Weekly demo-ready increments.</li>
-                  <li>Backlog with priorities and risks.</li>
-                  <li>Transparent time vs. outcome tracking.</li>
-                  <li>One accountable delivery lead.</li>
-                </ul>
-              </div>
-              <div>
-                <h3>Practices</h3>
-                <ul>
-                  <li>Sprint planning + review notes.</li>
-                  <li>Definition of Ready/Done.</li>
-                  <li>Preview environments for every PR.</li>
-                  <li>Explicit non-goals & assumptions.</li>
-                </ul>
-              </div>
-            </div>
-          </article>
-
-          <!-- Transparency -->
-          <article class="card">
-            <span class="badge">Transparency</span>
-            <h2>Always know the status</h2>
-            <p class="lead">Open docs, shared roadmaps, measurable results.</p>
-
-            <div class="two-col">
-              <div>
-                <h3>What you get</h3>
-                <ul>
-                  <li>Shareable roadmap and ADRs.</li>
-                  <li>KPI dashboards for quality and cost.</li>
-                  <li>Runbooks for deploys & incidents.</li>
-                  <li>Handover pack you can keep.</li>
-                </ul>
-              </div>
-              <div>
-                <h3>Practices</h3>
-                <ul>
-                  <li>Docs as code + templates.</li>
-                  <li>Automated changelogs.</li>
-                  <li>Incident reviews & post-mortems.</li>
-                  <li>Access, tagging and audit by default.</li>
-                </ul>
-              </div>
-            </div>
-          </article>
-
-          <!-- Reliability & Security -->
-          <article class="card">
-            <span class="badge">Reliability & Security</span>
-            <h2>Design for uptime</h2>
-            <p class="lead">Security, testing and recovery built-in from day one.</p>
-
-            <div class="two-col">
-              <div>
-                <h3>What you get</h3>
-                <ul>
-                  <li>Automated tests & CI/CD.</li>
-                  <li>Monitoring, alerts and SLOs.</li>
-                  <li>Backups & recovery drills.</li>
-                  <li>Change control that’s auditable.</li>
-                </ul>
-              </div>
-              <div>
-                <h3>Practices</h3>
-                <ul>
-                  <li>Static analysis, linters, dependency updates.</li>
-                  <li>PR checks and policy gates.</li>
-                  <li>Zero-trust defaults and least privilege.</li>
-                  <li>Runbooks, on-call basics, simulation.</li>
-                </ul>
-              </div>
-            </div>
-          </article>
+        <div class="glass-card">
+          <ul class="kpis modern">
+            <li class="kpi2"><span class="dot blue"></span><div>
+              <h3 class="kpi2-title"><span class="text-gradient">Faster</span> delivery</h3>
+              <p class="kpi2-desc">Weekly demo-ready builds. Decisions made on the call.</p>
+              <ul class="kpi2-sub">
+                <li>CI/CD + preview links for every change.</li>
+                <li>2–4 engineers + delivery lead — no layers.</li>
+              </ul>
+            </div></li>
+            <li class="kpi2"><span class="dot green"></span><div>
+              <h3 class="kpi2-title"><span class="text-gradient">Lower</span> total cost</h3>
+              <p class="kpi2-desc">Near-shore rates and automation reduce toil.</p>
+              <ul class="kpi2-sub">
+                <li>Reuse patterns; automate tests & releases.</li>
+                <li>Transparent time vs outcome tracking.</li>
+              </ul>
+            </div></li>
+            <li class="kpi2"><span class="dot violet"></span><div>
+              <h3 class="kpi2-title"><span class="text-gradient">Clear</span> ownership</h3>
+              <p class="kpi2-desc">One accountable lead and a visible backlog.</p>
+              <ul class="kpi2-sub">
+                <li>Single point of contact; fast decisions.</li>
+                <li>Roadmap + ADRs shared with you.</li>
+              </ul>
+            </div></li>
+            <li class="kpi2"><span class="dot pink"></span><div>
+              <h3 class="kpi2-title"><span class="text-gradient">Security</span>-first</h3>
+              <p class="kpi2-desc">Design for uptime and quick recovery.</p>
+              <ul class="kpi2-sub">
+                <li>PR checks, dependency updates, SAST/linters.</li>
+                <li>Runbooks, drills and verified backups.</li>
+              </ul>
+            </div></li>
+          </ul>
         </div>
+      </div>
+    </section>
 
-        <!-- Simple timeline -->
-        <div class="cards-flat" style="margin-top:1.25rem">
-          <article class="card">
-            <h3 class="h2" style="margin:.2rem 0 .6rem">Engagement flow</h3>
-            <ol class="lead">
-              <li><strong>Initial contact:</strong> goals, constraints, success criteria, one-page proposal.</li>
-              <li><strong>Discovery & requirements:</strong> workshops, audits, KPIs, risks and first backlog.</li>
-              <li><strong>Analysis & design:</strong> architecture notes, ADRs, delivery plan & estimates.</li>
-              <li><strong>Build & transition:</strong> sprints, weekly demos, tests and docs. Handover plan.</li>
-              <li><strong>Operate & support:</strong> monitoring, incidents, fixes and change requests.</li>
-              <li><strong>Review & improve:</strong> KPI + cost review, next-step proposals and roadmap.</li>
-            </ol>
-          </article>
-        </div>
+    <section class="section" style="padding-top:1rem">
+      <div class="container">
+        <ol>
+          <li><strong>Initial contact:</strong> goals, constraints, success criteria, one-page proposal.</li>
+          <li><strong>Discovery & requirements:</strong> workshops, audits, KPIs, risks and first backlog.</li>
+          <li><strong>Analysis & design:</strong> architecture notes, ADRs, delivery plan & estimates.</li>
+          <li><strong>Build & transition:</strong> sprints, weekly demos, tests and docs. Handover plan.</li>
+          <li><strong>Operate & support:</strong> monitoring, incidents, fixes and change requests.</li>
+          <li><strong>Review & improve:</strong> KPI + cost review, next-step proposals and roadmap.</li>
+        </ol>
       </div>
     </section>
   </template>
 
-  <!-- ===== Resources (grouped into three two-column cards) ===== -->
+  <!-- ===== Resources ===== -->
   <template id="page-resources">
     <section class="section">
       <div class="container">
         <h1 class="h1">Resources</h1>
-        <p class="lead" style="max-width:880px">
-          Lightweight templates we use in delivery. Grab and adapt.
-        </p>
+        <p class="lead">Lightweight templates we use in delivery. Grab and adapt.</p>
       </div>
     </section>
 
     <section class="section">
       <div class="container">
-        <div class="grid grid-3 cards-flat">
-          <!-- Discovery & Design -->
-          <article class="card">
-            <span class="badge">Discovery & Design</span>
-            <h2>Start clear</h2>
-            <p class="lead">Align stakeholders and decisions before build.</p>
-
-            <div class="two-col">
-              <div>
-                <h3>Includes</h3>
-                <ul>
-                  <li>Stakeholder & KPI template.</li>
-                  <li>Risk register & assumptions.</li>
-                  <li>ADR (Architecture Decision Record).</li>
-                  <li>UX flows & design system starter.</li>
-                </ul>
-              </div>
-              <div>
-                <h3>Use it to</h3>
-                <ul>
-                  <li>Capture goals and constraints in one page.</li>
-                  <li>Make trade-offs explicit and documented.</li>
-                  <li>De-risk early with shared context.</li>
-                  <li>Speed up decisions later.</li>
-                </ul>
-              </div>
-            </div>
-          </article>
-
-          <!-- Build & Operate -->
-          <article class="card">
-            <span class="badge">Build & Operate</span>
-            <h2>Ship safely</h2>
-            <p class="lead">Repeatable delivery with quality baked-in.</p>
-
-            <div class="two-col">
-              <div>
-                <h3>Includes</h3>
-                <ul>
-                  <li>Definition of Done (tests, docs, security).</li>
-                  <li>Runbook basics for incidents.</li>
-                  <li>CI/CD pipeline templates.</li>
-                  <li>Monitoring & alerting checklist.</li>
-                </ul>
-              </div>
-              <div>
-                <h3>Use it to</h3>
-                <ul>
-                  <li>Stabilize releases and reduce regressions.</li>
-                  <li>Respond, escalate and communicate clearly.</li>
-                  <li>Keep ops knowledge in the repo.</li>
-                  <li>Onboard new engineers faster.</li>
-                </ul>
-              </div>
-            </div>
-          </article>
-
-          <!-- Improve & Costs -->
-          <article class="card">
-            <span class="badge">Improve & Costs</span>
-            <h2>Measure & optimize</h2>
-            <p class="lead">Make better decisions with data and budgets.</p>
-
-            <div class="two-col">
-              <div>
-                <h3>Includes</h3>
-                <ul>
-                  <li>Quarterly review pack (KPI trends, costs).</li>
-                  <li>FinOps quick wins (rightsizing, schedules, tiers).</li>
-                  <li>Outcome vs effort tracking.</li>
-                  <li>Next-step proposals with estimates.</li>
-                </ul>
-              </div>
-              <div>
-                <h3>Use it to</h3>
-                <ul>
-                  <li>Cut 10–30% of cloud waste safely.</li>
-                  <li>Spot slowdown or quality drift early.</li>
-                  <li>Plan the next quarter with clarity.</li>
-                  <li>Keep teams focused on outcomes.</li>
-                </ul>
-              </div>
-            </div>
-          </article>
+        <div class="grid grid-3">
+          <div class="card">
+            <span class="badge">Discovery</span>
+            <h3 class="h2" style="margin:.2rem 0 .4rem">Stakeholder & KPI template</h3>
+            <p class="lead">Capture goals, constraints and success metrics in a single page.</p>
+          </div>
+          <div class="card">
+            <span class="badge">Design</span>
+            <h3 class="h2" style="margin:.2rem 0 .4rem">ADR — Architecture Decision Record</h3>
+            <p class="lead">Keep decisions explicit: context, options, trade-offs and outcome.</p>
+          </div>
+          <div class="card">
+            <span class="badge">Build</span>
+            <h3 class="h2" style="margin:.2rem 0 .4rem">Definition of Done</h3>
+            <p class="lead">What “done” means for us: code, tests, docs, security checks.</p>
+          </div>
+          <div class="card">
+            <span class="badge">Operate</span>
+            <h3 class="h2" style="margin:.2rem 0 .4rem">Runbook basics</h3>
+            <p class="lead">Respond, escalate and communicate clearly during incidents.</p>
+          </div>
+          <div class="card">
+            <span class="badge">Improve</span>
+            <h3 class="h2" style="margin:.2rem 0 .4rem">Quarterly review pack</h3>
+            <p class="lead">KPI trends, costs and proposed next steps with estimates.</p>
+          </div>
+          <div class="card">
+            <span class="badge">Costs</span>
+            <h3 class="h2" style="margin:.2rem 0 .4rem">FinOps quick wins</h3>
+            <p class="lead">Rightsizing, schedules and tiers that typically save 10–30%.</p>
+          </div>
         </div>
       </div>
     </section>
   </template>
 
-  <!-- ===== Who we are (two cards with two-column content) ===== -->
+  <!-- ===== Who we are ===== -->
   <template id="page-about">
     <section class="section">
       <div class="container">
         <h1 class="h1">Who We Are</h1>
-        <p class="lead" style="max-width:880px">
-          Near-shore senior talent with product, network and cloud experience.
-        </p>
+        <p class="lead">Near-shore senior talent with product, network and cloud experience.</p>
       </div>
     </section>
 
     <section class="section">
       <div class="container">
-        <div class="grid grid-2 cards-flat">
-          <!-- Kosovo advantage -->
-          <article class="card">
+        <div class="grid grid-2" style="margin-top:1rem">
+          <div class="card">
             <span class="badge">Kosovo advantage</span>
-            <h2>Close, capable, cost-efficient</h2>
-            <p class="lead">EU-friendly timezone and culture with modern engineering skills.</p>
-
-            <div class="two-col">
-              <div>
-                <h3>Strengths</h3>
-                <ul>
-                  <li>Young, English-speaking, tech-savvy talent.</li>
-                  <li>EU timezone overlap for demos and decisions.</li>
-                  <li>Modern stacks and practices from day one.</li>
-                  <li>Cost-efficient without losing seniority.</li>
-                </ul>
-              </div>
-              <div>
-                <h3>Proof points</h3>
-                <ul>
-                  <li>Delivered across web, network and cloud.</li>
-                  <li>Playbooks, docs and runbooks by default.</li>
-                  <li>Security and testing integrated into delivery.</li>
-                  <li>Happy clients, predictable outcomes.</li>
-                </ul>
-              </div>
-            </div>
-          </article>
-
-          <!-- How we organize -->
-          <article class="card">
+            <h3 class="h2" style="margin:.3rem 0 .5rem">Close, capable, cost-efficient</h3>
+            <ul>
+              <li>Young, tech-savvy, English-speaking talent; cultural proximity to EU.</li>
+              <li>Modern stacks and delivery practices from day one.</li>
+              <li>EU timezone overlap for demos and decisions.</li>
+              <li>Cost-efficient without losing seniority.</li>
+            </ul>
+          </div>
+          <div class="card">
             <span class="badge">How we organize</span>
-            <h2>Small senior squads</h2>
-            <p class="lead">One accountable lead, visible progress, measurable results.</p>
-
-            <div class="two-col">
-              <div>
-                <h3>Structure</h3>
-                <ul>
-                  <li>2–4 engineers + delivery lead.</li>
-                  <li>Clear roles & shared standards.</li>
-                  <li>Capacity you can scale up or pause.</li>
-                  <li>Single point of contact.</li>
-                </ul>
-              </div>
-              <div>
-                <h3>Quality safeguards</h3>
-                <ul>
-                  <li>Weekly demos & transparent backlog.</li>
-                  <li>ADRs and architecture notes.</li>
-                  <li>Tests, CI/CD, security checks.</li>
-                  <li>Runbooks and incident drills.</li>
-                </ul>
-              </div>
-            </div>
-          </article>
+            <h3 class="h2" style="margin:.3rem 0 .5rem">Small senior squads</h3>
+            <ul>
+              <li>Delivery manager as your single point of contact.</li>
+              <li>Weekly demos, transparent backlogs and ADRs.</li>
+              <li>Security, testing and docs by default.</li>
+              <li>Capacity you can scale up or pause.</li>
+            </ul>
+          </div>
         </div>
       </div>
     </section>
   </template>
 
-  <!-- ===== Contact (unchanged) ===== -->
+  <!-- ===== Contact ===== -->
   <template id="page-contact">
-    <h1 class="h1">Contact</h1>
-    <div class="card">
-      <form id="contactForm" action="https://formspree.io/f/REPLACE_WITH_YOUR_ID" method="POST">
-        <p><label>Your name<br><input type="text" name="name" required></label></p>
-        <p><label>Email<br><input type="email" name="email" required></label></p>
-        <p><label>Company<br><input type="text" name="company"></label></p>
-        <p><label>Message<br><textarea name="message" rows="5" required></textarea></label></p>
-        <p><button class="btn primary" type="submit">Send</button></p>
-      </form>
-      <p class="lead">Prefer email? <a href="mailto:hello@kosconn.com">hello@kosconn.com</a></p>
-    </div>
+    <section class="section">
+      <div class="container">
+        <h1 class="h1">Contact</h1>
+        <div class="card">
+          <form id="contactForm" action="https://formspree.io/f/REPLACE_WITH_YOUR_ID" method="POST">
+            <p><label>Your name<br><input type="text" name="name" required></label></p>
+            <p><label>Email<br><input type="email" name="email" required></label></p>
+            <p><label>Company<br><input type="text" name="company"></label></p>
+            <p><label>Message<br><textarea name="message" rows="5" required></textarea></label></p>
+            <p><button class="btn primary" type="submit">Send</button></p>
+          </form>
+          <p class="lead">Prefer email? <a href="mailto:hello@kosconn.com">hello@kosconn.com</a></p>
+        </div>
+      </div>
+    </section>
   </template>
 
   <script>
@@ -767,6 +661,9 @@
         a.classList.toggle('active', routes[u.pathname] === id);
       });
 
+      // close mobile menu on route change
+      closeMenu();
+
       window.scrollTo(0,0);
       const y = document.getElementById('year'); if (y) y.textContent = new Date().getFullYear();
     }
@@ -780,8 +677,30 @@
         render(u.pathname);
       }
     });
-
     window.addEventListener('popstate', ()=>render(location.pathname));
+
+    // ===== Mobile menu =====
+    const toggleBtn = document.querySelector('.nav-toggle');
+    const navLinks = document.querySelector('.nav-links');
+    function openMenu(){
+      navLinks.classList.add('open');
+      document.body.classList.add('menu-open');
+      toggleBtn.setAttribute('aria-expanded','true');
+    }
+    function closeMenu(){
+      navLinks.classList.remove('open');
+      document.body.classList.remove('menu-open');
+      if (toggleBtn) toggleBtn.setAttribute('aria-expanded','false');
+    }
+    if (toggleBtn){
+      toggleBtn.addEventListener('click', ()=>{
+        if (navLinks.classList.contains('open')) closeMenu(); else openMenu();
+      });
+      // Close on ESC
+      window.addEventListener('keydown', (e)=>{ if(e.key==='Escape') closeMenu(); });
+      // Close when clicking a nav link (handled in render too, but safe here)
+      navLinks.addEventListener('click', (e)=>{ if (e.target.tagName==='A') closeMenu(); });
+    }
 
     (function init(){
       const p = new URLSearchParams(location.search).get('__r');
