@@ -107,18 +107,33 @@
       backdrop-filter: blur(10px) saturate(120%);
       box-shadow: 0 10px 30px rgba(2,6,23,.15);
     }
-    .kpis{ display:grid; gap:12px; margin:0; padding:0; list-style:none; }
-    .kpi{ display:grid; grid-template-columns:26px 1fr; column-gap:12px; align-items:start; }
-    .kpi .check{
-      width:26px; height:26px; border-radius:999px;
-      background: rgba(255,255,255,.35);
-      border:1px solid rgba(255,255,255,.55);
-      display:flex; align-items:center; justify-content:center;
-      box-shadow:0 2px 6px rgba(2,6,23,.2);
-    }
-    .kpi .check svg{ width:14px; height:14px; color:#1b74e4; }
-    .kpi-title{ font-weight:900; line-height:1.25; }
-    .kpi-desc{ color:#475569; font-size:1rem; margin-top:2px; }
+    /* Fresh KPI card content */
+.kpis.modern{ display:grid; gap:16px; margin:0; padding:0; list-style:none; }
+
+.kpi2{
+  display:grid;
+  grid-template-columns:14px 1fr;   /* tiny color sphere + content */
+  column-gap:12px;
+  align-items:start;
+}
+
+.kpi2 .dot{
+  width:10px; height:10px; border-radius:999px;
+  margin-top:.55rem;                 /* aligns with title baseline */
+  box-shadow:0 0 0 3px rgba(255,255,255,.35), 0 6px 18px rgba(2,6,23,.18);
+}
+
+/* dot colors */
+.dot.blue{   background:linear-gradient(135deg,#2e90fa,#8256ff); }
+.dot.green{  background:linear-gradient(135deg,#22c55e,#12b76a); }
+.dot.violet{ background:linear-gradient(135deg,#7c3aed,#8256ff); }
+.dot.pink{   background:linear-gradient(135deg,#f43f5e,#fb7185); }
+
+.kpi2-title{ margin:0; font-size:1.05rem; line-height:1.35; font-weight:900; }
+.kpi2-desc{  margin:.25rem 0 0; color:#475569; line-height:1.55; }
+.kpi2-sub{   margin:.35rem 0 0 .85rem; padding:0 0 0 .6rem; color:#64748b; }
+.kpi2-sub li{ margin:.15rem 0; }
+
     .hero .glass-card{ margin-top:.25rem; }
   </style>
 </head>
@@ -187,44 +202,60 @@
       <div class="container">
         <div class="features-wrap">
           <div class="glass-card" role="region" aria-label="Why teams choose us">
-            <ul class="kpis">
-              <li class="kpi">
-                <span class="check" aria-hidden="true">
-                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>
-                </span>
-                <div>
-                  <div class="kpi-title"><span class="text-gradient">Faster</span> delivery</div>
-                  <div class="kpi-desc">Small senior team focused on impact.</div>
-                </div>
-              </li>
-              <li class="kpi">
-                <span class="check" aria-hidden="true">
-                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>
-                </span>
-                <div>
-                  <div class="kpi-title"><span class="text-gradient">Lower</span> total cost</div>
-                  <div class="kpi-desc">Near-shore rates, no overhead.</div>
-                </div>
-              </li>
-              <li class="kpi">
-                <span class="check" aria-hidden="true">
-                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>
-                </span>
-                <div>
-                  <div class="kpi-title"><span class="text-gradient">Clear</span> ownership</div>
-                  <div class="kpi-desc">We own outcomes, not just tasks.</div>
-                </div>
-              </li>
-              <li class="kpi">
-                <span class="check" aria-hidden="true">
-                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>
-                </span>
-                <div>
-                  <div class="kpi-title"><span class="text-gradient">Security</span>-first</div>
-                  <div class="kpi-desc">Tests, docs, backups & runbooks.</div>
-                </div>
-              </li>
-            </ul>
+            <ul class="kpis modern">
+  <li class="kpi2">
+    <span class="dot blue" aria-hidden="true"></span>
+    <div>
+      <h3 class="kpi2-title"><span class="text-gradient">Faster</span> delivery</h3>
+      <p class="kpi2-desc">Ship value every week with demo-ready builds. A small senior squad means fewer hand-offs and faster decisions.</p>
+      <ul class="kpi2-sub">
+        <li>Weekly demo & notes; next week’s plan agreed in the call.</li>
+        <li>CI/CD from day one; preview links for every change.</li>
+        <li>2–4 engineers + delivery lead; no unnecessary layers.</li>
+      </ul>
+    </div>
+  </li>
+
+  <li class="kpi2">
+    <span class="dot green" aria-hidden="true"></span>
+    <div>
+      <h3 class="kpi2-title"><span class="text-gradient">Lower</span> total cost</h3>
+      <p class="kpi2-desc">Near-shore rates without office overhead. We reduce rework and recurring toil with automation.</p>
+      <ul class="kpi2-sub">
+        <li>Reuse components & patterns; don’t reinvent.</li>
+        <li>Automate tests, releases and environment setup.</li>
+        <li>Transparent time vs. outcome tracking.</li>
+      </ul>
+    </div>
+  </li>
+
+  <li class="kpi2">
+    <span class="dot violet" aria-hidden="true"></span>
+    <div>
+      <h3 class="kpi2-title"><span class="text-gradient">Clear</span> ownership</h3>
+      <p class="kpi2-desc">One accountable delivery lead, visible backlog and KPIs. You always know status, risks and next steps.</p>
+      <ul class="kpi2-sub">
+        <li>Single point of contact; fast decisions.</li>
+        <li>Public backlog/roadmap; shared docs & ADRs.</li>
+        <li>Weekly review: goals hit, risks, upcoming work.</li>
+      </ul>
+    </div>
+  </li>
+
+  <li class="kpi2">
+    <span class="dot pink" aria-hidden="true"></span>
+    <div>
+      <h3 class="kpi2-title"><span class="text-gradient">Security</span>-first</h3>
+      <p class="kpi2-desc">Testing, docs, backups and runbooks by default. We design for uptime and quick recovery.</p>
+      <ul class="kpi2-sub">
+        <li>PR checks, dependency updates, SAST/linters.</li>
+        <li>Monitoring & alerts; backups verified regularly.</li>
+        <li>Runbooks & incident drill basics.</li>
+      </ul>
+    </div>
+  </li>
+</ul>
+
           </div>
         </div>
       </div>
