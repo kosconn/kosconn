@@ -176,6 +176,39 @@
 .flat-cards .card.accent-platform{
   border-top: 1px solid var(--line) !important;  /* override colored top */
 }
+/* --- Keep footer at the bottom on short pages --- */
+body{ min-height:100vh; display:flex; flex-direction:column; }  /* keeps footer down */
+main{ flex:1; }                                                  /* page content grows */
+
+/* --- Services page: flat, square, modern cards (no accent bars) --- */
+.svc .cards-flat .card{
+  border-radius:0;                 /* square corners */
+  border-top:none;                 /* remove accent bar look */
+  padding:22px 24px;
+  box-shadow:0 6px 22px rgba(2,6,23,.06); /* subtle, modern */
+}
+
+.svc .service-card h2{ margin:.25rem 0 .35rem; }
+.svc .service-card p.lead{ margin:0 0 .8rem; color:var(--muted); }
+
+/* Two neat columns for outcomes/deliverables on desktop */
+.svc .svc-columns{
+  display:grid; gap:12px 28px;
+  grid-template-columns:repeat(2,minmax(0,1fr));
+}
+@media (max-width: 960px){
+  .svc .svc-columns{ grid-template-columns:1fr; }
+}
+
+/* tiny stacks/tech row */
+.svc .stack{ margin-top:.75rem; font-size:.95rem; color:#64748b }
+
+/* Optional: soft callout at end */
+.svc .callout{
+  border-radius:0;
+  border-left:3px solid #2e90fa;
+  background:linear-gradient(180deg,#ffffff, #f9fbff);
+}
 </style>
 
 </head>
@@ -273,63 +306,143 @@
 </template>
 
 
-  <template id="page-services">
-    <h1 class="h1">Our Services</h1>
-    <p class="lead">Three tracks that combine into one delivery: product, network and cloud.</p>
-
-    <div class="grid grid-3" style="margin-top:1rem">
-      <article class="card svc-card accent-core">
-        <span class="badge core">Coding & Product</span>
-        <h3 class="h2">Ship useful software</h3>
-        <ul class="checklist">
-          <li>Web apps, internal tools, portals and dashboards.</li>
-          <li>APIs, data integrations and automation pipelines.</li>
-          <li>Design system, UX flows and prototyping.</li>
-          <li>CI/CD from day one, tests and docs baked in.</li>
-        </ul>
-        <div class="svc-meta">
-          <span class="chip">React / Vue</span>
-          <span class="chip">Node / .NET</span>
-          <span class="chip">Playwright</span>
-          <span class="chip">REST / GraphQL</span>
-        </div>
-      </article>
-
-      <article class="card svc-card accent-foundation">
-        <span class="badge foundation">Network Foundation</span>
-        <h3 class="h2">Keep the lights on</h3>
-        <ul class="checklist">
-          <li>Segmentation, QoS and Wi-Fi planning for scale.</li>
-          <li>Central monitoring, logs and actionable alerts.</li>
-          <li>Security by design, runbooks and drills.</li>
-          <li>Vendor-neutral — we document, you own it.</li>
-        </ul>
-        <div class="svc-meta">
-          <span class="chip">ZTP / IaC</span>
-          <span class="chip">NetBox</span>
-          <span class="chip">Prometheus</span>
-          <span class="chip">Syslog / SIEM</span>
-        </div>
-      </article>
-
-      <article class="card svc-card accent-platform">
-        <span class="badge platform">Cloud & FinOps</span>
-        <h3 class="h2">Safe, efficient platform</h3>
-        <ul class="checklist">
-          <li>Landing zones with guardrails and environments.</li>
-          <li>Infra automation, pipelines and golden paths.</li>
-          <li>Cost visibility, budgets and optimisation.</li>
-          <li>Backup, recovery and incident readiness.</li>
-        </ul>
-        <div class="svc-meta">
-          <span class="chip">Azure / AWS</span>
-          <span class="chip">Terraform</span>
-          <span class="chip">GitHub Actions</span>
-          <span class="chip">Budgets & alerts</span>
-        </div>
-      </article>
+<template id="page-services">
+  <section class="section">
+    <div class="container">
+      <h1 class="h1">Our Services</h1>
+      <p class="lead" style="max-width:880px">
+        Three tracks work together so you can move with confidence: 
+        <strong>Product (software)</strong>, <strong>Network (foundation)</strong>, and <strong>Cloud &amp; FinOps</strong>.
+        Each is delivered by a small senior squad with weekly demos, docs and runbooks.
+      </p>
     </div>
-  </template>
+  </section>
+
+  <section class="section svc">
+    <div class="container">
+      <div class="grid grid-3 cards-flat">
+
+        <!-- Coding & Product -->
+        <article class="card service-card">
+          <span class="badge">Coding &amp; Product</span>
+          <h2>Ship useful software</h2>
+          <p class="lead">Features every week, maintainable code, and zero-drama releases.</p>
+
+          <div class="svc-columns">
+            <div>
+              <h3 class="h2" style="font-size:1.05rem;margin:.2rem 0 .4rem">Outcomes</h3>
+              <ul>
+                <li>Predictable roadmap; visible backlog with priorities.</li>
+                <li>Stable builds with automated tests and CI/CD.</li>
+                <li>Design system + reusable components for speed.</li>
+                <li>APIs with clear contracts (REST/GraphQL) and docs.</li>
+                <li>Measured quality (lint, coverage, performance budgets).</li>
+              </ul>
+            </div>
+            <div>
+              <h3 class="h2" style="font-size:1.05rem;margin:.2rem 0 .4rem">Deliverables</h3>
+              <ul>
+                <li>Sprint plan, demo notes, and risk register weekly.</li>
+                <li>ADR &amp; architecture notes for key decisions.</li>
+                <li>Test suites (unit/e2e), pipelines, environments.</li>
+                <li>Runbooks for deploy, rollback, and incidents.</li>
+                <li>Onboarding guide so you can own it anytime.</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="stack">
+            React / Next.js • Vue • .NET / Node.js • PostgreSQL • REST / GraphQL •
+            Playwright • Docker • GitHub Actions • CI/CD
+          </div>
+        </article>
+
+        <!-- Network Foundation -->
+        <article class="card service-card">
+          <span class="badge">Network Foundation</span>
+          <h2>Keep the lights on</h2>
+          <p class="lead">A reliable, observable network: segmented, monitored, and documented.</p>
+
+          <div class="svc-columns">
+            <div>
+              <h3 class="h2" style="font-size:1.05rem;margin:.2rem 0 .4rem">Outcomes</h3>
+              <ul>
+                <li>Segmentation, QoS and Wi-Fi planning that scales.</li>
+                <li>Central monitoring, logs and actionable alerts.</li>
+                <li>Security by design with least-privilege defaults.</li>
+                <li>Transparent KPIs for uptime, latency and SLOs.</li>
+                <li>Change control with tested, auditable workflows.</li>
+              </ul>
+            </div>
+            <div>
+              <h3 class="h2" style="font-size:1.05rem;margin:.2rem 0 .4rem">Deliverables</h3>
+              <ul>
+                <li>Network baseline + diagrams + IP strategy.</li>
+                <li>Device inventory (source-of-truth) and ZTP setup.</li>
+                <li>Monitoring/alerting rules, dashboards and runbooks.</li>
+                <li>Backup/restore procedures for critical gear.</li>
+                <li>Handover checklist and training session.</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="stack">
+            NetBox • Prometheus / Grafana • Syslog / SIEM • ZTP •
+            Firewalls / Switches / Wi-Fi (vendor-neutral)
+          </div>
+        </article>
+
+        <!-- Cloud & FinOps -->
+        <article class="card service-card">
+          <span class="badge">Cloud &amp; FinOps</span>
+          <h2>Safe, efficient platform</h2>
+          <p class="lead">Guardrails, automation, and cost visibility—without slowing teams down.</p>
+
+          <div class="svc-columns">
+            <div>
+              <h3 class="h2" style="font-size:1.05rem;margin:.2rem 0 .4rem">Outcomes</h3>
+              <ul>
+                <li>Secure landing zone with identity, policy and logging.</li>
+                <li>Pipelines for infra + app deploys (repeatable IaC).</li>
+                <li>Budgets, alerts and reports for real cost control.</li>
+                <li>Backups + recovery objectives with testable drills.</li>
+                <li>Clear ownership model and documented SRE routines.</li>
+              </ul>
+            </div>
+            <div>
+              <h3 class="h2" style="font-size:1.05rem;margin:.2rem 0 .4rem">Deliverables</h3>
+              <ul>
+                <li>Terraform modules and environments (dev/test/prod).</li>
+                <li>GitHub Actions pipelines with policy checks.</li>
+                <li>Guardrails: IAM, tagging, networking, encryption.</li>
+                <li>Budgets, cost dashboards and savings plan (rightsizing).</li>
+                <li>Backup/restore runbooks and incident simulation.</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="stack">
+            Azure / AWS • Terraform • GitHub Actions • Budgets &amp; Alerts •
+            Backup / DR • Observability
+          </div>
+        </article>
+      </div>
+
+      <!-- Why outsource (simple callout) -->
+      <div class="cards-flat" style="margin-top:1.25rem">
+        <article class="card callout">
+          <h3 class="h2" style="margin:.2rem 0 .4rem">Why outsource these with Kosconn?</h3>
+          <ul class="lead" style="margin:0">
+            <li><strong>Small senior squad</strong> = fewer hand-offs, faster impact.</li>
+            <li><strong>Near-shore</strong> rates and same-timezone collaboration.</li>
+            <li><strong>Measurable delivery</strong>: weekly demos, visible KPIs, docs.</li>
+            <li><strong>Ownership transfer</strong>: runbooks and training so you can run it.</li>
+          </ul>
+        </article>
+      </div>
+    </div>
+  </section>
+</template>
 
   <template id="page-how">
     <h1 class="h1">How We Work</h1>
