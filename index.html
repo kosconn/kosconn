@@ -98,9 +98,9 @@
     background-size: cover;
     background-position: center right;
     background-repeat: no-repeat;
-    min-height: calc(100vh - 68px);
+    min-height: clamp(520px, 72vh, 860px);
   }
-  body.is-home .hero{ min-height:100vh; }  /* full-bleed on Home */
+  body.is-home .hero{ min-height: clamp(520px, 72vh, 860px); } 
   /* remove the dark top fade that dimmed the hero */
   .hero::before{ content:none; }
 
