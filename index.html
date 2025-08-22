@@ -6,103 +6,17 @@
   <title>Kosconn — Outsource smart: Coding, Networks, Cloud</title>
   <meta name="description" content="Kosconn helps EU companies ship clean code on reliable networks and cloud. Nearshore squads, weekly demos, measurable outcomes.">
   <link rel="canonical" href="https://www.kosconn.com/">
-  <!-- Optional icons if you have them -->
   <link rel="icon" href="/assets/favicon.ico">
   <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
   <link rel="manifest" href="/assets/site.webmanifest">
 
   <style>
-    /* ===== Base theme (keep all of this) ===== */
+    /* ===== Base theme ===== */
     :root{
       --ink:#0b1220; --muted:#475569; --bg:#f6f9ff; --panel:#fff; --line:#e6ebf5;
       --sky:#2e90fa; --violet:#8256ff; --green:#12b76a; --shadow:0 8px 30px rgba(2,6,23,.08);
       --maxw:1180px;
     }
-    /* Center the moved card and keep the section a bit tighter */
-.features-wrap{ max-width: 920px; margin: 0 auto; }
-.section.compact{ padding: 2rem 0; } /* default is 3rem; this keeps things neat */
-
-/* More gap between the 3 service cards */
-.grid-3{ gap: 1.25rem; }               /* was 1rem */
-@media (max-width: 960px){
-  .grid-3{ gap: 1rem; }                /* sensible on mobile */
-}
-
-/* Balanced hero grid (keeps symmetry) */
-.hero-grid{
-  grid-template-columns: minmax(0,1fr) 520px;
-  align-items: center;
-}
-@media (max-width: 960px){ .hero-grid{ grid-template-columns: 1fr; } }
-
-/* Simple glass card */
-.glass-card{
-  max-width: 520px;
-  padding: 18px 22px;
-  border-radius: 16px;
-  background: rgba(255,255,255,.18);
-  border: 1px solid rgba(255,255,255,.35);
-  backdrop-filter: blur(10px) saturate(120%);
-  box-shadow: 0 10px 30px rgba(2,6,23,.15);
-}
-
-/* KPI list */
-.kpis{ display:grid; gap:12px; margin:0; padding:0; list-style:none; }
-.kpi{ display:grid; grid-template-columns:26px 1fr; column-gap:12px; align-items:start; }
-.kpi .check{
-  width:26px; height:26px; border-radius:999px;
-  background: rgba(255,255,255,.35);
-  border:1px solid rgba(255,255,255,.55);
-  display:flex; align-items:center; justify-content:center;
-  box-shadow:0 2px 6px rgba(2,6,23,.2);
-}
-.kpi .check svg{ width:14px; height:14px; color:#1b74e4; } /* blue tick */
-.kpi-title{ font-weight:900; line-height:1.25; }
-.kpi-desc{ color:#475569; font-size:1rem; margin-top:2px; }
-
-/* Optional: tiny lift to align visually with the left headline */
-.hero .glass-card{ margin-top:.25rem; }
-
-    /* Hero grid with fixed right column for symmetry */
-.hero-grid{
-  grid-template-columns: minmax(0,1fr) 520px;       /* left grows, right is neat */
-  align-items: center;
-}
-@media (max-width: 960px){ .hero-grid{ grid-template-columns: 1fr; } }
-
-/* Creative right card */
-.hero .features-card{
-  max-width: 520px;
-  padding: 18px 22px;
-  border-radius: 18px;
-  border: 1px solid transparent;                   /* gradient border trick */
-  background:
-    linear-gradient(180deg, rgba(255,255,255,.55), rgba(255,255,255,.35)) padding-box,
-    linear-gradient(135deg, #2e90fa 0%, #8256ff 55%, #f43f5e 100%) border-box;
-  box-shadow: 0 12px 40px rgba(2,6,23,.15);
-  backdrop-filter: blur(8px) saturate(120%);
-}
-
-/* List layout + icons */
-.features-list{ list-style:none; margin:0; padding:0; display:grid; gap:12px; }
-.features-item{ display:grid; grid-template-columns:24px 1fr; column-gap:12px; align-items:start; }
-.features-icon{
-  width:24px; height:24px; border-radius:999px;
-  background: linear-gradient(135deg,#2e90fa,#8256ff);
-  display:flex; align-items:center; justify-content:center;
-  box-shadow: 0 2px 6px rgba(2,6,23,.2);
-}
-.features-icon svg{ width:14px; height:14px; color:#fff; }
-.features-title{ font-weight:800; }
-.features-desc{ color:#475569; font-size:1rem; margin-top:2px; }
-
-.hero .card.transparent{
-  background: transparent;
-  border: 0;
-  box-shadow: none;
-  backdrop-filter: none;
-}
-}
     *{box-sizing:border-box}
     html{scroll-behavior:smooth}
     body{margin:0;font-family:ui-sans-serif,system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial;
@@ -169,6 +83,43 @@
         min-height: 420px;
       }
     }
+
+    /* Hero copy wrapper (replaces unused grid) */
+    .hero-copy{ max-width: 820px; }
+
+    /* Moved features card below hero */
+    .features-wrap{ max-width: 920px; margin: 0 auto; }
+    .section.compact{ padding: 2rem 0; } /* default is 3rem */
+
+    /* More gap between the 3 service cards */
+    .grid-3{ gap: 1.25rem; }
+    @media (max-width: 960px){
+      .grid-3{ gap: 1rem; }
+    }
+
+    /* Glass card + KPI list (used below hero) */
+    .glass-card{
+      max-width: 520px;
+      padding: 18px 22px;
+      border-radius: 16px;
+      background: rgba(255,255,255,.18);
+      border: 1px solid rgba(255,255,255,.35);
+      backdrop-filter: blur(10px) saturate(120%);
+      box-shadow: 0 10px 30px rgba(2,6,23,.15);
+    }
+    .kpis{ display:grid; gap:12px; margin:0; padding:0; list-style:none; }
+    .kpi{ display:grid; grid-template-columns:26px 1fr; column-gap:12px; align-items:start; }
+    .kpi .check{
+      width:26px; height:26px; border-radius:999px;
+      background: rgba(255,255,255,.35);
+      border:1px solid rgba(255,255,255,.55);
+      display:flex; align-items:center; justify-content:center;
+      box-shadow:0 2px 6px rgba(2,6,23,.2);
+    }
+    .kpi .check svg{ width:14px; height:14px; color:#1b74e4; }
+    .kpi-title{ font-weight:900; line-height:1.25; }
+    .kpi-desc{ color:#475569; font-size:1rem; margin-top:2px; }
+    .hero .glass-card{ margin-top:.25rem; }
   </style>
 </head>
 <body>
@@ -214,7 +165,7 @@
   <template id="page-home">
     <section class="hero">
       <div class="container">
-        <div class="grid grid-2 hero-grid" style="gap:2rem">
+        <div class="hero-copy">
           <div>
             <span class="badge foundation">Nearshore to EU member states</span>
             <h1 class="h1" style="margin:.6rem 0 1rem">
@@ -225,59 +176,59 @@
             <div style="margin-top:1rem; display:flex; gap:.6rem; flex-wrap:wrap">
               <a class="btn primary" href="/contact" data-nav="/contact">Start a project</a>
               <a class="btn" href="/services" data-nav="/services">See our services</a>
+            </div>
           </div>
-         </div>
         </div>
       </div>
     </section>
-    
-<!-- Features card below the hero -->
-<section class="section compact">
-  <div class="container">
-    <div class="features-wrap">
-      <div class="glass-card" role="region" aria-label="Why teams choose us">
-        <ul class="kpis">
-          <li class="kpi">
-            <span class="check" aria-hidden="true">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>
-            </span>
-            <div>
-              <div class="kpi-title"><span class="text-gradient">Faster</span> delivery</div>
-              <div class="kpi-desc">Small senior team focused on impact.</div>
-            </div>
-          </li>
-          <li class="kpi">
-            <span class="check" aria-hidden="true">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>
-            </span>
-            <div>
-              <div class="kpi-title"><span class="text-gradient">Lower</span> total cost</div>
-              <div class="kpi-desc">Near-shore rates, no overhead.</div>
-            </div>
-          </li>
-          <li class="kpi">
-            <span class="check" aria-hidden="true">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>
-            </span>
-            <div>
-              <div class="kpi-title"><span class="text-gradient">Clear</span> ownership</div>
-              <div class="kpi-desc">We own outcomes, not just tasks.</div>
-            </div>
-          </li>
-          <li class="kpi">
-            <span class="check" aria-hidden="true">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>
-            </span>
-            <div>
-              <div class="kpi-title"><span class="text-gradient">Security</span>-first</div>
-              <div class="kpi-desc">Tests, docs, backups & runbooks.</div>
-            </div>
-          </li>
-        </ul>
+
+    <!-- Features card below the hero -->
+    <section class="section compact">
+      <div class="container">
+        <div class="features-wrap">
+          <div class="glass-card" role="region" aria-label="Why teams choose us">
+            <ul class="kpis">
+              <li class="kpi">
+                <span class="check" aria-hidden="true">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>
+                </span>
+                <div>
+                  <div class="kpi-title"><span class="text-gradient">Faster</span> delivery</div>
+                  <div class="kpi-desc">Small senior team focused on impact.</div>
+                </div>
+              </li>
+              <li class="kpi">
+                <span class="check" aria-hidden="true">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>
+                </span>
+                <div>
+                  <div class="kpi-title"><span class="text-gradient">Lower</span> total cost</div>
+                  <div class="kpi-desc">Near-shore rates, no overhead.</div>
+                </div>
+              </li>
+              <li class="kpi">
+                <span class="check" aria-hidden="true">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>
+                </span>
+                <div>
+                  <div class="kpi-title"><span class="text-gradient">Clear</span> ownership</div>
+                  <div class="kpi-desc">We own outcomes, not just tasks.</div>
+                </div>
+              </li>
+              <li class="kpi">
+                <span class="check" aria-hidden="true">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>
+                </span>
+                <div>
+                  <div class="kpi-title"><span class="text-gradient">Security</span>-first</div>
+                  <div class="kpi-desc">Tests, docs, backups & runbooks.</div>
+                </div>
+              </li>
+            </ul>
+          </div>
+        </div>
       </div>
-    </div>
-  </div>
-</section>
+    </section>
 
     <section class="section">
       <div class="container">
