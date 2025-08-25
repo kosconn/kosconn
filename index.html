@@ -17,7 +17,7 @@
     --sky:#2e90fa; --violet:#8256ff; --green:#12b76a; --shadow:0 8px 30px rgba(2,6,23,.08);
     --maxw:1180px;
 
-    /* new hero text tokens */
+    /* hero text tokens */
     --hero-text-desktop:#0b1220;
     --hero-text-mobile:#f8fafc;
     --hero-shadow-mobile:0 2px 18px rgba(0,0,0,.45);
@@ -28,10 +28,12 @@
     margin:0;
     font-family:ui-sans-serif,system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial;
     background:var(--bg);color:var(--ink);line-height:1.55;-webkit-font-smoothing:antialiased;
-    padding-top:68px; /* fixed header offset on inner pages */
+    padding-top:68px; /* fixed header offset */
     min-height:100vh; display:flex; flex-direction:column; /* sticky footer layout */
   }
-  body.is-home{ padding-top:0; } /* home hero sits under header */
+  /* Home now ALSO respects the header offset so hero sits lower */
+  body.is-home{ padding-top:68px; }
+  body.menu-open{ overflow:hidden; } /* lock scroll under mobile drawer */
   main{ flex:1; }
 
   a{color:var(--sky);text-decoration:none} a:hover{opacity:.9}
@@ -50,29 +52,26 @@
   .btn{display:inline-flex;align-items:center;gap:.5rem;padding:.75rem 1rem;border-radius:999px;font-weight:700;border:1px solid var(--line);background:#fff}
   .btn.primary{background:#0b1220;color:#fff;border-color:transparent}
 
-  /* ===== Header (desktop) ===== */
+  /* ===== Header ===== */
   header{
     position:fixed; top:0; left:0; right:0; z-index:50;
-    background:rgba(255,255,255,.9);
+    background:rgba(255,255,255,.95);
     backdrop-filter:blur(8px);
     border-bottom:1px solid var(--line);
   }
-  body.is-home header{ background:transparent; border-bottom:0; backdrop-filter:none; }
-  .nav{display:flex;align-items:center;gap:1rem;height:68px}
+  .nav{display:flex;align-items:center;gap:1rem;height:68px; position:relative;}
   .brand{display:flex;align-items:center;gap:.6rem;font-weight:900}
   .logo{width:32px;height:32px;border-radius:10px;background:linear-gradient(135deg,#2e90fa,#8256ff)}
   .nav-links{margin-left:auto;display:flex;flex-wrap:wrap;gap:.35rem}
   .nav-links a{padding:.5rem .8rem;border-radius:10px;font-weight:700;color:#334155}
   .nav-links a.active,.nav-links a:hover{color:#2e90fa}
 
-  /* Readable links on transparent Home header (desktop) */
-  body.is-home .brand{ color:#fff; text-shadow:0 1px 2px rgba(0,0,0,.35); }
-  body.is-home .nav-links a{ color:#f8fafc; text-shadow:0 1px 2px rgba(0,0,0,.35); }
-  body.is-home .nav-links a:hover, body.is-home .nav-links a.active{
-    color:#ffffff; background:rgba(255,255,255,.08);
-  }
+  /* Ensure home header is NOT transparent anymore */
+  body.is-home header{ background:rgba(255,255,255,.95); border-bottom:1px solid var(--line); backdrop-filter:blur(8px); }
+  body.is-home .brand, body.is-home .nav-links a{ color:#334155 !important; text-shadow:none !important; }
+  body.is-home .nav-links a:hover, body.is-home .nav-links a.active{ color:#2e90fa !important; background:transparent !important; }
 
-  /* ===== Mobile nav (lighter sheet) ===== */
+  /* ===== Mobile nav: left-to-right drawer ===== */
   .nav-toggle{
     display:none; margin-left:auto; width:40px; height:40px; border:1px solid var(--line);
     border-radius:10px; background:#fff; align-items:center; justify-content:center;
@@ -84,29 +83,33 @@
   .nav-toggle::after{ transform:translateY(6px); }
 
   @media (max-width:860px){
-    .nav-links{ display:none; }
-    .nav-toggle{ display:flex; }
+    /* center brand on mobile */
+    .brand{ margin:0 auto; }
+    .nav-toggle{ display:flex; position:absolute; right:20px; }
 
-    /* new: light, professional overlay sheet */
-    .nav-links.open{
-      display:flex; flex-direction:column; gap:.35rem;
-      position:fixed; left:0; right:0; top:68px; padding:14px 20px 18px;
-      background:rgba(255,255,255,.96);
+    /* Use the same .nav-links element as a drawer */
+    .nav-links{
+      position:fixed; top:0; bottom:0; left:0;
+      width:min(84vw,360px); padding:84px 20px 22px; /* 84 clears header */
+      background:rgba(255,255,255,.98);
       backdrop-filter:blur(10px) saturate(140%);
-      border-bottom:1px solid var(--line);
-      z-index:60;
+      border-right:1px solid var(--line);
+      box-shadow:0 10px 30px rgba(2,6,23,.15);
+      display:flex; flex-direction:column; gap:.5rem;
+      transform:translateX(-105%); transition:transform .28s cubic-bezier(.2,.8,.2,1);
+      z-index:80;
     }
-    .nav-links.open a{ color:#0b1220; }
-    .nav-links.open a:hover,.nav-links.open a.active{
-      color:#0b1220; background:rgba(2,6,23,.06);
-    }
+    .nav-links.open{ transform:translateX(0); }
+    .nav-links a{ color:#0b1220; padding:.75rem .9rem; border-radius:12px; }
+    .nav-links a:hover,.nav-links a.active{ background:rgba(2,6,23,.06); }
     .nav-links .nav-cta{ margin-top:.35rem; }
 
-    body.menu-open header{
-      background:rgba(255,255,255,.96); border-bottom:1px solid var(--line);
-      backdrop-filter:blur(10px) saturate(140%);
+    /* page scrim */
+    .drawer-backdrop{
+      position:fixed; inset:0; background:rgba(15,23,42,.32); backdrop-filter:blur(2px);
+      opacity:0; pointer-events:none; transition:opacity .25s; z-index:70;
     }
-    body.is-home.menu-open .brand{ color:#0b1220; text-shadow:none; }
+    .drawer-backdrop.show{ opacity:1; pointer-events:auto; }
   }
 
   /* ===== Footer (smaller/cleaner) ===== */
@@ -140,9 +143,9 @@
 
   /* ===== Hero (desktop image; mobile video) ===== */
   .hero{
-    position:relative;
-    overflow:hidden;
+    position:relative; overflow:hidden;
     padding: clamp(3rem, 7vw, 6rem) 0;
+    margin-top:12px; /* nudge down a little extra as requested */
     background:
       linear-gradient(90deg, rgba(255,255,255,.42) 0%, rgba(255,255,255,.22) 34%,
                             rgba(255,255,255,.08) 62%, rgba(255,255,255,0) 100%),
@@ -163,13 +166,12 @@
     display:none; z-index:0; pointer-events:none;
   }
 
-  /* Mobile ≤700px: show video, brighten slightly, ensure text pops */
+  /* Mobile ≤700px: show video + readability overlay */
   @media (max-width:700px){
     .hero{ background:none; min-height:480px; }
     .hero-video{ display:block; filter:brightness(1.08) contrast(1.04) saturate(1.05); }
     .hero::after{
       content:""; position:absolute; inset:0; z-index:1; pointer-events:none;
-      /* lighter, professional overlay for readability */
       background: linear-gradient(
         180deg,
         rgba(0,0,0,.32) 0%,
@@ -254,6 +256,9 @@
       </nav>
     </div>
   </header>
+
+  <!-- drawer backdrop node (mobile) -->
+  <div class="drawer-backdrop" id="drawerBackdrop"></div>
 
   <!-- App root -->
   <main id="app"></main>
@@ -673,7 +678,7 @@
       app.innerHTML = tpl ? tpl.innerHTML : '<h1>Not found</h1>';
       document.title = titles[id] || 'Kosconn';
 
-      // Transparent header only on Home
+      // Home gets a normal (non-transparent) header now
       document.body.classList.toggle('is-home', id === 'page-home');
 
       // Highlight current nav
@@ -700,18 +705,22 @@
     });
     window.addEventListener('popstate', ()=>render(location.pathname));
 
-    // ===== Mobile menu =====
+    // ===== Mobile drawer menu =====
     const toggleBtn = document.querySelector('.nav-toggle');
     const navLinks = document.querySelector('.nav-links');
+    const backdrop = document.getElementById('drawerBackdrop');
+
     function openMenu(){
       navLinks.classList.add('open');
       document.body.classList.add('menu-open');
-      toggleBtn.setAttribute('aria-expanded','true');
+      if (toggleBtn) toggleBtn.setAttribute('aria-expanded','true');
+      if (backdrop) backdrop.classList.add('show');
     }
     function closeMenu(){
       navLinks.classList.remove('open');
       document.body.classList.remove('menu-open');
       if (toggleBtn) toggleBtn.setAttribute('aria-expanded','false');
+      if (backdrop) backdrop.classList.remove('show');
     }
     if (toggleBtn){
       toggleBtn.addEventListener('click', ()=>{
@@ -719,8 +728,12 @@
       });
       // Close on ESC
       window.addEventListener('keydown', (e)=>{ if(e.key==='Escape') closeMenu(); });
-      // Close when clicking a nav link (handled in render too, but safe here)
+      // Close when clicking a nav link
       navLinks.addEventListener('click', (e)=>{ if (e.target.tagName==='A') closeMenu(); });
+    }
+    if (backdrop){
+      backdrop.addEventListener('click', closeMenu);
+      backdrop.addEventListener('touchstart', closeMenu);
     }
 
     (function init(){
