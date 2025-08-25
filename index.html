@@ -17,7 +17,7 @@
     --sky:#2e90fa; --violet:#8256ff; --green:#12b76a; --shadow:0 8px 30px rgba(2,6,23,.08);
     --maxw:1180px;
 
-    /* hero text tokens */
+    /* new hero text tokens */
     --hero-text-desktop:#0b1220;
     --hero-text-mobile:#f8fafc;
     --hero-shadow-mobile:0 2px 18px rgba(0,0,0,.45);
@@ -28,11 +28,10 @@
     margin:0;
     font-family:ui-sans-serif,system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial;
     background:var(--bg);color:var(--ink);line-height:1.55;-webkit-font-smoothing:antialiased;
-    padding-top:68px; /* fixed header offset */
-    min-height:100vh; display:flex; flex-direction:column;
+    padding-top:68px; /* fixed header offset on inner pages */
+    min-height:100vh; display:flex; flex-direction:column; /* sticky footer layout */
   }
-  /* Home should ALSO respect header height (no overlay) */
-  body.is-home{ padding-top:68px; }
+  body.is-home{ padding-top:0; } /* home hero sits under header */
   main{ flex:1; }
 
   a{color:var(--sky);text-decoration:none} a:hover{opacity:.9}
@@ -51,24 +50,29 @@
   .btn{display:inline-flex;align-items:center;gap:.5rem;padding:.75rem 1rem;border-radius:999px;font-weight:700;border:1px solid var(--line);background:#fff}
   .btn.primary{background:#0b1220;color:#fff;border-color:transparent}
 
-  /* ===== Header ===== */
+  /* ===== Header (desktop) ===== */
   header{
     position:fixed; top:0; left:0; right:0; z-index:50;
-    background:rgba(255,255,255,.98);
+    background:rgba(255,255,255,.9);
     backdrop-filter:blur(8px);
     border-bottom:1px solid var(--line);
   }
-  .nav{display:flex;align-items:center;gap:1rem;height:68px; position:relative;}
-  .brand{display:flex;align-items:center;gap:.6rem;font-weight:900; color:var(--ink);}
+  body.is-home header{ background:transparent; border-bottom:0; backdrop-filter:none; }
+  .nav{display:flex;align-items:center;gap:1rem;height:68px}
+  .brand{display:flex;align-items:center;gap:.6rem;font-weight:900}
   .logo{width:32px;height:32px;border-radius:10px;background:linear-gradient(135deg,#2e90fa,#8256ff)}
   .nav-links{margin-left:auto;display:flex;flex-wrap:wrap;gap:.35rem}
   .nav-links a{padding:.5rem .8rem;border-radius:10px;font-weight:700;color:#334155}
   .nav-links a.active,.nav-links a:hover{color:#2e90fa}
-  .nav-links a.btn.primary{ color:#fff !important; } /* CTA stays white */
 
-  /* (Removed transparent-home overrides so header never overlays hero) */
+  /* Readable links on transparent Home header (desktop) */
+  body.is-home .brand{ color:#fff; text-shadow:0 1px 2px rgba(0,0,0,.35); }
+  body.is-home .nav-links a{ color:#f8fafc; text-shadow:0 1px 2px rgba(0,0,0,.35); }
+  body.is-home .nav-links a:hover, body.is-home .nav-links a.active{
+    color:#ffffff; background:rgba(255,255,255,.08);
+  }
 
-  /* ===== Mobile nav: left→right drawer ===== */
+  /* ===== Mobile nav (lighter sheet) ===== */
   .nav-toggle{
     display:none; margin-left:auto; width:40px; height:40px; border:1px solid var(--line);
     border-radius:10px; background:#fff; align-items:center; justify-content:center;
@@ -79,40 +83,33 @@
   .nav-toggle::before{ transform:translateY(-6px); }
   .nav-toggle::after{ transform:translateY(6px); }
 
-  /* Backdrop for drawer */
-  .nav-backdrop{
-    position:fixed; inset:0; background:rgba(2,6,23,.35);
-    opacity:0; pointer-events:none; transition:opacity .25s ease;
-    z-index:59;
-  }
-  body.menu-open .nav-backdrop{ opacity:1; pointer-events:auto; }
-
   @media (max-width:860px){
-    /* precisely center "Kosconn", hamburger on right */
-    .nav{ position:relative; }
-    .brand{ position:absolute; left:50%; transform:translateX(-50%); margin:0; }
-    .nav-toggle{ display:flex; position:absolute; right:20px; }
+    .nav-links{ display:none; }
+    .nav-toggle{ display:flex; }
 
-    /* Drawer */
-    .nav-links{
-      position:fixed; top:0; left:0; bottom:0;
-      width:86vw; max-width:360px;
-      padding:16px 18px;
-      display:flex; flex-direction:column; gap:.6rem;
-      background:#ffffff;
-      border-right:1px solid var(--line);
-      box-shadow:0 10px 40px rgba(2,6,23,.18);
-      transform:translateX(-100%);
-      transition:transform .32s cubic-bezier(.2,.8,.2,1);
+    /* new: light, professional overlay sheet */
+    .nav-links.open{
+      display:flex; flex-direction:column; gap:.35rem;
+      position:fixed; left:0; right:0; top:68px; padding:14px 20px 18px;
+      background:rgba(255,255,255,.96);
+      backdrop-filter:blur(10px) saturate(140%);
+      border-bottom:1px solid var(--line);
       z-index:60;
     }
-    .nav-links.open{ transform:translateX(0); }
-    .nav-links a{ color:#0b1220; text-shadow:none; }
-    .nav-links a:hover,.nav-links a.active{ background:rgba(2,6,23,.06); color:#0b1220; }
-    .nav-links .nav-cta{ margin-top:auto; } /* push CTA to bottom */
+    .nav-links.open a{ color:#0b1220; }
+    .nav-links.open a:hover,.nav-links.open a.active{
+      color:#0b1220; background:rgba(2,6,23,.06);
+    }
+    .nav-links .nav-cta{ margin-top:.35rem; }
+
+    body.menu-open header{
+      background:rgba(255,255,255,.96); border-bottom:1px solid var(--line);
+      backdrop-filter:blur(10px) saturate(140%);
+    }
+    body.is-home.menu-open .brand{ color:#0b1220; text-shadow:none; }
   }
 
-  /* ===== Footer ===== */
+  /* ===== Footer (smaller/cleaner) ===== */
   footer{background:#0b1220;color:#cbd5e1}
   footer a{color:#a3d3ff}
   footer .section{font-size:.875rem}
@@ -129,7 +126,7 @@
     .nav{height:60px}
   }
 
-  /* ===== Accents ===== */
+  /* ===== Color accents (home cards) ===== */
   .text-gradient{
     background: linear-gradient(135deg,#2e90fa 0%,#8256ff 55%,#f43f5e 100%);
     -webkit-background-clip:text; background-clip:text; color:transparent;
@@ -141,7 +138,7 @@
   .card.accent-foundation{ border-top:4px solid #2e90fa; }
   .card.accent-platform{ border-top:4px solid #8256ff; }
 
-  /* ===== Hero ===== */
+  /* ===== Hero (desktop image; mobile video) ===== */
   .hero{
     position:relative;
     overflow:hidden;
@@ -155,25 +152,38 @@
     background-repeat: no-repeat;
     min-height: clamp(520px, 72vh, 860px);
   }
+  body.is-home .hero{ min-height: clamp(520px, 72vh, 860px); }
   .hero .container{ position: relative; z-index: 2; }
   .hero-copy{ max-width: 820px; }
-  .hero .h1{ color:var(--hero-text-desktop); }
-  .hero p.lead{ color:#f1f5f9; text-shadow:0 2px 12px rgba(0,0,0,.35); }
+  .hero .h1, .hero p{ color: var(--hero-text-desktop); }
 
-  /* Mobile hero */
+  /* Video element (hidden on desktop by default) */
+  .hero-video{
+    position:absolute; inset:0; width:100%; height:100%; object-fit:cover;
+    display:none; z-index:0; pointer-events:none;
+  }
+
+  /* Mobile ≤700px: show video, brighten slightly, ensure text pops */
   @media (max-width:700px){
     .hero{ background:none; min-height:480px; }
-    .hero-video{ display:block; filter:brightness(1.08) contrast(1.04) saturate(1.05); position:absolute; inset:0; width:100%; height:100%; object-fit:cover; z-index:0; pointer-events:none;}
+    .hero-video{ display:block; filter:brightness(1.08) contrast(1.04) saturate(1.05); }
     .hero::after{
       content:""; position:absolute; inset:0; z-index:1; pointer-events:none;
-      background: linear-gradient(180deg, rgba(0,0,0,.32) 0%, rgba(0,0,0,.18) 26%, rgba(255,255,255,.08) 55%, rgba(255,255,255,0) 100%);
+      /* lighter, professional overlay for readability */
+      background: linear-gradient(
+        180deg,
+        rgba(0,0,0,.32) 0%,
+        rgba(0,0,0,.18) 26%,
+        rgba(255,255,255,.08) 55%,
+        rgba(255,255,255,0) 100%
+      );
     }
     .hero .h1, .hero p{ color:var(--hero-text-mobile); text-shadow:var(--hero-shadow-mobile); }
     .hero .h1{ line-height:1.06 }
     .badge.foundation{ background:rgba(255,255,255,.85); color:#1b74e4 }
   }
 
-  /* ===== Other sections ===== */
+  /* ===== Home: value band + square cards ===== */
   .features-wrap{ max-width: var(--maxw); margin: 0 auto; }
   .section.compact{ padding: 2rem 0; }
   .grid-3{ gap: 1.25rem; }
@@ -211,6 +221,7 @@
     border-top: 1px solid var(--line) !important;
   }
 
+  /* ===== Services page: modern cards ===== */
   .svc .cards-flat .card{
     border-radius:0; border-top:none; padding:22px 24px; box-shadow:0 6px 22px rgba(2,6,23,.06);
   }
@@ -243,9 +254,6 @@
       </nav>
     </div>
   </header>
-
-  <!-- Drawer backdrop -->
-  <div class="nav-backdrop"></div>
 
   <!-- App root -->
   <main id="app"></main>
@@ -319,7 +327,7 @@
       </div>
     </section>
 
-    <!-- Home cards -->
+    <!-- Home cards: square, no colored stripes -->
     <section class="section flat-cards">
       <div class="container">
         <div class="grid grid-3">
@@ -359,13 +367,11 @@
     <section class="section svc">
       <div class="container">
         <div class="grid grid-3 cards-flat">
-
           <!-- Coding & Product -->
           <article class="card service-card">
             <span class="badge">Coding &amp; Product</span>
             <h2>Ship useful software</h2>
             <p class="lead">Features every week, maintainable code, and zero-drama releases.</p>
-
             <div class="svc-columns">
               <div>
                 <h3 class="h2" style="font-size:1.05rem;margin:.2rem 0 .4rem">Outcomes</h3>
@@ -388,10 +394,8 @@
                 </ul>
               </div>
             </div>
-
             <div class="stack">
-              React / Next.js • Vue • .NET / Node.js • PostgreSQL • REST / GraphQL •
-              Playwright • Docker • GitHub Actions • CI/CD
+              React / Next.js • Vue • .NET / Node.js • PostgreSQL • REST / GraphQL • Playwright • Docker • GitHub Actions • CI/CD
             </div>
           </article>
 
@@ -400,7 +404,6 @@
             <span class="badge">Network Foundation</span>
             <h2>Keep the lights on</h2>
             <p class="lead">A reliable, observable network: segmented, monitored, and documented.</p>
-
             <div class="svc-columns">
               <div>
                 <h3 class="h2" style="font-size:1.05rem;margin:.2rem 0 .4rem">Outcomes</h3>
@@ -423,10 +426,8 @@
                 </ul>
               </div>
             </div>
-
             <div class="stack">
-              NetBox • Prometheus / Grafana • Syslog / SIEM • ZTP •
-              Firewalls / Switches / Wi-Fi (vendor-neutral)
+              NetBox • Prometheus / Grafana • Syslog / SIEM • ZTP • Firewalls / Switches / Wi-Fi (vendor-neutral)
             </div>
           </article>
 
@@ -435,7 +436,6 @@
             <span class="badge">Cloud &amp; FinOps</span>
             <h2>Safe, efficient platform</h2>
             <p class="lead">Guardrails, automation, and cost visibility—without slowing teams down.</p>
-
             <div class="svc-columns">
               <div>
                 <h3 class="h2" style="font-size:1.05rem;margin:.2rem 0 .4rem">Outcomes</h3>
@@ -458,10 +458,8 @@
                 </ul>
               </div>
             </div>
-
             <div class="stack">
-              Azure / AWS • Terraform • GitHub Actions • Budgets &amp; Alerts •
-              Backup / DR • Observability
+              Azure / AWS • Terraform • GitHub Actions • Budgets &amp; Alerts • Backup / DR • Observability
             </div>
           </article>
         </div>
@@ -491,7 +489,7 @@
       </div>
     </section>
 
-  <section class="section" style="padding-top:1.2rem">
+    <section class="section" style="padding-top:1.2rem">
       <div class="container">
         <div class="glass-card">
           <ul class="kpis modern">
@@ -563,31 +561,26 @@
             <h3 class="h2" style="margin:.2rem 0 .4rem">Stakeholder & KPI template</h3>
             <p class="lead">Capture goals, constraints and success metrics in a single page.</p>
           </div>
-
           <div class="card">
             <span class="badge">Design</span>
             <h3 class="h2" style="margin:.2rem 0 .4rem">ADR — Architecture Decision Record</h3>
             <p class="lead">Keep decisions explicit: context, options, trade-offs and outcome.</p>
           </div>
-
           <div class="card">
             <span class="badge">Build</span>
             <h3 class="h2" style="margin:.2rem 0 .4rem">Definition of Done</h3>
             <p class="lead">What “done” means for us: code, tests, docs, security checks.</p>
           </div>
-
           <div class="card">
             <span class="badge">Operate</span>
             <h3 class="h2" style="margin:.2rem 0 .4rem">Runbook basics</h3>
             <p class="lead">Respond, escalate and communicate clearly during incidents.</p>
           </div>
-
           <div class="card">
             <span class="badge">Improve</span>
             <h3 class="h2" style="margin:.2rem 0 .4rem">Quarterly review pack</h3>
             <p class="lead">KPI trends, costs and proposed next steps with estimates.</p>
           </div>
-
           <div class="card">
             <span class="badge">Costs</span>
             <h3 class="h2" style="margin:.2rem 0 .4rem">FinOps quick wins</h3>
@@ -620,7 +613,6 @@
               <li>Cost-efficient without losing seniority.</li>
             </ul>
           </div>
-
           <div class="card">
             <span class="badge">How we organize</span>
             <h3 class="h2" style="margin:.3rem 0 .5rem">Small senior squads</h3>
@@ -681,7 +673,7 @@
       app.innerHTML = tpl ? tpl.innerHTML : '<h1>Not found</h1>';
       document.title = titles[id] || 'Kosconn';
 
-      // header is always solid; still mark home for other styling if needed
+      // Transparent header only on Home
       document.body.classList.toggle('is-home', id === 'page-home');
 
       // Highlight current nav
@@ -708,34 +700,27 @@
     });
     window.addEventListener('popstate', ()=>render(location.pathname));
 
-    // ===== Mobile drawer =====
+    // ===== Mobile menu =====
     const toggleBtn = document.querySelector('.nav-toggle');
     const navLinks = document.querySelector('.nav-links');
-    const backdrop = document.querySelector('.nav-backdrop');
-
     function openMenu(){
       navLinks.classList.add('open');
       document.body.classList.add('menu-open');
-      toggleBtn && toggleBtn.setAttribute('aria-expanded','true');
+      toggleBtn.setAttribute('aria-expanded','true');
     }
     function closeMenu(){
       navLinks.classList.remove('open');
       document.body.classList.remove('menu-open');
-      toggleBtn && toggleBtn.setAttribute('aria-expanded','false');
+      if (toggleBtn) toggleBtn.setAttribute('aria-expanded','false');
     }
-
     if (toggleBtn){
       toggleBtn.addEventListener('click', ()=>{
         if (navLinks.classList.contains('open')) closeMenu(); else openMenu();
       });
-      // ESC closes
+      // Close on ESC
       window.addEventListener('keydown', (e)=>{ if(e.key==='Escape') closeMenu(); });
-      // Clicking a link closes
+      // Close when clicking a nav link (handled in render too, but safe here)
       navLinks.addEventListener('click', (e)=>{ if (e.target.tagName==='A') closeMenu(); });
-    }
-    if (backdrop){
-      backdrop.addEventListener('click', closeMenu);
-      backdrop.addEventListener('touchstart', closeMenu);
     }
 
     (function init(){
